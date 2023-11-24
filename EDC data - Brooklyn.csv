@@ -1,0 +1,26 @@
+Date,Ship,Line,Type,Guest,Crew,Shore Power Compatibility,BCT Shore Power Compatible
+9/29/2023,Queen Mary,Cunard Line,Full Turn,"2,500","1,253",Yes,Yes
+9/30/2023,Emerald Princess,Princess Cruise Line,Full Turn,"3,000","1,200",Yes,Yes
+10/4/2023,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",Yes,No
+10/7/2023,Emerald Princess,Princess Cruise Line,Full Turn,"3,000","1,200",Yes,Yes
+10/9/2023,Caribbean Princess,Princess Cruise Line,Full Turn,"3,000","1,200",Yes,Yes
+10/13/2023,Queen Mary 2,Cunard Line,Full Turn,"2,500","1,253",Yes,Yes
+10/14/2023,Emerald Princess,Princess Cruise Line,Full Turn,"3,000","1,200",Yes,Yes
+10/15/2023,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",Yes,No
+10/21/2023,Emerald Princess,Princess Cruise Line,Full Turn,"3,000","1,200",Yes,Yes
+10/25/2023,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",Yes,No
+10/27/2023,Caribbean Princess,Princess Cruise Line,Transit,"3,000","1,200",Yes,Yes
+10/28/2023,Emerald Princess,Princess Cruise Line,Full Turn,"3,000","1,200",Yes,Yes
+11/4/2023,Emerald Princess,Princess Cruise Line,Transit,"3,000","1,200",Yes,Yes
+11/5/2023,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",Yes,No
+11/13/2023,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",Yes,No
+11/19/2023,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",Yes,No
+11/26/2023,Queen Mary 2,Cunard Line,Full Turn,"2,500","1,253",Yes,Yes
+11/27/2023,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",Yes,No
+12/2/2023,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",Yes,No
+12/8/2023,Queen Mary 2,Cunard Line,Full Turn,"2,500","1,253",Yes,Yes
+12/9/2023,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",Yes,No
+12/16/2023,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",Yes,No
+12/22/2023,Queen Mary 2,Cunard Line,Full Turn,"2,500","1,253",Yes,Yes
+12/23/2023,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",Yes,No
+12/30/2023,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",Yes,No

@@ -1,0 +1,537 @@
+---
+title: "Midterm"
+author: "Alice Friedman"
+date: "2023-10-22"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+library(forecast)
+library(scales)
+library(ggcorrplot)
+library(httr)
+library(jsonlite)
+library(tidyr)
+library(forcats)
+library(glmnet)
+```
+
+
+
+```{r loadData_weather}
+Dyson_raw <- read.csv("RawData/Dyson2023-10-21.csv") %>% mutate(
+  DateTime = parse_date_time(DateTime, "mdy HM", tz = "America/New_York")
+  ) %>% 
+  rename(
+    pm2.5_high = `High.PM.2.5`,
+    pm2.5 = `PM.2.5`) %>%
+  filter(DateTime >= "2023-07-11" & DateTime < "2023-10-21") 
+
+Dyson <- Dyson_raw %>% 
+  mutate(
+        across(c(pm2.5, pm2.5_high), as.numeric),
+        across(contains("Hg"), as.numeric),
+        across(contains(".F"), as.numeric),
+        across(contains(".m"), as.numeric),
+        across(contains(".in"), as.numeric),
+        across(contains("RH"), as.numeric)
+    ) %>% filter(
+      Avg.Wind.Dir != "--",
+      High.Wind.Direction !="--"
+    ) 
+
+ggplot(Dyson %>% filter(complete.cases(.))) +
+  geom_line(aes(x=DateTime, y=pm2.5), color="blue") +  
+  scale_x_datetime(breaks = scales::date_breaks("1 month"), labels = date_format("%m %d")) +
+  ylab("PM 2.5 (Parts Per Million)") + 
+  xlab("Date") +
+  theme(aspect.ratio = 1/4)
+```
+```{r dummies_all}
+
+dummify <- function(df, col){
+
+    # Create a matrix of dummy variables
+  dummy_direction <- model.matrix(~. - 1, data = df %>% select({{col}}))
+  # Convert the matrix to a data frame
+  dummy_direction <- as.data.frame(dummy_direction)
+
+  # Rename the dummy variables for clarity
+  colnames(dummy_direction) <- gsub(col, paste0(col, "."), colnames(dummy_direction))
+  
+  # Identify the column to be dropped
+  col_to_drop <- paste(col, ".N", sep = "")
+
+  # Remove the dummy variable with the name "{{col}}.N"
+  if (col_to_drop %in% colnames(dummy_direction)) {
+    dummy_direction <- dummy_direction[, -which(colnames(dummy_direction) == col_to_drop)]
+  }
+
+  # Print the resulting data frame with dummy variables
+  print(dummy_direction |> names())
+
+  df <- cbind(df, dummy_direction)
+  print(names(df))
+  return(df)
+}
+
+Dyson_prevailing_dummied <- dummify(Dyson, "Prevailing.Wind.Dir")
+Dyson_avg_dummied <- dummify(Dyson_prevailing_dummied, "Avg.Wind.Dir")
+Dyson_dummied <- dummify(Dyson_avg_dummied, "High.Wind.Direction")
+```
+
+
+
+```{r dataviz_weather}
+corr <- stats::cor(Dyson %>% select(contains(".F")),  use = "pairwise.complete.obs")
+ggcorrplot(corr, type = "lower", show.diag = F, lab = T, lab_size = 2) +
+  theme(
+    axis.text.x=element_text(size=6, angle=45, vjust=1, hjust=1, margin=margin(-3,0,0,0)),
+        axis.text.y=element_text(size=6, margin=margin(0,-3,0,0)),
+        panel.grid.major=element_blank())
+
+
+corr2 <- stats::cor(Dyson %>% select(pm2.5, contains(".F")),  use = "pairwise.complete.obs")
+ggcorrplot(corr2, type = "lower", show.diag = F, lab = T, lab_size = 2) +
+  theme(
+    axis.text.x=element_text(size=6, angle=45, vjust=1, hjust=1, margin=margin(-3,0,0,0)),
+        axis.text.y=element_text(size=6, margin=margin(0,-3,0,0)),
+        panel.grid.major=element_blank())
+```
+
+
+```{r hourly}
+## aggregate Dyson hourly
+aq_list <-c(
+  "pm2.5",
+  "pm2.5_high",
+  "AQI",
+  "High.AQI",
+  "PM.1",
+  "High.PM.1",
+  "PM.10",
+  "High.PM.10"
+)
+# Round the timestamp to the nearest hour
+data <- Dyson_dummied %>%
+  mutate(hour = floor_date(DateTime, unit = "hour")) %>%
+  relocate(DateTime, hour, aq_list, contains("Rain"))
+
+# Use summarize(across()) to calculate summary statistics for all columns
+summary_data <- data %>% select(-DateTime) %>% 
+  group_by(hour) %>% select(where(is.numeric)) %>%
+  summarize(
+    across(-contains("Rain"), list(mean = mean)),
+    across(contains("Rain"), list(sum=sum))
+            )
+```
+
+
+```{r purple}
+
+start_dates <- c(
+  "2023-07-03",
+  "2023-07-17",
+  "2023-07-31",
+  "2023-08-14",
+  "2023-08-28",
+  "2023-09-11",
+  "2023-09-25",
+  "2023-10-09",
+  "2023-10-23"
+  # "2023-11-06"
+)
+
+format_timestamp <- function(date){
+  return (paste0(as.character(date),"T00%3A00%3A00%2B00%3A00"))
+}
+
+add_days <- function(day1){
+  day1 <- ymd(day1, tz = "UTC")
+  nextdate <- day1 + days(14)
+  nexttime <- format_timestamp(nextdate)
+  return(nexttime)
+}
+
+# startTimeStamp <- "2023-07-31T00%3A00%3A00%2B00%3A00"
+
+# Define list of fields
+fields_list <- c("temperature", 
+                 "humidity", 
+                 "pm2.5_alt")
+
+get_purple <- function(sensor, startday=day1, fields=fields_list){
+
+  # Combine the fields into a single string with commas and URL-encode if needed
+  fields_to_include <- paste(fields, collapse = "%2C%20")
+  
+  #encode and format startday
+  startDate <- format_timestamp(startday)
+  # Calculate end day 14 days later
+  endDate <- add_days(startday)
+  # Amend the URL with the combined fields
+  url <- paste0(
+    "https://api.purpleair.com/v1/",
+    "sensors/",
+    sensor,
+    "/history?start_timestamp=",   
+    startDate,
+    "&end_timstamp=",
+    endDate,
+    "&average=60&fields=", #this selects the hourly average
+    fields_to_include
+    )
+  
+    print(url)
+    # Define the API key
+    api_key <- "D75A9E8C-5A4F-11EE-A77F-42010A800009"
+
+    # Define headers
+    headers = httr::add_headers(`X-API-Key` = api_key)
+
+    # Send a GET request with custom headers
+    response <- GET(url, headers)
+
+    # Parse the JSON response
+    data <- jsonlite::fromJSON(content(response, "text"))
+
+    # Access the data you want (temperature, humidity, pm2.5_alt) & convert to data frame
+    df <- data$data %>% as.data.frame()
+
+    # Extract the column names from the JSON response and set them as column names in the data frame
+    colnames(df) <- data$fields
+
+    return(df)
+}
+
+purple_loop <- function(sensor, n=8, fields=fields_list, startday="2023-07-31"){
+  
+  dfs <- list()
+  
+  for(i in 1:n){
+   dfs[[i]] <- get_purple(sensor, startday = start_dates[i])
+   Sys.sleep(1)
+  }  
+  combined <- do.call(rbind, dfs)
+
+  # before joining, have to use lubridate to subtract 4 hours from UTC <- this is done above!!!
+  df <- combined %>%
+    mutate(
+      local_datetime = ymd_hms(time_stamp) - hours(4), #adjust timezone
+      Date = local_datetime %>% as.Date()
+      ) %>%
+    mutate_at(fields, as.numeric)
+
+  return (df)
+}
+```
+```{r pullPurple, eval=FALSE}
+
+# Define sensor (ID comes from URL in purpleair maps)
+`PortSide Test` <- 145962
+`Dikeman St` <- 182235
+`Hilo Acres` <- 23619
+`Dyberry Creek Farm` <- 21311
+`Pier 83` <- 185775
+
+Dyberry_pull <- purple_loop(`Dyberry Creek Farm`)
+#Pier83_pull <- purple_loop(`Pier 83`)
+DikemanSt_pull <- purple_loop(`Dikeman St`)
+```
+
+```{r prepPurple, eval=FALSE}
+prep <- function(df){
+  df <- df %>% 
+    arrange(local_datetime) %>%
+    filter(Date >= lubridate::as_date("2023-07-10"))%>% # filter to start July 10 with August Cruise data
+    mutate(
+      PM2.5_corrected = (pm2.5_alt* 0.524 - 0.0862 * humidity + 5.75), # Correction factor (national study)
+      # [Corrected PM2.5] = 0.4 * [PurpleAir raw PM2.5] - 0.025 * [Relative Humidity] + 3.56
+    #   PM2.5_corrected_Col = 0.4*pm2.5_alt - 0.025*humidity + 3.56,
+    #   Guest = coalesce(Guest, 0),
+    #   Crew = coalesce(Crew, 0),
+    #   CruiseArrival = if_else(Guest == 0, F, T),
+    #   Generator = if_else(Connection == "No" & CruiseArrival==T, T, F),
+    #   Connection = if_else(Connection == "Yes", T, F),
+    ) %>%
+    mutate(across(all_of(fields_list),as.numeric)) }
+  
+Dyberry <- prep(Dyberry_pull)
+Dyberry |> write_csv("Dyberry.csv")
+
+Dikeman <- prep(Dikeman_pull)
+Dikeman |> write_csv("Dikeman.csv")
+```
+
+
+```{r cruise}
+# cruiseShips_Aug <- read_csv("EDC data - Aug 2023.csv",show_col_types = FALSE) %>% 
+#   dplyr::mutate(Date = as.Date(Date, format= "%m/%d/%y"))
+# 
+# ships <- cruiseShips_Aug %>% group_by(Ship) %>% select(`Connection`) %>% unique()
+# 
+# cruiseShips_April <- read_csv("EDC data - April 2023.csv", show_col_types = FALSE) %>% 
+#   dplyr::mutate(Date = as.Date(`*Date*`, format= "%m/%d/%Y")) %>% 
+#   dplyr::select(-`*Date*`) %>%
+#   rename(Ship = `*Vessel*`)
+# 
+# cruise <- left_join(cruiseShips_April, ships) %>% arrange(Date) %>% select(Date, Ship, Connection) %>%
+#   mutate(Connection = if_else(Ship=="Crystal Serenity", "No", Connection))
+# 
+# cruise %>% select(Ship, Connection) %>% table()
+
+cruise <- read_csv("cruise.csv") %>% drop_na()
+cruise$Arrival <- parse_date_time(cruise$Arrival, order= "%m/%d/%y HM")
+cruise$Departure <- parse_date_time(cruise$Departure, order= "%m/%d/%y HM")
+
+# # Create an hourly sequence for the entire period
+# start_date <- min(cruise$Arrival)
+# end_date <- max(cruise$Departure)
+# hourly_sequence <- seq(from = start_date, to = end_date, by = "hour")
+# 
+# # Create an empty data frame to store the hourly ship presence
+# hourly_ship_presence <- data.frame(Hour = hourly_sequence)
+# 
+# # Initialize the Ship_Presence column with FALSE
+# hourly_ship_presence$Ship_Presence <- FALSE
+# 
+# # Iterate over the original data and mark presence in the hourly data frame
+# for (i in 1:nrow(cruise)) {
+#   arrival <- cruise$Arrival[i]
+#   departure <- cruise$Departure[i]
+#   hourly_ship_presence$Ship_Presence <- hourly_ship_presence$Ship_Presence | 
+#     (hourly_sequence >= arrival & hourly_sequence < departure)
+# }
+# 
+# # Print the result
+# print(hourly_ship_presence)
+
+# Create an empty data frame to store the final result
+result <- data.frame()
+
+# Iterate over the original data
+for (i in 1:nrow(cruise)) {
+  arrival <- cruise$Arrival[i]
+  departure <- cruise$Departure[i]
+  
+  # Create an hourly sequence for each row's period
+  hourly_sequence <- seq(from = arrival, to = departure, by = "hour")
+  
+  # Create an hourly ship presence data frame for the current row
+  hourly_ship_presence <- data.frame(Hour = hourly_sequence, Ship_Presence = TRUE)
+  
+  # Combine the hourly ship presence data with the original row data
+  merged_data <- cbind(cruise[i, ], hourly_ship_presence)
+  
+  # Append the merged data to the final result
+  result <- bind_rows(result, merged_data)
+}
+
+cruise_ships_hourly <- result |> select(-Arrival,-Departure)
+
+```
+
+```{r finaljoin}
+Dyberry <- read_csv("Dyberry.csv", show_col_types = FALSE )
+Dikeman <- read_csv("Dikeman.csv", show_col_types = FALSE )
+df <- left_join(summary_data, select(Dyberry, local_datetime, PM2.5_corrected), by=c("hour" = "local_datetime")) 
+
+ship_cols <-c(
+  "Ship_Presence","Ship","Generator"
+)
+  
+df <- df %>% left_join(cruise_ships_hourly, by=c("hour"="Hour")) %>%
+  mutate(
+    Ship_Presence = if_else(is.na(Ship_Presence), FALSE, Ship_Presence),
+    Connection = if_else(Connection=="Yes", TRUE, FALSE),
+    Ship = if_else(is.na(Ship), "None", Ship),
+    Generator = if_else(Ship_Presence==T & Connection==F, T, F)
+    ) 
+
+df <- left_join(df, select(Dikeman, local_datetime, PM2.5_corrected), by=c("hour" = "local_datetime"))
+
+df <- df |> rename(
+  PM2.5_corrected.ControlPurple = PM2.5_corrected.x,
+  PM2.5_corrected.RedHookPurple = PM2.5_corrected.y,
+  PM2.5_Dyson = pm2.5_mean,
+  PM2.5_high_Dyson = pm2.5_high_mean,
+  Rain = Rain...in_sum
+)
+
+df <- df %>% relocate(hour, all_of(ship_cols))
+```
+
+```{r}
+drop_list <-c(
+  "PM2.5_high_Dyson",
+  "PM2.5_corrected.RedHookPurple",
+  "Connection"
+)
+
+dfPM2.5 <- df %>% select(-drop_list)
+```
+
+
+
+## Plots
+```{r plots}
+
+ggplot() +
+  geom_vline(aes(xintercept = hour, color = "Ship"), 
+               data=df %>% filter(Ship_Presence==T),
+               color="lightgrey",
+               alpha=0.8) +
+    geom_vline(aes(xintercept = hour, color = "Ship with Generator"), 
+               data=df %>% filter(Generator==T),
+               color="darkgrey",
+               alpha=0.8) +
+  #geom_line(aes(x=hour, y=PM2.5_corrected.RedHookPurple), color="lightblue", data=df) +  
+  # geom_line(aes(x=hour, y =PM2.5_corrected.ControlPurple), color="lightgreen", data=df)+
+  geom_line(aes(x=hour, y =PM2.5_Dyson, color="Portside Dyson Sensor"), color="darkblue", data=df)+
+  scale_x_datetime(breaks = scales::date_breaks("1 month"), labels = date_format("%m %d")) +
+  ylab("PM 2.5 (Parts Per Million)") + 
+  xlab("Date") + theme(aspect.ratio = 1/5)
+```
+```{r means}
+
+```
+
+```{r LASSO}
+lasso_data <- dfPM2.5 %>% drop_na()
+# Sample data with a large feature set
+set.seed(42)
+X <- makeX(lasso_data %>% select(-PM2.5_Dyson))
+y <- lasso_data$PM2.5_Dyson
+n <- length(y)
+p <- length(X)
+
+# Split the data into a training set and a testing set
+train_ratio <- 0.8
+train_size <- round(n * train_ratio)
+X_train <-X[1:train_size, ]
+y_train <- y[1:train_size]
+X_test <- X[(train_size + 1):n, ]
+y_test <- y[(train_size + 1):n]
+
+# Fit a Lasso model with cross-validation
+cvfit <- cv.glmnet(X_train, y_train, alpha = 1)  # alpha = 1 for Lasso
+
+# Find the optimal lambda (alpha) from cross-validation
+best_lambda <- cvfit$lambda.min
+
+# Fit the Lasso model with the best lambda
+lasso_model <- glmnet(X_train, y_train, alpha = 1, lambda = best_lambda)
+
+# Evaluate the model on the test set
+predictions <- predict(lasso_model, s = best_lambda, newx = X_test)
+mse <- mean((predictions - y_test)^2)
+cat("Mean Squared Error on Test Set:", mse, "\n")
+
+
+
+# Get the coefficients (feature importance)
+lasso_coef <- coef(lasso_model)
+
+# Extract the coefficients for each lambda value
+# The lambda value can be chosen based on your specific needs
+lambda_index <- 1  # Adjust as needed
+coefficients <- as.vector(lasso_coef[, lambda_index])
+
+# Create a data frame for plotting
+feature_importance <- as.data.frame(
+as.matrix(coef(cvfit, cvfit$lambda.min)
+))
+
+# Sort the data frame by coefficient magnitude for plotting
+feature_importance <- feature_importance[order(abs(feature_importance$s1), decreasing = TRUE), ]
+
+# Create a feature importance plot
+ggplot(feature_importance, aes(x = reorder(Feature, -s1), y = s1)) +
+  geom_bar(stat = "identity", fill = "blue") +
+  labs(title = "Lasso Feature Importance Plot", x = "Feature", y = "Coefficient") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+```{r}
+
+lm(PM2.5_Dyson ~ Ship_Presence, df) %>% summary()
+
+df %>% ggplot() + geom_boxplot(aes(x=Ship_Presence, y = pm2.5_mean))
+
+lm(pm2.5_mean ~ PM2.5_corrected + Ship, df) %>% summary()
+
+df %>% ggplot() + geom_boxplot(aes(x=Ship_Presence, y = PM2.5_Dyson)) + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+df %>% ggplot() + geom_boxplot(aes(x=Ship_Presence, y = PM2.5_Dyson, color = Generator)) + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))+facet_wrap(~Ship_Presence)
+
+df %>% ggplot(aes(x=Avg.Wind.Speed...mph_mean, y = PM2.5_Dyson, color = Generator)) + geom_point() + 
+  geom_smooth(method="lm")+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))+facet_wrap(~Ship_Presence)
+
+df %>% ggplot(aes(x=Rain, y = PM2.5_Dyson, color = Generator)) + geom_point() + 
+  geom_smooth(method="lm")+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))+facet_wrap(~Ship_Presence)
+
+df %>% ggplot(aes(x=High.Dew.Point..F_mean, y = PM2.5_Dyson, color = Generator)) + geom_point() + 
+  geom_smooth(method="lm")+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))+facet_wrap(~Ship_Presence)
+
+```
+
+```{r ts_plot}
+
+daily_data <- Dyson_dummied %>% mutate(Date =as.Date(DateTime)) |> 
+  dplyr::group_by (Date) %>%
+  summarize(
+    elevated_hours = sum(pm2.5 > 12)/4, 
+    pm2.5_max = max(pm2.5),
+    pm2.5_mean = mean(pm2.5)
+    ) 
+
+
+
+t_hours <-ts(daily_data$elevated_hours, frequency = 365, start = c(2023,7, 11, 0)) 
+
+t <- ts(daily_data$pm2.5_mean, frequency= 365, start = c(2023,8, 02, 0)) %>% na.locf()
+t_hourly <- ts(df$pm2.5_mean, frequency= 365, start = c(2023,8, 02, 0)) %>% na.locf()
+
+fit <- auto.arima(t)
+fit <- auto.arima(t_hourly)
+tbats_fit <- tbats(t)
+
+tbats_fit %>% summary()
+forecast(fit, h=30) %>% autoplot()
+forecast(tbats_fit, h=30) %>% autoplot()
+ets(t) %>% forecast(h=30) %>% autoplot()
+ets(t_hours) %>% forecast(h=30) %>% autoplot()
+
+summary(fit)
+
+# t_dikeman <- ts(Dikeman$pm2.5_alt, frequency = 24, start =c(2023))
+
+fit %>% forecast(xreg=) %>% autoplot()
+
+t_hourly %>% pacf () %>% plot()
+
+#No autocorrelation
+```
+
+```{r}
+daily_ships <- df %>% mutate(Date =as.Date(hour)) |> 
+  dplyr::group_by (Date, Ship, Generator) %>%
+  summarize(
+    elevated_hours = sum(pm2.5_mean > 12)/4, 
+    pm2.5_max = max(pm2.5_mean),
+    pm2.5_Dyberry = mean(PM2.5_corrected)
+    ) |> ungroup()
+
+ggplot(daily_ships, aes(x=pm2.5_Dyberry, y=elevated_hours, color=Generator)) + 
+  geom_point() + 
+  geom_smooth(method="lm")
+```

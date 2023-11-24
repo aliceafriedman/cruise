@@ -1,0 +1,668 @@
+---
+title: "cruiseships"
+author: "Alice Friedman"
+date: "2023-10-03"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(readr)
+library(dplyr)
+library(httr)
+library(jsonlite)
+library(ggplot2)
+library(lubridate)
+library(tidyr)
+library(forecast)
+library(data.table)
+```
+
+## Data Preparation
+
+
+```{r load_cruisehips}
+cruiseShips_April <- read_csv("EDC data - April 2023.csv", show_col_types = FALSE) %>% 
+  dplyr::mutate(Date = as.Date(`*Date*`, format= "%m/%d/%Y")) %>% 
+  dplyr::select(-`*Date*`)
+
+#head(cruiseShips_April)
+
+cruiseShips_Aug <- read_csv("EDC data - Aug 2023.csv",show_col_types = FALSE) %>% 
+  dplyr::mutate(Date = as.Date(Date, format= "%m/%d/%y"))
+
+head(cruiseShips_Aug)
+
+#head(cruiseShips_Sept)
+
+cruiseShips_Sept <- read_csv("EDC data - Brooklyn.csv",show_col_types = FALSE) %>% 
+  dplyr::mutate(Date = as.Date(Date, format= "%m/%d/%Y"))
+
+worldship <- read_csv("EDC data - Worldship.csv",show_col_types = FALSE) %>% 
+  dplyr::mutate(Date = as.Date(DATE, format= "%m/%d/%Y"))
+
+#head(cruiseShips_Sept)
+
+# weather <- read_csv("Red Hook Brookyn weather.csv", show_col_types = F)
+
+Dyson <- read_csv("RawData/Dyson2023-10-21.csv", show_col_types = F) %>% mutate(
+  DateTime = parse_date_time(DateTime, "mdy HM", tz = "America/New_York")
+  )
+
+Dyson <- rename(Dyson,
+  pm2.5 = `High PM 2.5 - ug/m`
+)
+p <- ggplot(Dyson) +
+  geom_line(aes(x=DateTime, y=pm2.5), color="blue") +   
+  scale_x_datetime(labels = date_format("%Y-%m-%d %H %M")) +
+  theme(aspect.ratio = 1/4)
+
+p + geom_hline(yintercept = 12) 
+
+p + geom_vline(data=cruise, 
+               size=4*8,
+               aes(xintercept=ymd(Date), color=factor(Ship)))
+```
+
+```{r load_aqi}
+NYC_AQI <- read_csv("new-york-air-quality.csv", show_col_types = FALSE) %>%
+  mutate(Date = as.Date(date, format = "%Y/%m/%d")) %>%
+  dplyr::select(Date, pm25, o3, no2, co) 
+
+NYC_AQI %>% head(3)
+
+#currently goes up to 10-13 -- source is ??
+
+```
+
+```{r difference, eval=FALSE}
+
+dates_not_shared <- setdiff(cruiseShips_Aug$Date, cruiseShips_Sept$Date
+                            )
+dates_not_shared %>% as.Date()
+```
+
+Dates prior to 2023-09-29 are only available in the April list; 10-29 and 10-30 are schedule changes (presumably cancelled). 
+
+I should use the August version, at least to start.
+
+```{r dates}
+
+
+# format_timestamp(add_days(day1))
+
+```
+
+
+```{r purple}
+
+start_dates <- c(
+  "2023-07-31",
+  "2023-08-14",
+  "2023-08-28",
+  "2023-09-11",
+  "2023-09-25",
+  "2023-10-09",
+  # "2023-10-23",
+  # "2023-11-06"
+)
+
+format_timestamp <- function(date){
+  return (paste0(as.character(date),"T00%3A00%3A00%2B00%3A00"))
+}
+
+add_days <- function(day1){
+  day1 <- ymd(day1, tz = "UTC")
+  nextdate <- day1 + days(14)
+  nexttime <- format_timestamp(nextdate)
+  return(nexttime)
+}
+
+# startTimeStamp <- "2023-07-31T00%3A00%3A00%2B00%3A00"
+
+# Define list of fields
+fields_list <- c("temperature", 
+                 "humidity", 
+                 "pm2.5_alt")
+
+get_purple <- function(sensor, startday=day1, fields=fields_list){
+
+  # Combine the fields into a single string with commas and URL-encode if needed
+  fields_to_include <- paste(fields, collapse = "%2C%20")
+  
+  #encode and format startday
+  startDate <- format_timestamp(startday)
+  # Calculate end day 14 days later
+  endDate <- add_days(startday)
+  # Amend the URL with the combined fields
+  url <- paste0(
+    "https://api.purpleair.com/v1/",
+    "sensors/",
+    sensor,
+    "/history?start_timestamp=",   
+    startDate,
+    "&end_timstamp=",
+    endDate,
+    "&average=60&fields=", #this selects the hourly average
+    fields_to_include
+    )
+  
+    print(url)
+    # Define the API key
+    api_key <- "D75A9E8C-5A4F-11EE-A77F-42010A800009"
+
+    # Define headers
+    headers = httr::add_headers(`X-API-Key` = api_key)
+
+    # Send a GET request with custom headers
+    response <- GET(url, headers)
+
+    # Parse the JSON response
+    data <- jsonlite::fromJSON(content(response, "text"))
+
+    # Access the data you want (temperature, humidity, pm2.5_alt) & convert to data frame
+    df <- data$data %>% as.data.frame()
+
+    # Extract the column names from the JSON response and set them as column names in the data frame
+    colnames(df) <- data$fields
+
+    return(df)
+}
+
+purple_loop <- function(sensor, n=6, fields=fields_list, startday="2023-07-31"){
+  
+  dfs <- list()
+  
+  for(i in 1:n){
+   dfs[[i]] <- get_purple(sensor, startday = start_dates[i])
+   Sys.sleep(1)
+  }  
+  combined <- do.call(rbind, dfs)
+
+  # before joining, have to use lubridate to subtract 4 hours from UTC <- this is done above!!!
+  df <- combined %>%
+    mutate(
+      local_datetime = ymd_hms(time_stamp) - hours(4),
+      Date = local_datetime %>% as.Date()
+      ) %>%
+    mutate_at(fields, as.numeric)
+
+  return (df)
+}
+
+Hilo_pull <- purple_loop(`Hilo Acres`)
+
+
+
+```
+
+```{r pull_data}
+
+
+
+
+join_cruise <- function(df, name, sensor){
+  joined_df <- left_join(df, cruiseShips_Aug, by="Date") %>%
+  write_csv(joined_df, paste0(name, sensor, Sys.time(), ".csv"))
+  return(joined_df)
+}
+# Define sensor (ID comes from URL in purpleair maps)
+`PortSide Test` <- 145962
+`Dikeman St` <- 182235
+`Hilo Acres` <- 23619
+`Dyberry Creek Farm` <- 21311
+`Pier 83` <- 185775
+
+#PULL FROM API
+Hilo_pull <- purple_loop(`Hilo Acres`)
+Dyberry_pull <- purple_loop(`Dyberry Creek Farm`)
+Portside_pull <- purple_loop(`PortSide Test`)
+Dikeman_pull <- purple_loop(`Dikeman St`)
+Pier83_pull <- purple_loop(`Pier 83`)
+#JOIN & WRITE TO CSV
+
+Hilo_joined <- join_cruise(Hilo_pull, "Hilo Acres", `Hilo Acres`)
+Dyberry_joined <- join_cruise(Dyberry_pull, "Dyberry Creek Farm", `Dyberry Creek Farm`)
+Dikeman_joined <- join_cruise(Dikeman_pull, "Dikeman", `Dikeman St`)
+Portside_joined <- join_cruise(Portside_pull, "Portside", `PortSide Test`)
+
+## Post Process
+
+prep <- function(df){
+  df <- df %>% 
+    arrange(local_datetime) %>%
+    filter(Date > lubridate::as_date("2023-08-01"))%>% # filter to start Augest 1st with August Cruise data
+    mutate(
+      PM2.5_corrected = (pm2.5_alt* 0.524 - 0.0862 * humidity + 5.75), # Correction factor (national study)
+      # [Corrected PM2.5] = 0.4 * [PurpleAir raw PM2.5] - 0.025 * [Relative Humidity] + 3.56
+      PM2.5_corrected_Col = 0.4*pm2.5_alt - 0.025*humidity + 3.56,
+      Guest = coalesce(Guest, 0),
+      Crew = coalesce(Crew, 0),
+      CruiseArrival = if_else(Guest == 0, F, T),
+      Generator = if_else(Connection == "No" & CruiseArrival==T, T, F),
+      Connection = if_else(Connection == "Yes", T, F),
+    ) %>% 
+    mutate(across(fields_list,as.numeric)) %>% 
+    left_join(NYC_AQI) #joine to regional data
+}
+
+Portside <- prep(Portside_joined)
+Dikeman <- prep(Dikeman_joined)
+Hilo <- prep(Hilo_joined)
+Pier83 <- prep(Pier83_joined)
+
+Pier83 <- full_join(Pier83_pull, worldship %>% filter(TERMINAL == "MCT"), join_by(Date)) %>% 
+    arrange(local_datetime) %>%
+    filter(Date > lubridate::as_date("2023-08-01"))%>% # filter to start Augest 1st with August Cruise data
+    mutate(
+      PM2.5_corrected = (pm2.5_alt* 0.524 - 0.0862 * humidity + 5.75), # Correction factor (national study)
+      # [Corrected PM2.5] = 0.4 * [PurpleAir raw PM2.5] - 0.025 * [Relative Humidity] + 3.56
+      PM2.5_corrected_Col = 0.4*pm2.5_alt - 0.025*humidity + 3.56,
+      Guest = NA,
+      Crew = NA,
+      Connection = NA,
+      CruiseArrival = if_else(is.na(SHIP), F, T),
+      Generator = if_else(is.na(SHIP), F, T),
+    ) %>% 
+    mutate(across(fields_list,as.numeric)) %>% 
+    left_join(NYC_AQI) #joine to regional data
+
+```
+
+
+
+
+```{r}
+
+plot_impact <- function(df){
+
+daily_data <- df %>% dplyr::group_by (Date, Connection, CruiseArrival, Guest, Generator, pm25) %>%
+  summarize(
+    mean2.5 = mean(PM2.5_corrected),
+    max2.5 = max(PM2.5_corrected),
+    min2.5 = min(PM2.5_corrected),
+    mean2.5_Col = mean(PM2.5_corrected_Col),
+    max2.5_Col = max(PM2.5_corrected_Col),
+    min2.5_Col = min(PM2.5_corrected_Col),
+    elevated_hours = sum(PM2.5_corrected > 12),  
+    elevated_hours_Col = sum(PM2.5_corrected_Col > 12),    
+    meanTemp = mean(temperature),
+    meanHumidity = mean(humidity),
+    meanPressure = mean(pressure)
+    ) 
+  
+  return(daily_data)
+}
+
+Dikeman_daily <- plot_impact(Dikeman)
+Pier83_daily <- plot_impact(Pier83)
+Dikeman_daily %>% select(elevated_hours, elevated_hours_Col, Generator) %>%
+   gather(variable, value, - Generator, -Connection, -CruiseArrival, - Date, - Guest) %>% #filter(Guest > 0) %>%
+   ggplot(aes(x = Generator, y = value)) +
+   geom_boxplot() +
+   facet_wrap(~variable) +
+   labs(x = "Cruise Ship Portside Power") %>% print()
+
+```
+```{r}
+
+daily_data %>% ungroup() %>%
+  dplyr::select(-meanTemp, -meanHumidity, -meanPressure) %>%
+  gather(variable, value, -Date, -Connection, -CruiseArrival, -Guest, -Generator) %>% 
+  ggplot(aes(x = Generator, y = value)) +
+  geom_boxplot() +
+  facet_wrap(~variable, scales = "free_y") +
+  labs(x = "Cruise Ship Docked with Generator")
+
+daily_data %>%
+  gather(variable, value, -Date, -Guest, -Connection, -CruiseArrival) %>% #filter(Guest > 0) %>%
+  ggplot(aes(x = Guest, y = value)) +
+  geom_point() + geom_smooth(method = "lm")+
+  facet_wrap(~variable, scales = "free_y") +
+  labs(x = "")
+
+df_long <- as.data.frame(daily_data %>%
+  gather(variable, value, -Date, -Connection, -CruiseArrival, -Guest) %>% filter(Guest > 0) 
+  )
+```
+
+Sections of the mid-term paper
+Out of all the datasets, why did you pick this dataset?
+What is the effort you went throught to get this dataset to the point that you needed it to be?
+Out of all the models out there, why is the technique that you are using the ones that make sense?
+Can use multiple techniques?
+What are the initial results of the model?
+Spend some time explaining your use case as if the audience is not familiar with your subject area?
+literature that is specific to your hypothesis and use case
+then discuss each paper what it does and doesn't do (what is and isn't useful)
+
+
+```{r t-t}
+# Test mean difference for each variable
+
+t_test_connected <- function(var, df=joined){
+
+  connected_yes <- df %>%
+    filter(Connection == T & !is.na({{var}})) %>%
+    select({{var}})
+  
+  connected_no <- df %>%
+    filter(Connection == F & !is.na({{var}})) %>%
+    select({{var}})
+    
+  
+  # Perform the independent samples t-test
+  t_test_result <- t.test(connected_yes, connected_no)
+  # Print the results
+  print(t_test_result)
+  
+  return(t_test_result)
+}
+
+t_test_connected("PM2.5_corrected_Col", Dikeman)
+t_test_connected("PM2.5_corrected", Dikeman)
+t_test_connected("pm2.5_alt", Dikeman)
+t_test_connected("PM2.5_corrected_Col", Hilo)
+
+#sig difference between connected and not connected on days when there is a ship
+
+t_test_ship <- function(var, df=Dikeman){
+
+  ship_yes <- df %>%
+    filter(CruiseArrival == T & !is.na({{var}})) %>%
+    select({{var}})
+  
+  ship_no <- df %>%
+    filter(CruiseArrival == F & !is.na({{var}})) %>%
+    select({{var}})
+    
+  
+  # Perform the independent samples t-test
+  t_test_result <- t.test(ship_yes, ship_no)
+  # Print the results
+  print(t_test_result)
+  
+  return(t_test_result)
+}
+
+t_test_ship("PM2.5_corrected_Col", Dikeman)
+t_test_ship("PM2.5_corrected", Dikeman)
+t_test_ship("pm2.5_alt", Dikeman)
+t_test_ship("PM2.5_corrected_Col", Hilo) # no ship on avg higher pm2.5! ( by about 12%)
+t_test_ship("PM2.5_corrected", Pier83)
+t_test_ship("elevated_hours", Pier83_daily %>% ungroup()) #no impact
+
+#Difference in ship no/ship is there, but it's in the wrong direction -- this was different when i pulled it two weekes ago!
+
+t_test_no_gen <- function(var, df=joined){
+
+  gen_yes <- df %>%
+    filter(Connection == F & !is.na({{var}})) %>% #no connection means generator is a yes
+    select({{var}})
+  
+  gen_no <- df %>%
+    filter((CruiseArrival == F | Connection == T) & !is.na({{var}})) %>% #trying to get both instances of no generator
+    select({{var}})
+    
+  
+  # Perform the independent samples t-test
+  t_test_result <- t.test(gen_yes, gen_no)
+  # Print the results
+  #print(t_test_result)
+  
+  return(t_test_result)
+}
+
+t_test_no_gen("pm2.5_alt", Dikeman)
+t_test_no_gen("PM2.5_corrected", Dikeman)
+t_test_no_gen("PM2.5_corrected_Col", Dikeman)
+t_test_no_gen("PM2.5_corrected_Col", Hilo)
+t_test_no_gen("elevated_hours", Dikeman_daily %>% ungroup())
+# significant difference on days when there is a ship with a generator vs no ship.
+# mean is 10% higher on days with a generator
+
+
+```
+Is there autocorrelation in the data?
+
+When looked at hourly, yes
+When looked at daily, no
+
+> model <- lm(pm2.5_alt ~ Connection, data = joined)
+> acf(model$residuals, type = "correlation")
+> model <- lm(pm2.5_alt ~ Connection, data = daily_data)
+Error in eval(predvars, data, env) : object 'pm2.5_alt' not found
+> model <- lm(mean2.5 ~ Connection, data = daily_data)
+> acf(model$residuals, type = "correlation")
+
+
+```{r}
+#this is from chatgpt and doesn't work or make sense
+# Load necessary libraries
+library(caret)
+
+# Function to evaluate a linear regression model
+evaluate_model <- function(data, formula) {
+  model <- lm(formula, data = data)
+  predictions <- predict(model, newdata = data)
+  mse <- mean((data$Value - predictions)^2)
+  return(mse)
+}
+
+# Evaluate the initial model without the binary variable
+initial_formula <- mean10.0 ~ Date
+initial_mse <- evaluate_model(daily_data, initial_formula)
+
+# Evaluate the model with the binary variable
+revised_formula <- mean10.0 ~ Date + Connection
+revised_mse <- evaluate_model(daily_data, revised_formula)
+
+# Print the MSE values
+cat("Initial Model MSE:", initial_mse, "\n")
+cat("Revised Model MSE (with Treatment):", revised_mse, "\n")
+
+
+```
+
+Results:
+Comparing *only* days with cruise ships, the presence of off-shore power has a statistical impact on all size particulate
+
+Comparing all days (cruise ship and no cruise ship) the presence of an off-shore generator has no statistical difference on air quality for pm1.0, pm2.5, or pm10.0 particulates.
+
+```{r model}
+
+null_model <- 
+  
+avg_model <- lm(mean2.5 ~ nyc_avg_pm2.5, daily_data)
+
+with_ships <- lm(mean2.5 ~ nyc_avg_pm2.5 + CruiseArrival, daily_data)
+
+with_generators <- lm(mean2.5 ~ nyc_avg_pm2.5 + Generator, daily_data)
+
+with_generators <- lm(max2.5 ~ nyc_avg_pm2.5 + Generator, daily_data)
+
+
+with_generators_weather <- lm(mean2.5 ~ nyc_avg_pm2.5 + Generator + meanTemp + meanPressure + meanHumidity, daily_data)
+
+summary(null_model)
+
+summary(with_ships)
+
+summary(with_generators)
+
+anova(null_model, with_ships)
+# results -- this model is not statisically different from just AQI
+
+anova(null_model, with_generators)
+
+anova(null_model, with_generators_weather)
+
+jo
+
+df <- Dikeman_joined %>% left_join(NYC_AQI) %>%
+  mutate(
+    Generator = if_else(CruiseArrival == T & Connection == "No", "Offshore Power", 
+                        if_else(CruiseArrival == T & Connection == "Yes", "Onshore Power", "No Ship")
+  ))
+  
+AQI_ship <- lm(df$nyc_avg_pm2.5 ~ df$CruiseArrival)
+
+summary(AQI_ship)
+
+lm(df$nyc_avg_pm2.5 ~ df$Generator) %>% summary()
+lm(df$nyc_avg_pm2.5 ~ df$Generator + df$temperature + df$humidity) %>% summary()
+
+
+lm(daily_data$nyc_avg_pm2.5 ~ daily_data$Generator) %>% summary()
+
+lm(daily_data$nyc_avg_pm2.5 ~ daily_data$Generator) %>% summary()
+
+lm(daily_data$mean2.5 ~ daily_data$Generator) %>% summary()
+
+daily_ship_data <- daily_data %>% filter(CruiseArrival == T)
+
+lm(daily_ship_data$mean2.5 ~ daily_ship_data$Generator) %>% summary()
+
+
+```
+
+```{r daytime}
+daytime <- df %>% 
+  filter(hour(local_datetime) > 4 & hour(local_datetime) < 18) 
+
+lm(daytime$pm2.5 ~ daytime$Generator + daytime$nyc_avg_pm2.5 + daytime$humidity) %>% summary()
+
+daytime %>% select(local_datetime, pm2.5_alt, Generator, CruiseArrival) %>%
+  gather(variable, value, -local_datetime, -Generator, - CruiseArrival) %>%
+  ggplot(aes(x = Generator, y = value, fill = CruiseArrival)) + geom_boxplot() + 
+  ggtitle("Daytime Hourly PM 2.5 levels at Dikeman St, 5am to 5pm")+ 
+  ylab("PPM") + 
+  xlab("Ship Power Connection at Brooklyn Cruise Terminal")
+
+daytime %>% select(local_datetime, pm2.5_alt, Generator, CruiseArrival) %>%
+  gather(variable, value, -local_datetime, -Generator, - CruiseArrival) %>%
+  ggplot(aes(x = CruiseArrival, y = value, fill = CruiseArrival)) + geom_boxplot() + 
+  ggtitle("Daytime Hourly PM 2.5 levels at Dikeman St, 5am to 5pm") + 
+  ylab("PPM") +
+  xlab("Cruise Ship in Brooklyn Terminal by Date")
+  
+  
+
+
+```
+```{r lessR}
+#write_csv(daily_data, "daily_data.csv")
+library(lessR)
+d <- Read("daily_data.csv")
+reg_brief(mean2.5 ~ nyc_avg_pm2.5, new_scale="z", plot_errors=TRUE)
+reg_brief(max2.5 ~ nyc_avg_pm2.5 + CruiseArrival, new_scale="z", plot_errors=TRUE)
+reg(mean2.5 ~ nyc_avg_pm2.5 + Generator, plot_errors=TRUE)
+
+# results 
+
+# * Not statistically different
+# * Impact estimate is + 0.41 pm when a generator is present
+```
+```{r}
+daily_data %>% ungroup() %>%
+  select(Date, nyc_avg_pm2.5, mean2.5) %>%
+  gather(variable, value, -Date) %>% 
+  ggplot(aes(x=variable, y=value)) +geom_boxplot()
+```
+```{r}
+d <- df
+reg(nyc_avg_pm2.5 ~ Generator + temperature + humidity)
+```
+
+
+
+
+
+
+
+
+
+Prompt:
+I have a dataset with significant autocorrelation and I want to test if I can add an additional categorical variable to the model to improve predictive value how do I do that?
+
+ChatGPT Ideas:
+To test if adding an additional categorical variable can improve the predictive value of your time series model in the presence of significant autocorrelation, you can follow these steps:
+
+1. **Data Preparation**:
+   - Ensure that your time series data and the categorical variable are appropriately formatted and available for analysis.
+   - The categorical variable should be converted into a suitable format for modeling, such as one-hot encoding for categorical variables with multiple levels.
+
+2. **Initial Model without the Categorical Variable**:
+   - Start by building an initial time series model using only the autocorrelation structure. For example, you can use autoregressive (AR), moving average (MA), or autoregressive integrated moving average (ARIMA) models to capture the autocorrelation.
+   - Evaluate the performance of this initial model using appropriate model evaluation metrics, such as Mean Absolute Error (MAE), Mean Squared Error (MSE), or others.
+
+3. **Include the Categorical Variable**:
+   - Add the categorical variable to your time series dataset. Ensure that it aligns with the corresponding time periods or timestamps in your time series data.
+   - Depending on the nature of your categorical variable (e.g., it could be a factor or a binary indicator), you can include it as an additional predictor in your model.
+
+4. **Revised Model with the Categorical Variable**:
+   - Build a revised time series model that includes both the autocorrelation structure and the categorical variable.
+   - The choice of modeling technique will depend on the specific characteristics of your data and the nature of the categorical variable. You may use regression models, ARIMA models with exogenous variables (ARIMAX), or other appropriate methods.
+
+5. **Model Comparison**:
+   - Compare the performance of the initial model (without the categorical variable) and the revised model (with the categorical variable) using appropriate evaluation metrics.
+   - Common metrics for time series forecasting models include MAE, MSE, Root Mean Squared Error (RMSE), and others.
+   - Additionally, you can use statistical tests, such as the AIC (Akaike Information Criterion) or BIC (Bayesian Information Criterion), to assess the goodness of fit and model parsimony.
+
+6. **Assess Improvement**:
+   - Determine whether the inclusion of the categorical variable results in improved model performance.
+   - If the revised model with the categorical variable demonstrates better predictive accuracy (i.e., lower error metrics) and is statistically favored by information criteria, it suggests that the categorical variable contributes to the model's predictive value.
+
+7. **Interpretation**:
+   - After confirming the improvement in predictive value, interpret the coefficients or effects of the categorical variable within the context of your analysis.
+   - Consider the practical significance of the categorical variable's impact on the time series predictions.
+
+8. **Validation and Testing**:
+   - Validate the final model using out-of-sample data to ensure its generalizability.
+   - Assess how well the model performs on unseen data to confirm that the improvement in predictive value holds.
+
+9. **Reporting and Documentation**:
+   - Clearly document the entire modeling process, including the inclusion of the categorical variable, in your analysis report.
+   - Provide explanations and justifications for the choice of variables and modeling techniques.
+
+By systematically following these steps, you can determine if adding an additional categorical variable improves the predictive value of your time series model and make informed decisions regarding its inclusion in your forecasting efforts.
+
+
+More AI
+
+Predicting PM2.5 (Particulate Matter 2.5 micrometers or smaller) levels involves the use of various data sources and factors to build predictive models. PM2.5 is a type of air pollution consisting of tiny particles or droplets in the air, which can have harmful health effects. Here are some types of data and factors that can be used to predict PM2.5 levels:
+
+1. Meteorological Data:
+   - Temperature: Higher temperatures can increase the formation of PM2.5.
+   - Relative Humidity: Lower humidity levels can promote the dispersion of PM2.5.
+   - Wind Speed and Direction: Wind can transport PM2.5 from one location to another.
+   - Atmospheric Pressure: It can influence the dispersion and concentration of particles.
+   - Precipitation: Rain can help reduce PM2.5 levels by washing particles from the air.
+
+2. Air Quality Monitoring Data:
+   - Data from air quality monitoring stations that measure PM2.5 concentrations at specific locations.
+   - Data on other air pollutants such as PM10, carbon monoxide, sulfur dioxide, and nitrogen dioxide.
+
+3. Geographic and Topographic Data:
+   - Elevation: Higher elevations may have different PM2.5 levels due to weather patterns and local sources.
+   - Proximity to Bodies of Water: Coastal areas may have lower PM2.5 levels due to the moderating influence of water bodies.
+
+4. Land Use and Land Cover Data:
+   - Information about the types of land use, such as urban, industrial, or rural areas, which can affect local PM2.5 emissions and concentrations.
+
+5. Satellite Imagery:
+   - Satellite data can provide information about atmospheric conditions, such as cloud cover, aerosol optical depth, and other factors that influence PM2.5 levels.
+
+6. Historical Data:
+   - Past PM2.5 levels and associated data for trend analysis and model training.
+
+7. Anthropogenic Sources:
+   - Data on local sources of PM2.5, such as industrial facilities, transportation, construction activities, and other emissions.
+
+8. Air Quality Models:
+   - Numerical models that simulate atmospheric processes and pollutant dispersion can be used to predict PM2.5 levels based on input data.
+
+9. Machine Learning and Data Analytics:
+   - Machine learning algorithms can be trained on historical data to make predictions based on a combination of the above factors.
+
+It's important to note that predicting PM2.5 levels accurately can be complex due to the influence of various dynamic and interconnected factors. Models often combine multiple data sources and advanced modeling techniques to make more accurate predictions. The availability and quality of data can also vary by location, which can impact the accuracy of predictions. Additionally, real-time monitoring and continuous data updates are essential for improving prediction accuracy.

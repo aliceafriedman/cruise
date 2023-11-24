@@ -1,0 +1,453 @@
+DAY,DATE,SHIP,LINE,ARRIVAL TIME,DEPARTURE TIME,TERMINAL,DESTINATION & NOTES
+Monday,1/2/2023,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,Southern Caribbean
+Monday,1/2/2023,Norwegian Gem,Norwegian Cruise Line,10:00 AM,4:00 PM,MCT,"Bermuda/Bahamas/Port Canaveral, FL"
+Tuesday,1/3/2023,Queen Mary 2,Cunard,6:30 AM,5:00 PM,BCT,Transatlantic (World Cruise)
+Sunday,1/8/2023,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,3:00 PM,MCT,Eastern Caribbean
+Wednesday,1/11/2023,Norwegian Gem,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,Bermuda
+Friday,1/13/2023,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,Southern Caribbean
+Monday,1/16/2023,Norwegian Gem,Norwegian Cruise Line,10:00 AM,4:00 PM,MCT,"Bermuda/Bahamas/Port Canaveral, FL"
+Thursday,1/19/2023,Queen Victoria,Cunard,AM,---,MCT,In port overnight
+Friday,1/20/2023,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,3:00 PM,MCT,Eastern Caribbean
+Friday,1/20/2023,Queen Victoria,Cunard,---,5:00 PM,MCT,San Francisco via Eastern Caribbean/Panama Canal/Mexico (World Cruise)
+Tuesday,1/24/2023,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,Southern Caribbean
+Wednesday,1/25/2023,Norwegian Gem,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,"Panama City, Panama via Southern Caribbean"
+Wednesday,2/1/2023,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,Bermuda
+Saturday,2/4/2023,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,"Port Canaveral, FL/Miami, FL/Bahamas"
+Monday,2/6/2023,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,3:00 AM,MCT,Eastern Caribbean
+Sunday,2/12/2023,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Friday,2/17/2023,Norwegian Gem,Norwegian Cruise Line,10:00 AM,4:00 PM,MCT,Eastern Caribbean
+Saturday,2/18/2023,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,5:00 PM,MCT,"Port Canaveral, FL/Bahamas/Bermuda"
+Sunday,2/19/2023,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Sunday,2/26/2023,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Sunday,2/26/2023,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,5:00 PM,MCT,Eastern Caribbean
+Monday,2/27/2023,Norwegian Gem,Norwegian Cruise Line,10:00 AM,4:00 PM,MCT,Eastern Caribbean
+Sunday,3/5/2023,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Friday,3/10/2023,Norwegian Gem,Norwegian Cruise Line,10:00 AM,4:00 PM,MCT,Eastern Caribbean
+Friday,3/10/2023,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,5:00 PM,MCT,"Port Canaveral, FL/Bahamas/Bermuda"
+Sunday,3/12/2023,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Saturday,3/18/2023,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,5:00 PM,MCT,"Port Canaveral, FL/Bahamas"
+Sunday,3/19/2023,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Tuesday,3/21/2023,Norwegian Gem,Norwegian Cruise Line,10:00 AM,4:00 PM,MCT,Eastern Caribbean
+Sunday,3/26/2023,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Sunday,3/26/2023,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,Bermuda/Bahamas
+Tuesday,3/28/2023,Norwegian Prima,Norwegian Cruise Line,11:00 AM,4:00 PM,MCT,Bermuda
+Friday,3/31/2023,Norwegian Gem,Norwegian Cruise Line,10:00 AM,3:30 PM,MCT,"Bermuda (""Broadway Cruise"")"
+Sunday,4/2/2023,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Sunday,4/2/2023,Norwegian Prima,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,Bermuda
+Wednesday,4/5/2023,Norwegian Gem,Norwegian Cruise Line,N/A,4:00 PM,MCT,Eastern Caribbean
+Wednesday,4/5/2023,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,Bermuda/Bahamas
+Thursday,4/6/2023,MS Rotterdam,Holland America Line,7:00 AM,---,MCT,In port overnight
+Friday,4/7/2023,MS Rotterdam,Holland America Line,---,4:00 PM,MCT,"Transatlantic (Plymouth, UK/Dover, UK/Rotterdam, Holland)"
+Saturday,4/8/2023,Amera,Phoenix Reisen Cruises,9:00 AM,---,MCT,In port overnight
+Sunday,4/9/2023,Amera,Phoenix Reisen Cruises,---,5:00 PM,MCT,"Transatlantic (Newport, RI/Boston, 
+MA/Azores/Portugal/Spain/England/Bremerhaven, Ger.)"
+Sunday,4/9/2023,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Sunday,4/9/2023,Norwegian Prima,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,Bermuda
+Saturday,4/15/2023,Norwegian Gem,Norwegian Cruise Line,10:00 AM,4:00 PM,MCT,Transatlantic (Azores/Portugal/Spain/France/Italy)
+Saturday,4/15/2023,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,N/A,MCT,"Repositioning to Port Canaveral, FL"
+Sunday,4/16/2023,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Sunday,4/16/2023,Norwegian Prima,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,Bermuda
+Tuesday,4/18/2023,Norwegian Sun,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,"Miami, FL"
+Wednesday,04/19/2023,Viking Octantis,Viking Expedition Cruises,7:00 AM,10:00 PM,MCT,Canada
+Thursday,4/20/2023,Costa Deliziosa,Costa Cruises,8:00 AM,---,MCT,In port overnight
+Thursday,4/20/2023,MSC Meraviglia,MSC Cruises,6:30 AM,---,BCT,In port overnight
+Thursday,4/20/2023,Norwegian Breakaway,Norwegian Cruise Line,6:30 AM,5:00 PM,MCT,Transatlantic (Bermuda/Azores/Portugal/Spain/France/Italy)
+Thursday,4/20/2023,Norwegian Dawn,Norwegian Cruise Line,7:00 AM,5:00 PM,MCT,"Transatlantic (Canada/Iceland/Ireland/France/Southampton, UK)"
+Friday,4/21/2023,Costa Deliziosa,Costa Cruises,---,6:00 PM,MCT,Transatlantic (Azores/Portugal/Morocco/Gibraltar/France/Italy)
+Friday,4/21/2023,MSC Meraviglia,MSC Cruises,---,---,BCT,In port overnight
+Saturday,4/22/2023,MSC Meraviglia,MSC Cruises,---,3:00 PM,BCT,"Port Canveral, FL/Bahamas"
+Saturday,4/22/2023,Norwegian Epic,Norwegian Cruise Line,8:30 AM,7:30 PM,MCT,Transatlantic (Bermuda/Azores/Madiera/Spain)
+Saturday,4/22/2023,Ocean Explorer,Vantage Travel,N/A,---,MCT,In port overnight
+Sunday,4/23/2023,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,"Port Canaveral, FL/Miami, FL/Bahamas"
+Sunday,4/23/2023,Norwegian Prima,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,Bermuda
+Sunday,4/23/2023,Ocean Explorer,Vantage Travel,---,N/A,MCT,New England
+Saturday,4/29/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Port Canaveral, FL/Bahamas"
+Sunday,4/30/2023,Enchantment of the Seas,Royal Caribbean,N/A,5:00 PM,CLCP,Transatlantic (Madiera/Spain/France/Italy)
+Sunday,4/30/2023,Norwegian Prima,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,"Norfolk, VA/Bermuda"
+Sunday,4/30/2023,Queen Mary 2,Cunard,6:30 AM,5:00 PM,BCT,"Transatlantic (Southampton, UK/Hamburg, Ger.) *CANCELLED DUE TO TECHNICAL 
+ISSUE*"
+Monday,5/1/2023,Anthem of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP,"Transatlantic (Azores/France/Southampton, UK)"
+Thursday,5/4/2023,Liberty of the Seas,Royal Caribbean,N/A,3:00 PM,CLCP,"Bermuda/Labadee, Haiti/Dominican Republic"
+Saturday,5/6/2023,Celebrity Summit,Celebrity Cruises,8:00 AM,4:00 PM,CLCP,"Newport, RI/Oak Bluffs, MA/Charleston, SC/Bermuda"
+Sunday,5/7/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Port Canaveral, FL/Bahamas"
+Sunday,5/7/2023,Norwegian Prima,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,"Norfolk, VA/Bermuda"
+Sunday,5/7/2023,Oasis of the Seas,Royal Caribbean,N/A,4:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Saturday,5/13/2023,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP,Bermuda
+Sunday,5/14/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Port Canaveral, FL/Bahamas"
+Sunday,5/14/2023,Norwegian Joy,Norwegian Cruise Line,N/A,11:00 PM,MCT,Bermuda
+Sunday,5/14/2023,Norwegian Prima,Norwegian Cruise Line,7:00 AM,5:00 PM,MCT,Nova Scotia/Iceland
+Sunday,5/14/2023,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Monday,5/15/2023,Celebrity Summit,Celebrity Cruises,8:00 AM,4:00 PM,CLCP,"Oak Bluffs, MA/Bermuda/Charleston, SC"
+Monday,5/15/2023,Viking Polaris,Viking Expedition Cruises,6:00 AM,5:00 PM,MCT,Canadian Maritimes/Toronto
+Wednesday,5/17/2023,Marella Discovery,Marella Cruises,7:00 AM,---,MCT,In port overnight
+Thursday,5/18/2023,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP,Bermuda
+Thursday,5/18/2023,Marella Discovery,Marella Cruises,---,6:00 PM,MCT,"Bahamas/Port Canaveral, FL"
+Sunday,5/21/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Port Canaveral, FL/Bahamas"
+Sunday,5/21/2023,Norwegian Joy,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,Bermuda
+Sunday,5/21/2023,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Tuesday,5/23/2023,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP,"Halifax, NS"
+Thursday,5/25/2023,Celebrity Summit,Celebrity Cruises,8:00 AM,4:00 PM,CLCP,"Bermuda/Charleston, SC/Newport, RI/Oak Bluffs, MA"
+Friday,5/26/2023,Queen Mary 2,Cunard,6:30 AM,5:00 PM,BCT,"Transatlantic (Southampton, UK)"
+Saturday,5/27/2023,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP,Bermuda
+Sunday,5/28/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Port Canaveral, FL/Bahamas"
+Sunday,5/28/2023,Norwegian Joy,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,Bermuda
+Sunday,5/28/2023,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP,"St. John, NB/Halifax, NS"
+Wednesday,5/31/2023,Marella Discovery,Marella Cruises,7:00 AM,---,MCT,In port overnight
+Wednesday,5/31/2023,Seven Seas Navigator,Regent Seven Seas,6:00 AM,6:00 PM,MCT,"New England/Canadian Maritimes/Quebec City, Que./Montreal, Que."
+Wednesday,5/31/2023,Silver Shadow,Silversea Cruises,8:00 AM,---,MCT,In port overnight
+Thursday,6/1/2023,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP,"Bermuda/Labadee, Haiti/Dominican Republic"
+Thursday,6/1/2023,Marella Discovery,Marella Cruises,---,6:00 PM,MCT,"Bahamas/Port Canaveral, FL"
+Thursday,6/1/2023,Silver Shadow,Silversea Cruises,---,1:00 PM,MCT,"Transatlantic (New England/Canadian Maritimes/Ireland/Southampton, UK)"
+Friday,6/2/2023,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Sunday,6/4/2023,Celebrity Summit,Celebrity Cruises,8:00 AM,4:00 PM,CLCP,Bermuda
+Sunday,6/4/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Port Canaveral, FL/Bahamas"
+Sunday,6/4/2023,Norwegian Joy,Norwegian Cruise Line,7:00 AM,6:00 PM,MCT,Bermuda
+Tuesday,6/6/2023,Viking Saturn,Viking Ocean Cruises,N/A,---,MCT,*****Maiden Arrival; In port overnight*
+Wednesday,6/7/2023,Viking Saturn,Viking Ocean Cruises,---,N/A,MCT,"Halifax, NS/Canada/Greenland/Iceland"
+Friday,6/9/2023,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Saturday,6/10/2023,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP,Bermuda
+Sunday,6/11/2023,Celebrity Summit,Celebrity Cruises,8:00 AM,4:00 PM,CLCP,Bermuda
+Sunday,6/11/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Port Canaveral, FL/Bahamas"
+Sunday,6/11/2023,Norwegian Joy,Norwegian Cruise Line,7:00 AM,6:00 PM,MCT,Bermuda
+Tuesday,6/13/2023,Carnival Venezia,Carnival Cruise Line,4:00 AM,---,MCT,*****Maiden Arrival (ex-Costa Venezia); In port overnight*
+Wednesday,6/14/2023,Carnival Venezia,Carnival Cruise Line,---,---,MCT,*Re-christening ceremony w/Jay Leno as ship's godfather; In port overnight*
+Wednesday,6/14/2023,Marella Discovery,Marella Cruises,7:00 AM,---,MCT,In port overnight
+Thursday,6/15/2023,Carnival Venezia,Carnival Cruise Line,---,4:00 PM,MCT,Bermuda
+Thursday,6/15/2023,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP,Bermuda
+Thursday,6/15/2023,Marella Discovery,Marella Cruises,---,5:30 PM,MCT,"Charleston, SC/Port Canaveral, FL"
+Friday,6/16/2023,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Sunday,6/18/2023,Celebrity Summit,Celebrity Cruises,8:00 AM,4:00 PM,CLCP,Bermuda
+Sunday,6/18/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Port Canaveral, FL/Bahamas"
+Sunday,6/18/2023,Norwegian Joy,Norwegian Cruise Line,7:00 AM,6:00 PM,MCT,Bermuda
+Monday,6/19/2023,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,Dominican Republic/Turks & Caicos/Bahamas
+Tuesday,6/20/2023,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP,"Halifax, NS"
+Tuesday,6/20/2023,Viking Neptune,Viking Ocean Cruises,7:00 AM,---,MCT,In port overnight
+Wednesday,6/21/2023,Viking Neptune,Viking Ocean Cruises,---,2:00 PM,MCT,"New England/Canadian Maritimes/Montreal, Que./Quebec City, Que."
+Thursday,6/22/2023,Seven Seas Navigator,Regent Seven Seas,11:00 AM,---,MCT,In port overnight
+Friday,6/23/2023,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Friday,6/23/2023,Seven Seas Navigator,Regent Seven Seas,7:00 AM,6:00 PM,MCT,New England/Canadian Maritimes/Greenland/Iceland
+Saturday,6/24/2023,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP,Bermuda
+Sunday,6/25/2023,Celebrity Summit,Celebrity Cruises,8:00 AM,4:00 PM,CLCP,Bermuda
+Sunday,6/25/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Port Canaveral, FL/Bahamas"
+Sunday,6/25/2023,Norwegian Joy,Norwegian Cruise Line,7:00 AM,11:00 PM,MCT,Bermuda
+Tuesday,6/27/2023,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,"San Juan, PR/St. Thomas, USVI/Turks & Caicos"
+Wednesday,6/28/2023,Marella Discovery,Marella Cruises,7:00 AM,---,MCT,In port overnight
+Thursday,6/29/2023,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP,"Bermuda/Labadee, Haiti/Dominican Republic"
+Thursday,6/29/2023,Marella Discovery,Marella Cruises,---,5:30 PM,MCT,"Charleston, SC/Port Canaveral, FL"
+Friday,6/30/2023,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Friday,6/30/2023,Queen Mary 2,Cunard,6:30 AM,5:00 PM,BCT,"Halifax, NS/Boston, MA/Newport, RI"
+Saturday,7/1/2023,Norwegian Joy,Norwegian Cruise Line,7:00 AM,3:00 PM,MCT,"Port Canaveral, FL/Bahamas/Bermuda"
+Sunday,7/2/2023,Celebrity Summit,Celebrity Cruises,8:00 AM,4:00 PM,CLCP,Bermuda
+Sunday,7/2/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Port Canaveral, FL/Bahamas"
+Wednesday,7/5/2023,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,Dominican Republic/Turks & Caicos/Bahamas
+Friday,7/7/2023,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Friday,7/7/2023,Queen Mary 2,Cunard,6:30 AM,5:00 PM,BCT,"Transatlantic (Southampton, UK)"
+Saturday,7/8/2023,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP,Bermuda
+Sunday,7/9/2023,Celebrity Summit,Celebrity Cruises,8:00 AM,4:00 PM,CLCP,Bermuda
+Sunday,7/9/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Port Canaveral, FL/Bahamas"
+Sunday,7/9/2023,Norwegian Joy,Norwegian Cruise Line,7:00 AM,6:00 PM,MCT,Bermuda
+Wednesday,7/12/2023,Marella Discovery,Marella Cruises,7:00 AM,---,MCT,In port overnight
+Thursday,7/13/2023,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,Bermuda
+Thursday,7/13/2023,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP,Bermuda
+Thursday,7/13/2023,Marella Discovery,Marella Cruises,---,5:30 PM,MCT,"Bahamas/Port Canaveral, FL"
+Thursday,7/13/2023,Viking Neptune,Viking Ocean Cruises,N/A,---,MCT,In port overnight
+Friday,7/14/2023,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Friday,7/14/2023,Viking Neptune,Viking Ocean Cruises,---,---,MCT,In port overnight
+Saturday,7/15/2023,Viking Neptune,Viking Ocean Cruises,---,N/A,MCT,"Boston, MA/Canadian Maritimes/Quebec City, Que./Montreal, Que."
+Sunday,7/16/2023,Celebrity Summit,Celebrity Cruises,8:00 AM,4:00 PM,CLCP,Bermuda
+Sunday,7/16/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Port Canaveral, FL/Bahamas"
+Sunday,7/16/2023,Norwegian Joy,Norwegian Cruise Line,7:00 AM,6:00 PM,MCT,Bermuda
+Monday,7/17/2023,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,Dominican Republic/Turks & Caicos/Bahamas
+Tuesday,7/18/2023,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP,"Halifax, NS"
+Friday,7/21/2023,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Friday,7/21/2023,Queen Mary 2,Cunard,6:30 AM,5:00 PM,BCT,"Transatlantic (Southampton, UK)"
+Saturday,7/22/2023,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP,Bermuda
+Sunday,7/23/2023,Celebrity Summit,Celebrity Cruises,8:00 AM,4:00 PM,CLCP,Bermuda
+Sunday,7/23/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Port Canaveral, FL/Bahamas"
+Sunday,7/23/2023,Norwegian Joy,Norwegian Cruise Line,7:00 AM,6:00 PM,MCT,Bermuda
+Tuesday,7/25/2023,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,"San Juan, PR/St. Thomas, USVI/Turks & Caicos"
+Wednesday,7/26/2023,Caribbean Princess,Princess Cruises,7:00 AM,7:00 PM,BCT,"New England/Canadian Maritrimes/Quebec City, Que."
+Wednesday,7/26/2023,Marella Discovery,Marella Cruises,7:00 AM,---,MCT,In port overnight
+Thursday,7/27/2023,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP,"Bermuda/Labadee, Haiti/Dominican Republic"
+Thursday,7/27/2023,Marella Discovery,Marella Cruises,---,5:30 PM,MCT,"Bahamas/Port Canaveral, FL"
+Friday,7/28/2023,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Sunday,7/30/2023,Celebrity Summit,Celebrity Cruises,8:00 AM,4:00 PM,CLCP,Bermuda
+Sunday,7/30/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Port Canaveral, FL/Bahamas"
+Sunday,7/30/2023,Norwegian Joy,Norwegian Cruise Line,7:00 AM,6:00 PM,MCT,Bermuda
+Tuesday,8/1/2023,Insignia,Oceania Cruises,4:00 PM,---,MCT,In port overnight
+Wednesday,8/2/2023,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,Dominican Republic/Turks & Caicos/Bahamas
+Wednesday,8/2/2023,Insignia,Oceania Cruises,---,4:00 PM,MCT,"New England/Halifax, NS/Greenland/Iceland"
+Friday,8/4/2023,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP,"Port Canaveral, FL/Bahamas/Labadee, Haiti"
+Saturday,8/5/2023,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP,Bermuda
+Sunday,8/6/2023,Celebrity Summit,Celebrity Cruises,8:00 AM,4:00 PM,CLCP,"Halifax, NS/St. Johns, NL/Greenland/Iceland"
+Sunday,8/6/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Port Canaveral, FL/Bahamas"
+Sunday,8/6/2023,Norwegian Joy,Norwegian Cruise Line,7:00 AM,6:00 PM,MCT,Bermuda
+Sunday,8/6/2023,Viking Neptune,Viking Ocean Cruises,N/A,---,MCT,In port overnight
+Monday,8/7/2023,Viking Neptune,Viking Ocean Cruises,---,N/A,MCT,"Halifax, NS/Greenland/Iceland"
+Wednesday,8/9/2023,Marella Discovery,Marella Cruises,7:00 AM,---,MCT,In port overnight
+Thursday,8/10/2023,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,Bermuda
+Thursday,8/10/2023,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP,Bermuda
+Thursday,8/10/2023,Marella Discovery,Marella Cruises,---,5:30 PM,MCT,"Bahamas/Port Canaveral, FL"
+Sunday,8/13/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Miami, FL/Bahamas"
+Sunday,8/13/2023,Norwegian Joy,Norwegian Cruise Line,7:00 AM,6:00 PM,MCT,Bermuda
+Sunday,8/13/2023,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Monday,8/14/2023,Caribbean Princess,Princess Cruises,7:00 AM,7:00 PM,BCT,"Nova Scotia/Greenland/St. Johns, NL"
+Monday,8/14/2023,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,"St. John, NB/Halifax, NS"
+Tuesday,8/15/2023,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP,Bermuda
+Wednesday,8/16/2023,Coral Princess,Princess Cruises,6:30 AM,---,MCT,In port overnight
+Thursday,8/17/2023,Coral Princess,Princess Cruises,---,5:00 PM,MCT,Australia via Panama Canal
+Thursday,8/17/2023,Viking Polaris,Viking Expeditions,N/A,N/A,MCT,"Canadian Maritimes/Toronto, ON"
+Friday,8/18/2023,Queen Mary 2,Cunard,6:30 AM,5:00 PM,BCT,"Transatlantic (Southampton, UK)"
+Saturday,8/19/2023,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,"St. John, NB"
+Saturday,8/19/2023,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP,Bermuda
+Sunday,8/20/2023,Norwegian Joy,Norwegian Cruise Line,7:00 AM,6:00 PM,MCT,"Port Canaveral, FL/Bahamas/Bermuda"
+Sunday,8/20/2023,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Monday,8/21/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,Bermuda
+Tuesday,8/22/2023,Norwegian Escape,Norwegian Cruise Line,N/A,8:00 PM,MCT,Bermuda
+Wednesday,8/23/2023,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,"San Juan, PR/St. Thomas, USVI/Turks & Caicos"
+Wednesday,8/23/2023,Marella Discovery,Marella Cruises,7:00 AM,---,MCT,In port overnight
+Thursday,8/24/2023,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP,"Boston, MA/Maine/St. John, NB/Halifax,NS"
+Thursday,8/24/2023,Marella Discovery,Marella Cruises,---,5:30 PM,MCT,"Bahamas/Port Canaveral, FL"
+Sunday,8/27/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Miami, FL/Bahamas"
+Sunday,8/27/2023,Norwegian Escape,Norwegian Cruise Line,7:00 AM,5:30 PM,MCT,"Halifax, NS/St. John, NB/Maine"
+Sunday,8/27/2023,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Wednesday,8/30/2023,Caribbean Princess,Princess Cruises,7:00 AM,5:00 PM,BCT,"New England/Canadian Maritimes/Quebec City, Que."
+Wednesday,8/30/2023,Insignia,Oceania Cruises,8:00 AM,5:00 PM,MCT,Bermuda
+Wednesday,8/30/2023,Norwegian Joy,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,Bermuda
+Wednesday,8/30/2023,Viking Saturn,Viking Ocean Cruises,N/A,N/A,MCT,"Halifax, NS/Greenland/Iceland"
+Thursday,8/31/2023,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,Dominican Republic/Turks & Caicos/Bahamas
+Saturday,9/2/2023,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP,Bermuda
+Sunday,9/3/2023,Norwegian Escape,Norwegian Cruise Line,7:00 AM,5:30 PM,MCT,"Halifax, NS/St. John, NB/Maine"
+Sunday,9/3/2023,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Monday,9/4/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,Bermuda
+Monday,9/4/2023,Norwegian Joy,Norwegian Cruise Line,7:00 AM,3:00 PM,MCT,"New England/Canadian Maritimes/Quebec City, Que."
+Monday,9/4/2023,Viking Star,Viking Ocean Cruises,N/A,---,MCT,In port overnight
+Tuesday,9/5/2023,Viking Star,Viking Ocean Cruises,---,4:30 PM,MCT,"Boston, MA/Canadian Maritimes/Quebec City, Que./Montreal, Que."
+Wednesday,9/6/2023,Insignia,Oceania Cruises,8:00 AM,5:00 PM,MCT,Bermuda
+Wednesday,9/6/2023,Marella Discovery,Marella Cruises,7:00 AM,---,MCT,In port overnight
+Wednesday,9/6/2023,Seabourn Quest,Seabourn,7:00 AM,5:00 PM,MCT,"New England/Canadian Maritimes/Quebec City, Que./Montreal, Que."
+Thursday,9/7/2023,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP,"Boston, MA/Maine/St. John, NB/Halifax,NS"
+Thursday,9/7/2023,Marella Discovery,Marella Cruises,---,5:30 PM,MCT,"Bahamas/Port Canaveral, FL"
+Friday,9/8/2023,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,"San Juan, PR/St. Thomas, USVI/Turks & Caicos"
+Saturday,9/9/2023,Emerald Princess,Princess Cruises,6:00 AM,5:00 PM,BCT,New England/Canadian Maritimes
+Sunday,9/10/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Miami, FL/Bahamas"
+Sunday,9/10/2023,Norwegian Escape,Norwegian Cruise Line,7:00 AM,5:30 PM,MCT,"Newport, RI/Maine/St. John, NB/Halifax, NS"
+Sunday,9/10/2023,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Monday,9/11/2023,Amera,Phoenix Reisen Cruises,7:30 AM,---,MCT,In port overnight
+Monday,9/11/2023,Queen Mary 2,Cunard,6:00 AM,5:00 PM,BCT,"Transatlantic (Southampton, UK/Hamburg, Ger.)"
+Tuesday,9/12/2023,Amera,Phoenix Reisen Cruises,---,6:00 PM,MCT,"Transatlantic (New England/Ireland/UK/Bremerhaven, Ger.)"
+Wednesday,9/13/2023,Insignia,Oceania Cruises,8:00 AM,5:00 PM,MCT,Bermuda
+Thursday,9/14/2023,Jewel of the Seas,Royal Caribbean,7:00 AM,---,CLCP,Unscheduled overnight in port due to Hurricane Lee
+Friday,09/15/2023,Emerald Princess,Princess Cruises,N/A,---,BCT,"Arrived a day early after cancelling a call at Halifx, NS due to Hurricane 
+Lee; in port overnight"
+Friday,09/15/2023,Vista,Oceania Cruises,5:00 AM,---,MCT,"*****Maiden Arrival; *Arrived 2 days early after skipping port calls due to 
+Hurricane Lee; in port overnight"
+Friday,09/15/2023,Jewel of the Seas,Royal Caribbean,---,6:30 PM,CLCP,"Greenland/Canadian Maritimes (call at Halifax cancelled due to Hurricane 
+Lee)"
+Friday,9/15/2023,Silver Shadow,Silversea Cruises,7:00 AM,---,MCT,In port overnight
+Saturday,9/16/2023,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,"St. John, NB/Halifax, NS/Sydney, NS"
+Saturday,09/16/2023,Vista,Oceania Cruises,---,---,MCT,Unscheduled overnight in port due to Hurricane Lee
+Saturday,09/16/2023,Norwegian Escape,Norwegian Cruise Line,N/A,---,MCT,"Arrived a day early after cancelling two port calls due to Hurricane 
+Harvey; anchored in port overnight"
+Saturday,9/16/2023,Emerald Princess,Princess Cruises,---,5:00 PM,BCT,New England/Canadian Maritimes
+Saturday,9/16/2023,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP,Bermuda
+Saturday,9/16/2023,Silver Shadow,Silversea Cruises,---,2:00 PM,MCT,"New England/Canadian Maritimes/Quebec City, Que."
+Sunday,9/17/2023,Norwegian Escape,Norwegian Cruise Line,---,5:30 PM,MCT,"Newport, RI/Maine/St. John, NB/Halifax, NS"
+Sunday,9/17/2023,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Sunday,9/17/2023,Seven Seas Mariner,Regent Seven Seas,6:00 AM,6:00 PM,MCT,"New England/Canadian Maritimes/Quebec City, Que./Montreal, Que."
+Sunday,9/17/2023,Vista,Oceania Cruises,---,---,MCT,In port overnight
+Monday,9/18/2023,Aurora,P&O Cruises,AM,---,MCT,In port overnight
+Monday,9/18/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,Bermuda
+Monday,9/18/2023,Vista,Oceania Cruises,---,6:00 PM,MCT,"New England/Canadian Maritimes/Quebec City, Que./Montreal, Que."
+Tuesday,9/19/2023,Aurora,P&O Cruises,---,---,MCT,In port overnight
+Tuesday,9/19/2023,Caribbean Princess,Princess Cruises,7:00 AM,7:00 PM,BCT,"New England/Canadian Maritimes/Quebec City, Que."
+Wednesday,9/20/2023,Aurora,P&O Cruises,---,7:00 PM,MCT,"Transatlantic (Maine/Halifax, NS/St. Johns, NL/Southampton, UK)"
+Wednesday,9/20/2023,Insignia,Oceania Cruises,8:00 AM,5:00 PM,MCT,Bermuda
+Wednesday,9/20/2023,Marella Discovery,Marella Cruises,7:00 AM,---,BCT,In port overnight
+Wednesday,9/20/2023,Norwegian Joy,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,Bermuda
+Thursday,9/21/2023,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP,"Boston, MA/Maine/St. John, NB/Halifax,NS"
+Thursday,9/21/2023,Marella Discovery,Marella Cruises,---,5:30 PM,BCT,"Bahamas/Port Canaveral, FL"
+Friday,9/22/2023,Mein Schiff 6,TUI Cruises,9:30 AM,---,CLCP,In port overnight
+Saturday,9/23/2023,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,"Portland, ME/St. John, NB/Halifax, NS"
+Saturday,9/23/2023,Emerald Princess,Princess Cruises,6:00 AM,6:00 PM,BCT,New England/Canadian Maritimes
+Saturday,9/23/2023,Mein Schiff 6,TUI Cruises,---,11:59 PM,CLCP,"New England/Canadian Maritimes/Quebec City, Que."
+Sunday,9/24/2023,MSC Meraviglia,MSC Cruises,7:00 AM,7:00 PM,BCT,New England/Canadian Maritimes
+Sunday,9/24/2023,Norwegian Escape,Norwegian Cruise Line,7:00 AM,5:30 PM,MCT,"Newport, RI/Maine/St. John, NB/Halifax, NS"
+Sunday,9/24/2023,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Sunday,9/24/2023,Viking Octantis,Viking Expeditions Cruises,N/A,N/A,MCT,"Ushuaia, Argentina"
+Monday,9/25/2023,Explora I,Explora Journeys,7:00 AM,---,MCT,*****Maiden Arrival; In port overnight*
+Monday,9/25/2023,Norwegian Joy,Norwegian Cruise Line,7:00 AM,3:00 PM,MCT,"New England/Canadian Maritimes/Quebec City, Que."
+Tuesday,9/26/2023,Explora I,Explora Journeys,---,6:00 AM,MCT,"Boston, MA/St. John, NB/Quebec City, Que."
+Wednesday,9/27/2023,Crystal Serenity,Crystal Cruises,8:00 AM,3:00 PM,MCT,"Boston, Halifax, NS/Sydney, NS/Quebec City, Que."
+Wednesday,9/27/2023,Insignia,Oceania Cruises,6:00 AM,7:00 PM,MCT,"New England/Canadian Maritimes/Quebec City, Que./Montreal, Que."
+Wednesday,9/27/2023,Viking Star,Viking Ocean Cruises,11:30 AM,---,MCT,In port overnight
+Thursday,9/28/2023,Disney Dream,Disney Cruise Line,5:30 AM,4:00 PM,MCT,Bermuda
+Thursday,9/28/2023,Jewel of the Seas,Royal Caribbean,8:00 AM,5:00 PM,CLCP,"Canadian Maritimes/Quebec City, Que."
+Thursday,9/28/2023,Viking Star,Viking Ocean Cruises,---,---,MCT,In port overnight
+Friday,9/29/2023,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,Eastern Caribbean
+Friday,9/29/2023,Queen Mary 2,Cunard,6:30 AM,5:00 PM,BCT,"Halifax, NS/Canadian Maritimes/Quebec City, Que./Boston, MA"
+Friday,9/29/2023,Viking Star,Viking Ocean Cruises,---,N/A,MCT,"Boston, MA/Canadian Maritimes/Quebec City, Que./Montreal, Que."
+Saturday,9/30/2023,Emerald Princess,Princess Cruises,6:00 AM,6:00 PM,BCT,New England/Canadian Maritimes
+Saturday,9/30/2023,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP,Bermuda
+Saturday,9/30/2023,Pacific World,Peaceboat,6:00 AM,11:00 PM,MCT,115th Global Voyage
+Sunday,10/1/2023,Norwegian Escape,Norwegian Cruise Line,7:00 AM,5:30 PM,MCT,"Newport, RI/Maine/St. John, NB/Halifax, NS"
+Sunday,10/1/2023,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Tuesday,10/3/2023,Disney Dream,Disney Cruise Line,7:30 AM,4:00 PM,MCT,Bermuda
+Wednesday,10/4/2023,Marella Discovery,Marella Cruises,7:00 AM,---,MCT,In port overnight
+Wednesday,10/4/2023,MSC Meraviglia,MSC Cruises,7:00 AM,7:00 PM,BCT,New England/Canadian Maritimes
+Thursday,10/5/2023,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP,"Boston, MA/Maine/St. John, NB/Halifax,NS"
+Thursday,10/5/2023,Marella Discovery,Marella Cruises,---,5:30 PM,MCT,"Bahamas/Port Canaveral, FL"
+Thursday,10/5/2023,Silver Shadow,Silversea Cruises,7:00 AM,7:00 PM,MCT,"New England/Canadian Maritimes/Quebec City, Que."
+Friday,10/6/2023,Mein Schiff 6,TUI Cruises,10:30 AM,---,CLCP,In port overnight
+Saturday,10/7/2023,Disney Dream,Disney Cruise Line,7:30 AM,5:00 PM,MCT,Bermuda
+Saturday,10/7/2023,Emerald Princess,Princess Cruises,6:00 AM,5:00 PM,BCT,New England/Canadian Maritimes
+Saturday,10/7/2023,Mein Schiff 6,TUI Cruises,---,11:59 PM,CLCP,"Boston, MA/Maine/St. John, NB/Halifax,NS"
+Saturday,10/7/2023,Silver Endeavour,Sliversea Cruises,6:00 AM,N/A,MCT,N/A
+Sunday,10/8/2023,Norwegian Escape,Norwegian Cruise Line,7:00 AM,5:30 PM,MCT,"Newport, RI/Maine/St. John, NB/Halifax, NS"
+Sunday,10/8/2023,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Sunday,10/8/2023,Spirit of Discovery,Saga Cruises,8:00 AM,5:00 PM,MCT,"Transatlantic (New England/Canada/Azores/Portsmouth, UK)"
+Sunday,10/8/2023,The World,The World Resident Holdings,8:30 AM,---,MCT,In port overnight
+Monday,10/9/2023,Caribbean Princess,Princess Cruises,7:00 AM,7:00 PM,BCT,"New England/Canadian Maritimes/Quebec City, Que."
+Monday,10/9/2023,Seven Seas Mariner,Regent Seven Seas,6:00 AM,6:00 PM,MCT,"New England/Canadian Maritimes/Quebec City, Que./Montreal, Que."
+Monday,10/9/2023,Vista,Oceania Cruises,8:00 AM,---,MCT,In port overnight
+Monday,10/9/2023,The World,The World Resident Holdings,---,---,MCT,In port overnight
+Tuesday,10/10/2023,Vista,Oceania Cruises,---,5:00 PM,MCT,"Charleston, SC/Miami, FL"
+Tuesday,10/10/2023,The World,The World Resident Holdings,---,---,MCT,In port overnight
+Wednesday,10/11/2023,Norwegian Joy,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,Bermuda
+Wednesday,10/11/2023,Norwegian Sky,Norwegian Cruise Line,8:00 AM,10:00 PM,MCT,"Baltimore, MD"
+Wednesday,10/11/2023,The World,The World Resident Holdings,---,N/A,MCT,N/A
+Thursday,10/12/2023,Balmoral,Fred Olsen Cruise Lines,AM,---,MCT,In port overnight
+Thursday,10/12/2023,Explora I,Explora Journeys,7:00 AM,---,MCT,In port overnight
+Thursday,10/12/2023,Seabourn Quest,Seabourn Cruise Line,7:00 AM,5:00 PM,MCT,"New England/Canadian Maritimes/Quebec City, Que./Montreal, Que."
+Friday,10/13/2023,Balmoral,Fred Olsen Cruise Lines,---,---,MCT,In port overnight
+Friday,10/13/2023,Crystal Serenity,Crystal Cruises,7:00 AM,8:00 PM,MCT,"New England/Nova Scotia/Quebec City, Que."
+Friday,10/13/2023,Disney Dream,Disney Cruise Line,7:30 AM,4:00 PM,MCT,Bermuda
+Friday,10/13/2023,Explora I,Explora Journeys,---,---,MCT,In port overnight
+Friday,10/13/2023,Queen Mary 2,Cunard,6:30 AM,5:00 PM,BCT,"Transatlantic (Southampton, UK/Hamburg, Ger.)"
+Saturday,10/14/2023,Balmoral,Fred Olsen Cruise Lines,---,Early AM,MCT,"Transatlantic (Baltimore, MD/Bermuda/Azores/Southampton, UK)"
+Saturday,10/14/2023,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,"Miami, FL/Bahamas"
+Saturday,10/14/2023,Emerald Princess,Princess Cruises,6:00 AM,5:00 PM,BCT,New England/Canadian Maritimes
+Saturday,10/14/2023,Explora I,Explora Journeys,---,6:00 AM,MCT,"Boston, MA/Halifax, NS/Quebec City, Que."
+Saturday,10/14/2023,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP,Bermuda
+Sunday,10/15/2023,MSC Meraviglia,MSC Cruises,7:00 AM,7:00 PM,BCT,New England/Canadian Maritimes
+Sunday,10/15/2023,Norwegian Escape,Norwegian Cruise Line,7:00 AM,5:30 PM,MCT,"Newport, RI/Maine/St. John, NB/Halifax, NS"
+Sunday,10/15/2023,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Monday,10/16/2023,Mein Schiff 6,TUI Cruises,11:00 AM,---,CLCP,In port overnight
+Monday,10/16/2023,Norwegian Joy,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,"Repositioning to Miami, FL via Eastern Caribbean"
+Tuesday,10/17/2023,Disney Dream,Disney Cruise Line,7:30 AM,4:00 PM,MCT,"St. John, NB"
+Tuesday,10/17/2023,Mein Schiff 6,TUI Cruises,---,---,CLCP,In port overnight
+Tuesday,10/17/2023,MS Europa 2,Hapag-Lloyd Cruises,7:00 AM,---,MCT,In port overnight
+Wednesday,10/18/2023,Marella Discovery,Marella Cruises,7:00 AM,---,MCT,In port overnight
+Wednesday,10/18/2023,Mein Schiff 6,TUI Cruises,---,10:00 PM,CLCP,Florida/Bahamas
+Wednesday,10/18/2023,MS Europa 2,Hapag-Lloyd Cruises,---,5:00 PM,MCT,"New England/Nova Scotia, NS/Norfolk, VA/Baltimore, MD"
+Thursday,10/19/2023,MS Europa,Hapag-Lloyd Cruises,4:00 PM,---,MCT,In port overnight
+Thursday,10/19/2023,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP,"Boston, MA/Maine/St. John, NB/Halifax,NS"
+Thursday,10/19/2023,Marella Discovery,Marella Cruises,---,5:30 PM,MCT,"Bahamas/Port Canaveral, FL"
+Friday,10/20/2023,Jewel of the Seas,Royal Caribbean,8:00 AM,5:00 PM,CLCP,"New England/Canadian Maritimes/Quebec City, Que."
+Friday,10/20/2023,MS Europa,Hapag-Lloyd Cruises,---,---,MCT,In port overnight
+Saturday,10/21/2023,Disney Dream,Disney Cruise Line,7:30 AM,4:00 PM,MCT,Bermuda
+Saturday,10/21/2023,Emerald Princess,Princess Cruises,6:00 AM,5:00 PM,BCT,New England/Canadian Maritimes
+Saturday,10/21/2023,MS Europa,Hapag-Lloyd Cruises,---,---,MCT,In port overnight
+Sunday,10/22/2023,MS Europa,Hapag-Lloyd Cruises,---,7:00 AM,MCT,"Baltimore, MD/Miami, FL"
+Sunday,10/22/2023,Norwegian Escape,Norwegian Cruise Line,7:00 AM,6:00 PM,MCT,Bermuda
+Sunday,10/22/2023,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Monday,10/23/2023,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,Bermuda
+Wednesday,10/25/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Port Canaveral, FL/Mexico/Bahamas"
+Wednesday,10/25/2023,Silver Shadow,Silversea Cruises,7:00 AM,7:00 PM,MCT,"New England/Canadian Maritimes/Quebec City, Que."
+Thursday,10/26/2023,Mein Schiff 6,TUI Cruises,8:00 AM,---,CLCP,In port overnight
+Friday,10/27/2023,Artania,Phoenix Reisen Cruises,7:00 AM,---,MCT,In port overnight
+Friday,10/27/2023,Caribbean Princess,Princess Cruises,7:00 AM,11:00 PM,BCT,"Ft. Lauderdale, FL"
+Friday,10/27/2023,Disney Dream,Disney Cruise Line,7:30 AM,4:00 PM,MCT,Bermuda
+Friday,10/27/2023,Mein Schiff 6,TUI Cruises,---,10:00 PM,CLCP,"Norfolk, VA/Charleston, SC/Florida/Eastern Caribbean"
+Saturday,10/28/2023,Artania,Phoenix Reisen Cruises,---,7:00 PM,MCT,Eastern Seaboard
+Saturday,10/28/2023,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,Eastern Caribbean
+Saturday,10/28/2023,Emerald Princess,Princess Cruises,6:00 AM,5:00 PM,BCT,New England/Canadian Maritimes
+Saturday,10/28/2023,Liberty of the Seas,Royal Caribbean,7:00 AM,N/A,CLCP,"Repositioning to Ft. Lauderdale, FL"
+Sunday,10/29/2023,Crystal Serenity,Crystal Cruises,7:00 AM,10:00 PM,BCT,"Miami, FL"
+Sunday,10/29/2023,Explora I,Explora Journeys,7:00 AM,---,MCT,In port overnight
+Sunday,10/29/2023,Norwegian Escape,Norwegian Cruise Line,7:00 AM,6:00 PM,MCT,Bermuda
+Sunday,10/29/2023,Oasis of the Seas,Royal Caribbean,6:00 AM,N/A,CLCP,"Repositioning to Miami, FL"
+Sunday,10/29/2023,MS Europa 2,Hapag-Lloyd Cruises,8:00 AM,---,MCT,In port overnight
+Monday,10/30/2023,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Monday,10/30/2023,Explora I,Explora Journeys,---,7:00 PM,MCT,"Port Canaveral, FL/Miami, FL"
+Monday,10/30/2023,MS Europa 2,Hapag-Lloyd Cruises,---,10:00 AM,MCT,"Eastern Caribbean/Miami, FL"
+Tuesday,10/31/2023,Disney Dream,Disney Cruise Line,7:30 AM,4:00 PM,MCT,Bermuda
+Tuesday,10/31/2023,Seven Seas Mariner,Regent Seven Seas,6:00 AM,6:00 PM,MCT,"Eastern Caribbean/Miami, FL"
+Thursday,11/2/2023,Seabourn Quest,Seabourn Cruise Line,8:00 AM,---,MCT,In port overnight
+Friday,11/3/2023,Seabourn Quest,Seabourn Cruise Line,---,12:00 PM,MCT,"Charleston, SC/Miami, FL"
+Saturday,11/4/2023,Disney Dream,Disney Cruise Line,7:30 AM,4:00 PM,MCT,"Bermuda/Tortola, BVI/San Juan, PR"
+Saturday,11/4/2023,Emerald Princess,Princess Cruises,6:00 AM,5:00 PM,BCT,Repositioning to Ft. Lauderdale via the Eastern Caribbean
+Saturday,11/4/2023,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,Eastern Caribbean
+Sunday,11/5/2023,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,Port Canaveral/Bahamas
+Sunday,11/5/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Miami, FL/Bahamas"
+Sunday,11/5/2023,Norwegian Escape,Norwegian Cruise Line,7:00 AM,8:00 PM,MCT,Bermuda
+Thursday,11/9/2023,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,Eastern Caribbean
+Thursday,11/9/2023,Jewel of the Seas,Royal Caribbean,8:00 AM,5:00 PM,CLCP,"Repositioning to San Juan, PR via Bermuda/Curacao/Aruba"
+Friday,11/10/2023,Norwegian Escape,Norwegian Cruise Line,7:00 AM,8:00 PM,MCT,Bermuda
+Saturday,11/11/2023,Insignia,Oceania Cruises,1:00 PM,---,MCT,In port overnight
+Sunday,11/12/2023,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,Port Canaveral/Bahamas
+Sunday,11/12/2023,Insignia,Oceania Cruises,---,6:00 PM,MCT,Eastern Caribbean
+Monday,11/13/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,Bermuda
+Monday,11/13/2023,Silver Shadow,Silversea Cruises,8:00 AM,---,MCT,In port overnight
+Tuesday,11/14/2023,Silver Shadow,Silversea Cruises,---,1:00 PM,MCT,"Bermuda/Ft. Lauderdale, FL"
+Wednesday,11/15/2023,Norwegian Escape,Norwegian Cruise Line,7:00 AM,N/A,MCT,"Repositioning to Port Canaveral, FL"
+Wednesday,11/15/2023,Norwegian Jade,Norwegian Cruise Line,7:00 AM,N/A,MCT,"Repositioning to Tampa, FL"
+Friday,11/17/2023,Silver Nova,Silversea Cruises,7:00 AM,---,MCT,*****Maiden Arrival; In port overnight*
+Saturday,11/18/2023,Silver Nova,Silversea Cruises,---,11:00 PM,MCT,"Norfolk, VA/Bermuda/San Juan, PR"
+Sunday,11/19/2023,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,Port Canaveral/Bahamas
+Sunday,11/19/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Miami, FL/Bahamas"
+Sunday,11/19/2023,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,Bermuda
+Monday,11/20/2023,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,"Bahamas/Turks & Caicos/Dominican Republic/San Juan, PR"
+Sunday,11/26/2023,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,Port Canaveral/Bahamas
+Sunday,11/26/2023,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,Eastern Caribbean
+Sunday,11/26/2023,Queen Mary 2,Cunard,6:30 AM,5:00 PM,BCT,Eastern Caribbean
+Monday,11/27/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,Bermuda
+Tuesday,11/28/2023,Norwegian Breakaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,"Repositioning to New Orleans, LA via the Caribbean"
+Thursday,11/30/2023,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,"San Juan, PR/Dominican Republic/Turks & Caicos/Bahamas"
+Friday,12/1/2023,Norwegian Prima,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,"Repositioning to Galveston, TX via the Caribbean"
+Saturday,12/2/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Port Canaveral, FL/Bahamas"
+Sunday,12/3/2023,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Wednesday,12/6/2023,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,Eastern Caribbean
+Friday,12/8/2023,Queen Mary 2,Cunard,6:30 AM,5:00 PM,BCT,"Transatlantic (Southampton, UK)"
+Saturday,12/9/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Port Canaveral, FL/Bahamas"
+Sunday,12/10/2023,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Sunday,12/10/2023,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,Bahamas
+Saturday,12/16/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Port Canaveral, FL/Bahamas"
+Saturday,12/16/2023,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,Bermuda
+Sunday,12/17/2023,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Monday,12/18/2023,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,Bahamas/Turks & Caicos/Dominican Republic
+Tuesday,12/19/2023,Norwegian Gem,Norwegian Cruise Line,7:00 AM,N/A,MCT,"Repositioning to Miami, FL"
+Thursday,12/21/2023,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,Eastern Caribbean
+Friday,12/22/2023,Queen Mary 2,Cunard,6:30 AM,5:00 PM,BCT,Eastern Caribbean
+Saturday,12/23/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Port Canaveral, FL/Bahamas"
+Sunday,12/24/2023,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Thursday,12/28/2023,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,"Miami, FL/Bahamas"
+Saturday,12/30/2023,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Port Canaveral, FL/Bahamas"
+Sunday,12/31/2023,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Tuesday,1/2/2024,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,Eastern Caribbean
+Wednesday,1/3/2024,Queen Mary 2,Cunard,6:30 AM,5:00 PM,BCT,"Transatlantic (Southampton, UK)"
+Saturday,1/6/2024,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,Bahamas
+Saturday,1/6/2024,MSC Meraviglia,MSC Cruises,7:00 AM,7:00 PM,BCT,"Port Canaveral, FL/Miami, FL/Bahamas"
+Sunday,1/7/2024,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,Southern Caribbean
+Friday,1/12/2024,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,Bermuda
+Sunday,1/14/2024,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,"Miami, FL/Bahamas"
+Monday,1/15/2024,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Port Canaveral, FL/Mexico/Bahamas/Miami, FL"
+Wednesday,1/17/2024,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,Eastern Caribbean
+Thursday,1/18/2024,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,Southern Caribbean
+Tuesday,1/23/2024,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,"Bahamas/Turks & Caicos/Dominican Republic/San Juan, PR"
+Friday,1/26/2024,MSC Meraviglia,MSC Cruises,7:00 AM,7:00 PM,BCT,"Port Canaveral, FL/Miami, FL/Bahamas"
+Saturday,1/27/2024,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,Eastern Caribbean
+Monday,1/29/2024,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,Southern Caribbean
+Friday,2/2/2024,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,"Miami, FL/Bahamas"
+Sunday,2/4/2024,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Port Canaveral, FL/Bahamas"
+Tuesday,2/6/2024,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,Eastern Caribbean
+Friday,2/9/2024,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Sunday,2/11/2024,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,Eastern Caribbean
+Sunday,2/11/2024,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Port Canaveral, FL/Miami, FL/Bahamas"
+Friday,2/16/2024,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,Eastern Caribbean
+Saturday,2/17/2024,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Sunday,2/18/2024,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Port Canaveral, FL/Miami, FL/Bahamas"
+Friday,2/23/2024,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT,"Miami, FL/Bahamas"
+Sunday,2/25/2024,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP,"Port Canaveral, FL/Bahamas"
+Sunday,2/25/2024,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT,"Port Canaveral, FL/Miami, FL/Bahamas"
+Monday,2/26/2024,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT,Eastern Caribbean

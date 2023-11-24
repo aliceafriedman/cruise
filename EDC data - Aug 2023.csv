@@ -1,0 +1,44 @@
+Date,Ship,Line,Type,Guest,Crew,Shore Power Compatibility,Connection
+8/6/23,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",No,No
+8/13/23,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",No,No
+8/14/23,Caribbean Princess,Princess Cruise Line,Full Turn,"3,000","1,200",Yes,Yes
+8/18/23,Queen Mary,Cunard Line,Full Turn,"2,500","1,253",Yes,Yes
+8/21/23,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",No,No
+8/27/23,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",No,No
+8/30/23,Caribbean Princess,Princess Cruise Line,Full Turn,"3,000","1,200",Yes,Yes
+9/4/23,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",No,No
+9/9/23,Emerald Princess,Princess Cruise Line,Transit,"3,000","1,200",Yes,Yes
+9/10/23,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",No,No
+9/11/23,Queen Mary,Cunard Line,Full Turn,"2,500","1,253",Yes,Yes
+9/16/23,Emerald Princess,Princess Cruise Line,Full Turn,"3,000","1,200",Yes,Yes
+9/18/23,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",No,No
+9/19/23,Caribbean Princess,Princess Cruise Line,Full Turn,"3,000","1,200",Yes,Yes
+9/20/23,Marella Discovery,Marella Cruises,Transit,"1,800",750,No,No
+9/21/23,Marella Discovery,Marella Cruises,Transit,"1,800",750,No,No
+9/23/23,Emerald Princess,Princess Cruise Line,Full Turn,"3,000","1,200",Yes,Yes
+9/24/23,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",No,No
+9/29/23,Queen Mary,Cunard Line,Full Turn,"2,500","1,253",Yes,Yes
+9/30/23,Emerald Princess,Princess Cruise Line,Full Turn,"3,000","1,200",Yes,Yes
+10/4/23,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",No,No
+10/7/23,Emerald Princess,Princess Cruise Line,Full Turn,"3,000","1,200",Yes,Yes
+10/9/23,Caribbean Princess,Princess Cruise Line,Full Turn,"3,000","1,200",Yes,Yes
+10/13/23,Queen Mary 2,Cunard Line,Full Turn,"2,500","1,253",Yes,Yes
+10/14/23,Emerald Princess,Princess Cruise Line,Full Turn,"3,000","1,200",Yes,Yes
+10/15/23,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",No,No
+10/21/23,Emerald Princess,Princess Cruise Line,Full Turn,"3,000","1,200",Yes,Yes
+10/25/23,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",No,No
+10/27/23,Caribbean Princess,Princess Cruise Line,Transit,"3,000","1,200",Yes,Yes
+10/28/23,Emerald Princess,Princess Cruise Line,Full Turn,"3,000","1,200",Yes,Yes
+11/4/23,Emerald Princess,Princess Cruise Line,Transit,"3,000","1,200",Yes,Yes
+11/5/23,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",No,No
+11/13/23,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",No,No
+11/19/23,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",No,No
+11/26/23,Queen Mary 2,Cunard Line,Full Turn,"2,500","1,253",Yes,Yes
+11/27/23,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",No,No
+12/2/23,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",No,No
+12/8/23,Queen Mary 2,Cunard Line,Full Turn,"2,500","1,253",Yes,Yes
+12/9/23,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",No,No
+12/16/23,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",No,No
+12/22/23,Queen Mary 2,Cunard Line,Full Turn,"2,500","1,253",Yes,Yes
+12/23/23,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",No,No
+12/30/23,MSC Meraviglia,MSC Cruises,Full Turn,"5,000","1,536",No,No

@@ -1,0 +1,215 @@
+---
+title: "Data Viz"
+author: "Alice Friedman"
+date: "2023-10-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(xts)
+library(forecast)
+```
+
+```{r}
+# Dikeman_joined <- left_join(Dikeman, cruiseShips_Aug, by="Date") %>%
+#   arrange(local_datetime) %>%
+#   filter(Date > lubridate::as_date("2023-08-05"))%>%
+#   mutate(
+#     Guest = coalesce(Guest, 0),
+#     Crew = coalesce(Crew, 0),
+#     CruiseArrival = if_else(Guest == 0, F, T),
+#     sensor = `PortSide Test`
+#   ) %>% mutate_at(
+#     fields_list,as.numeric)
+
+plot_ts_with_cruise <- function(df){
+  p <- ggplot() + 
+  geom_vline(aes(xintercept = local_datetime),
+                data = df %>% filter(CruiseArrival == T), color="lightblue") +
+  geom_vline(aes(xintercept = local_datetime, color = "CruiseArrival"),
+                data = df%>% filter(Generator == T & hour(local_datetime) < 15 & hour(local_datetime) > 4), color="darkblue") +
+  geom_line(aes(x=local_datetime, y=pm2.5_alt), color = "darkgreen", data=df) +
+  geom_line(aes(x=local_datetime, y=PM2.5_corrected), color = "red", data=df) +
+  # #geom_line(aes(x=local_datetime, y=pm2.5_alt), color = "lightgreen", data = joined, show.legend = T) +
+  # geom_line(aes(x=as.POSIXct(Date), y = nyc_avg_pm2.5), data= NYC_AQI %>% filter(Date > "2023-07-31")) + 
+  # geom_line(aes(x=as.POSIXct(local_datetime), y= as.numeric(pm2.5_alt)), data = Hilo_joined) +
+  # geom_line(aes(x=as.POSIXct(local_datetime), y= as.numeric(pm2.5_alt), color="Dyberry"), data = Dyberry) +
+  scale_x_datetime()  +  
+  theme(aspect.ratio = 1/4) + 
+  # scale_color_manual(
+  #   name = "Cruise Ship at BCT", 
+  #   values = c("Offshore Power" = "darkblue", "Onshore power" = "lightblue")) + 
+  # xlab("Date & Time") + 
+  ylab("PPM") + labs(color = "Legend Title") # +  # Customize the legend title
+  # guides(color = guide_legend(title.position = "top", keywidth = 2, keyheight = 1))  # Customize legend appearance
+
+  return (p)
+}
+
+plot_ts_with_cruise(Portside)
+plot_ts_with_cruise(Dikeman)
+
+```
+```{r daily_man}
+Pier83_daily %>% filter(date(Date) < "2023-10-20") %>% ggplot() + 
+  geom_vline(aes(xintercept = as.POSIXct(Date)),
+             data = daily_data %>% filter(CruiseArrival == T), 
+             color="darkblue",
+             linewidth = 1.5) +
+  geom_col(aes(x=as.POSIXct(Date), y=elevated_hours), color = "darkgreen", data=daily_data) +
+  geom_line(aes(x=as.POSIXct(Date), y=max2.5), color="red")+
+  geom_line(aes(x=as.POSIXct(Date), y=min2.5), color="red")+
+
+  scale_x_datetime()  +  
+  theme(aspect.ratio = 1/4) + 
+  ylab("PPM") + labs(color = "Legend Title") # +  # Customize the legend title
+
+```
+```{r daily_BK}
+Dikeman_daily %>% filter(date(Date) < "2023-10-20") %>% ggplot() + 
+  geom_vline(aes(xintercept = as.POSIXct(Date)),
+             data = daily_data %>% filter(CruiseArrival == T), 
+             color="lightblue",
+             linewidth = 1.5) +
+  geom_vline(aes(xintercept = as.POSIXct(Date)),
+             data = daily_data %>% filter(Generator == T), 
+             color="darkblue",
+             linewidth = 1.5) +
+  geom_col(aes(x=as.POSIXct(Date), y=elevated_hours), color = "darkgreen", data=daily_data) +
+  geom_line(aes(x=as.POSIXct(Date), y=max2.5), color="red")+
+  geom_line(aes(x=as.POSIXct(Date), y=min2.5), color="red")+
+
+  scale_x_datetime()  +  
+  theme(aspect.ratio = 1/4) + 
+  ylab("PPM") + labs(color = "Legend Title") # +  # Customize the legend title
+
+```
+```{r}
+# Copy code
+ggplot() + 
+  geom_vline(aes(xintercept = local_datetime, color = "Onshore Power"),
+             data = Dikeman_joined %>% filter(CruiseArrival == T), linetype = "solid") +
+  geom_vline(aes(xintercept = local_datetime, color = "Offshore power"),
+             data = Dikeman_joined %>% filter(Connection == "No"), linetype = "dashed") +
+  geom_line(aes(x = local_datetime, y = pm2.5_alt, color = "PM2.5"), data = Dikeman_joined) +
+  scale_x_datetime() +
+  scale_color_manual(
+    name = "Legend Title",
+    values = c("PM2.5" = "darkgreen", "Offshore Power" = "darkblue", "Onshore power" = "lightblue" )
+  ) +
+  theme(aspect.ratio = 1/4) +
+  xlab("Date & Time") +
+  ylab("PPM") +
+  labs(color = "Legend Title") +
+  guides(
+    color = guide_legend(title.position = "top", keywidth = 2, keyheight = 1)
+  )
+
+
+
+
+# joined %>% ggplot() + 
+#   geom_vline(aes(xintercept = local_datetime),
+#                data = . %>% filter(CruiseArrival == T), color="lightblue") +
+#   geom_vline(aes(xintercept = local_datetime),
+#                data = . %>% filter(Connection == "No"), color="darkblue") +
+#   scale_x_datetime()  + theme(aspect.ratio = 1/10)
+
+# 
+# line.data <- data.frame(xintercept = c(2, 4), Lines = c("lower", "upper"),
+#   color = c("red", "blue"), stringsAsFactors = FALSE)
+# 
+# ggplot(BOD, aes( Time, demand ) ) + 
+#   geom_point() + 
+#   geom_vline(aes(xintercept = xintercept, color = Lines), line.data, size = 1) +
+#   scale_colour_manual(values = line.data$color)
+```
+
+```{r}
+data <- left_join(Dikeman, Dyberry, 
+                  join_by(local_datetime),
+                  suffix = c(".RedHook", ".Upstate")) %>%
+  mutate(Generator = if_else(CruiseArrival == T & Connection == "No", T, F))
+
+data %>% group_by(hour(local_datetime)) %>%
+  summarise(
+    mean2.5 = mean(pm2.5_alt.RedHook)
+  ) %>% plot()
+
+data %>%
+  ggplot(aes(x = pm2.5_alt.Upstate, y = pm2.5_alt.RedHook, colour = Connection, fill = CruiseArrival)) +
+  geom_smooth(method = "lm") +
+  geom_point(alpha = 0.5) 
+
+```
+```{r}
+
+weather_model <- lm(Dikeman_joined$pm2.5_alt ~ Dikeman_joined$temperature + 
+                      Dikeman_joined$humidity + 
+                      Dikeman_joined$pressure + 
+                      Dikeman_joined$Connection + 
+                      hour(Dikeman_joined$local_datetime)
+                    )
+
+
+summary(weather_model)
+
+pred <- predict(weather_model)
+
+# Create a scatter plot
+Dikeman_joined %>% filter(hour(local_datetime) > 4 & hour(local_datetime) < 18) %>%
+  ggplot(aes(x=temperature, y = pm2.5_alt, color=Connection)) +
+  geom_point() +
+  geom_smooth(method = lm) +
+  facet_wrap(~ hour(local_datetime))
+
+         
+
+# Create a scatter plot with a regression line
+
+Dikeman_joined %>% filter(hour(local_datetime) > 4 & hour(local_datetime) < 10) %>%
+  ggplot(aes(x = temperature, y = pm2.5_alt, color=Connection)) +
+  geom_point() +   # Add scatter points
+  labs(x = "Temperature", y = "PM2.5") +  # Label the axes
+  ggtitle("Scatter Plot with Linear Regression")  + # Add a title 
+  geom_smooth(method = "lm") +
+  facet_wrap(~ hour(local_datetime))
+
+am <- data %>% filter(hour(local_datetime) == 6) %>%
+  mutate(Generator = if_else(Connection=="No"), 1, 0)
+
+weather_model_am <- lm(am$pm2.5_alt.RedHook ~ 
+                          am$temperature.RedHook +
+                         am$humidity.RedHook +
+                         am$pressure.RedHook +
+#                         am$Generator +
+                         am$Guest
+                         # am$pm2.5_alt.Upstate
+                    )
+
+summary(weather_model_am)
+
+
+Dikeman_joined %>%
+  ggplot(aes(x = pressure, y = pm2.5_alt)) +
+  geom_smooth(method = "lm", se=F) +
+  geom_point(alpha = 0.5) 
+
+Dikeman_joined %>%
+  ggplot(aes(x = temperature, y = pm2.5_alt, color=as.factor(hour(local_datetime)))) +
+  geom_smooth(method = "lm", se=F) +
+  geom_point(alpha = 0.5) 
+
+Dikeman_joined %>%
+  ggplot(aes(x = humidity, y = pm2.5_alt, color=as.factor(hour(local_datetime)))) +
+  geom_smooth(method = "lm", se=F) +
+  geom_point(alpha = 0.5) 
+
+Dikeman_joined %>%
+  ggplot(aes(x = hour(local_datetime), y = pm2.5_alt, color=Connection)) +
+  geom_smooth(method = "lm", se=F) +
+  geom_jitter(alpha = 0.5) 
+
+```
+

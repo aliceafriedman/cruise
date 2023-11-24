@@ -1,0 +1,131 @@
+---
+title: "Model"
+author: "Alice Friedman"
+date: "2023-10-13"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(caret)
+```
+```{r}
+formula <- pm2.5_alt.RedHook ~ temperature.RedHook + humidity.RedHook + pressure.RedHook + Generator
+
+model <- train(
+  formula,
+  data = am,
+  method = "lm",
+  preProcess = c("center", "scale")
+)
+predicted <- predict(model)
+actual <- am$pm2.5_alt.RedHook
+plot(predicted, actual, main = "Predicted vs. Actual")
+```
+
+```{r}
+formula0 <- PM2.5_corrected ~ temperature
+model0 <- train(
+  formula0,
+  data = Dikeman %>% filter(!is.na(pm25)),
+  method = "lm"
+)
+predicted0 <- predict(model0, newdata = Dikeman)
+actual <- Dikeman$PM2.5_corrected[1:length(predicted)]
+plot(actual ~ predicted0)
+plot(actual ~ Dikeman$temperature[1:length(predicted)])
+summary(model0)
+#Result -- just looking at temperature explains 23$ of variance
+```
+
+```{r}
+formula <- PM2.5_corrected ~ Generator
+
+model <- train(
+  formula,
+  data = Dikeman %>% filter(!is.na(pm25)),
+  method = "lm"
+)
+predicted <- predict(model, newdata = Dikeman)
+actual <- Dikeman$PM2.5_corrected[1:length(predicted)]
+plot(actual ~ predicted)
+
+summary(model)
+#Result -- just looking at generator explains 1% of the variance
+```
+
+```{r}
+formula2 <- PM2.5_corrected ~ Generator + temperature
+
+model2 <- train(
+  formula2,
+  data = Dikeman %>% filter(!is.na(pm25)),
+  method = "lm"
+)
+predicted2 <- predict(model2, newdata = Dikeman)
+actual <- Dikeman$PM2.5_corrected[1:length(predicted)]
+plot(actual ~ predicted2)
+
+summary(model2)
+#Result -- adding temperature gets us up to 24%
+```
+
+```{r}
+formula3 <- PM2.5_corrected ~ Generator + temperature + pm25 # adding regional avg
+
+model3 <- train(
+  formula3,
+  data = Dikeman %>% filter(!is.na(pm25)),
+  method = "lm"
+)
+predicted3 <- predict(model3, newdata = Dikeman)
+actual <- Dikeman$PM2.5_corrected[1:length(predicted3)]
+plot(actual ~ predicted3)
+
+summary(model3)
+#Result -- adding temperature gets us up to 24%... but why are my predictions so low???
+```
+```{r}
+
+data4 <- Dikeman %>% group_by(Date, pm25, Generator) %>% summarise(temperature = mean(temperature)) %>% drop_na()
+  
+formula4 <- pm25 ~ Generator + temperature # adding regional avg
+
+model4 <- train(
+  formula4,
+  data = data4,
+  method = "lm"
+)
+predicted4 <- predict(model4, data4)
+
+actual <- data4$pm25[1:length(predicted4)]
+
+plot(actual ~ predicted4)
+
+summary(model4)
+#Result -- adding temperature gets us up to 24%... but why are my predictions so low???
+```
+```{r}
+# Access RMSE, MAE, R-squared, and Residual SE
+rmse <- summary_output$results$RMSE
+mae <- summary_output$results$MAE
+rsquared <- summary_output$results$Rsquared
+residual_se <- summary_output$results$ResidualSE
+
+# Print or use the metrics
+print(paste("RMSE:", rmse))
+print(paste("MAE:", mae))
+print(paste("R-squared:", rsquared))
+print(paste("Residual SE:", residual_se))
+
+ggplot(Dikeman, aes(x = temperature, y = PM2.5_corrected, color = Generator)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    title = "Scatterplot of PM2.5_corrected vs. Temperature",
+    x = "Temperature",
+    y = "PM2.5_corrected",
+    color = "Generator"
+  )
+
+```
