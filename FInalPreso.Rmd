@@ -8,7 +8,7 @@ output: ioslides_presentation
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, cache = T)
 library(readr)
 library(dplyr)
 library(ggplot2)
@@ -23,6 +23,7 @@ library(forcats)
 library(glmnet)
 library(gridExtra)
 library(stringr)
+library(kableExtra)
 ```
 
 ## Introduction
@@ -156,7 +157,39 @@ p_time_AQI <- ggplot(Dyson) +
 grid.arrange(p_time_AQI, p_time_PM, ncol=1)
 ```
 
+## Data Exploration
 
+```{r, warning=F, message=FALSE}
+BrooklynG_ships <- ggplot(df_hourly |> filter(Terminal=="BCT" | Terminal=="None")) +
+  geom_boxplot(aes(x=Ship_Presence, y = PM2.5_Dyson, color=Generator)) + 
+  geom_jitter(aes(x=Generator, y = PM2.5_Dyson, color=Generator), alpha=.4)
+
+BrooklynG_ships
+
+Brooklyn <- df_hourly |> filter(Terminal=="BCT" | Terminal=="None")
+```
+
+## Data Exploration
+
+```{r tables}
+BKsummary <- Brooklyn |> group_by(Ship_Presence, Generator) |> 
+  summarize(
+    PM1 = mean(PM1_mean, na.rm=T),
+    PM2.5 = mean(PM2.5_Dyson, na.rm=T),
+    PM10 = mean(PM10_mean, na.rm=T)
+    )
+
+barplot(
+  BKsummary |> select(contains("PM")) |> as.matrix(),
+  main = "Air Quality",
+  xlab = "Class",
+  col = c("red","green", "blue"), beside = T
+)
+```
+
+### Data Exploration
+```{r}
+```
 
 
 
