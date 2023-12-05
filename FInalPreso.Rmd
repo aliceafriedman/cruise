@@ -1,0 +1,163 @@
+---
+title: "Cruise Ships' Impact on NYC Air Quality"
+subtitle: "Final Presentation, DATA 698 CUNY SPS"
+author: "Alice Friedman"
+institute: "CUNY School for Professional Studies"
+date: "`r Sys.Date()`"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+library(forecast)
+library(scales)
+library(ggcorrplot)
+library(httr)
+library(jsonlite)
+library(tidyr)
+library(forcats)
+library(glmnet)
+library(gridExtra)
+library(stringr)
+```
+
+## Introduction
+
+- Air Pollution is responsible for an estimated 6.7 million annual premature deaths globally (WHO, 2022).
+  
+- Cruise ship emissions are a visible source of urban pollition in coastal cities, with increasing attention to mitigation strategies like the use of on-shore power while in port
+
+- *Research Gap*: Lack of empirical analysis in the context of New York City, emphasizing the need for a data-driven approach.
+
+## Study Area: Brooklyn Cruise Terminal
+
+- Only terminal on the east coast with shore power system designed to reduce emissions
+
+- Installed in 2016 at the cost of $21M
+
+- Red Hook neighborhood has worst air quality in Brooklyn (NYC.gov, 2023)
+
+- Policy Context: New York City considering local law Int. 1050, requiring cruise ships to use on-shore power by 2028 at all ports (including Manattan Cruise Terminal)
+
+## Research Questions
+
+-  What level of expected improvement in air quality can be expected as a result of improvements to New York City cruise ship terminals and proposed new regulations that will require all cruise ships to use on-shore power by 2028?
+
+-  What feature set among available inputs will best predict air quality *in the absence of consideration of cruise ship inputs*? 
+
+- Does the inclusion of cruise ship features measurably improve these results?
+
+## Literature Review
+
+- Selection of PM 2.5 as a critical parameter due to its known health impacts and reliable measurement methods
+
+- Methodological research included use of circular data (wind direction) and PM 2.5 readings from Purple Air
+
+- Studies from Europe (Hrvoje, 2011; Ruiz-Guerra et al, 2019; Fabregat et al, 2021) and Canada (Poplawski et al, 2011) support cruise ship emissions as measurably impacting on-shore air quality, typically using linear regression
+
+- No studies found to document this relationship in New York City, or using non-parametric methods to identify feature set
+
+## Data Sources
+
+- Weather and airquality data at the Port is taken from a Dyson Instruments weather station located adjacent to the Brooklyn Cruise Terminal
+
+- Observations are taken in 15 minute increments, starting July 11, 2023
+
+- Ship docking data is taken from Port of New York, hourly, and the EDC for information on whether ships can access the on-shore power or must use the generator (all ships outside of BCT use generators)
+
+- Additional data taken from Purple Air sensor at Dyberry farm as a control for wildfire smoke
+
+## Data Preparation
+
+- Weather data features evaluated include temperature, dew point, heat bulb index, humidity, wind speed, wind direction, air pressure reported at average, low, and high as well as rain in inches
+
+- Highly correlated weather features pruned to include only average value
+
+- Wind direction converted to radians and then defined by the sine and cosine of theta to avoid correlation
+
+- Cruise ship compatibility is taken from the EDC and extrapolated to ship dockings in July
+
+- PM 2.5 levels from Purple Air corrected based on EPA 
+
+- Weather data aggregated hourly (average value, except for rain which is summed) to join with cruise ship data and control sensor data from Purple Air
+
+- Final data set has 17 features, 5 possible targets, and 3,396 observations across 141 days (some days contain more than 24 observations because there may be more than one ship present)
+
+## Time Series
+
+```{r load_data, message=FALSE, warning=FALSE}
+#source("purple_pull.R") pulls from API and writes to csvs
+source("cruise_dataprep.R") #loads CSV generated from worlshipny.org and merges with EDC info on shore power
+source("PortSide_dataprep.R") #loads CSV aggregates as hourly data ("Dyson_hourly") and daily"
+```
+
+```{r join_data_hourly}
+Dyberry <- read_csv("Dyberry.csv", show_col_types = FALSE ) #loads PM2.5 from purple air at Dyberry Farm
+
+ship_cols <-c(
+  "Ship_Presence","Terminal", "Line", "Generator"
+)
+
+drop_list <-c(
+  "degrees_mean",
+  "Arrival", "ArrivalHour",
+  "Departure", "DepartureHour",
+  "degrees_mean"
+)
+
+#Join PortSide NY data to purple air data to cruise ships data to create an hourly data frame
+df_hourly <- left_join(Dyson_hourly, dplyr::select(Dyberry, local_datetime, PM2.5_corrected), by=c("hour" = "local_datetime"))  %>%     left_join(cruise_ships_hourly, by=c("hour"="Hour")) %>%
+  rename(
+    PM2.5_Dyson = PM2.5_mean
+    ) %>%
+  relocate(hour, all_of(ship_cols)) %>% 
+  dplyr::select(-all_of(drop_list)) %>%
+  mutate( # add features related to hour and day of week
+    dayofweek = wday(hour),
+    hourofday = hour(hour)
+  )
+write_csv(df_hourly, "Hourly_Joined.csv")
+```
+
+```{r join_daily}
+df_daily<- Dyson_daily %>% left_join(cruise_ships_daily, by=c("date"="Date")) %>%
+  relocate(date, any_of(ship_cols)) %>% 
+  dplyr::select(-any_of(drop_list)) %>%
+  mutate(
+    dayofweek = wday(date)
+    ) 
+
+write_csv(df_daily, "Daily_Joined.csv")
+```
+
+```{r plot1}
+p_time_PM <- ggplot(df_hourly %>% filter(complete.cases(.))) +
+  geom_line(aes(x=hour, y=PM2.5_Dyson, color="PM 2.5 Levels in Red Hook")) +
+  geom_line(aes(x=hour, y=PM2.5_corrected, color="PM 2.5 Levels Upstate\n(Dyberry Farm Control)")) +
+  scale_x_datetime(breaks = scales::date_breaks("1 month"), labels = date_format("%m %d")) +
+  ylab("PM 2.5 (Parts Per Million)") + 
+  xlab("Date") +
+  theme(aspect.ratio = 1/4)+ 
+  scale_color_manual(values = c("blue", "lightblue"), name = "Legend Title")
+
+p_time_AQI <- ggplot(Dyson) +
+  geom_line(aes(x=DateTime, y=AQI, color = "Actual AQI")) +  
+  geom_line(aes(x=DateTime, y=AQI_adj, color = "Adjusted for Woodsmoke")) +  
+  scale_x_datetime(breaks = scales::date_breaks("1 month"), labels = date_format("%m %d")) +
+  ylab("AQI") + 
+  xlab("Date") +
+  theme(aspect.ratio = 1/4)+ 
+  scale_color_manual(values = c("blue", "lightblue"), name = "Legend Title")
+
+grid.arrange(p_time_AQI, p_time_PM, ncol=1)
+```
+
+
+
+
+
+

@@ -1,0 +1,447 @@
+Date,Ship,Line,Arrival,Departure,Terminal
+1/2/23,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+1/2/23,Norwegian Gem,Norwegian Cruise Line,10:00 AM,4:00 PM,MCT
+1/3/23,Queen Mary 2,Cunard,6:30 AM,5:00 PM,BCT
+1/8/23,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,3:00 PM,MCT
+1/11/23,Norwegian Gem,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+1/13/23,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+1/16/23,Norwegian Gem,Norwegian Cruise Line,10:00 AM,4:00 PM,MCT
+1/19/23,Queen Victoria,Cunard,AM,---,MCT
+1/20/23,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,3:00 PM,MCT
+1/20/23,Queen Victoria,Cunard,---,5:00 PM,MCT
+1/24/23,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+1/25/23,Norwegian Gem,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+2/1/23,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+2/4/23,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+2/6/23,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,3:00 AM,MCT
+2/12/23,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+2/17/23,Norwegian Gem,Norwegian Cruise Line,10:00 AM,4:00 PM,MCT
+2/18/23,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,5:00 PM,MCT
+2/19/23,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+2/26/23,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+2/26/23,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,5:00 PM,MCT
+2/27/23,Norwegian Gem,Norwegian Cruise Line,10:00 AM,4:00 PM,MCT
+3/5/23,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+3/10/23,Norwegian Gem,Norwegian Cruise Line,10:00 AM,4:00 PM,MCT
+3/10/23,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,5:00 PM,MCT
+3/12/23,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+3/18/23,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,5:00 PM,MCT
+3/19/23,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+3/21/23,Norwegian Gem,Norwegian Cruise Line,10:00 AM,4:00 PM,MCT
+3/26/23,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+3/26/23,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+3/28/23,Norwegian Prima,Norwegian Cruise Line,11:00 AM,4:00 PM,MCT
+3/31/23,Norwegian Gem,Norwegian Cruise Line,10:00 AM,3:30 PM,MCT
+4/2/23,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+4/2/23,Norwegian Prima,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+4/5/23,Norwegian Gem,Norwegian Cruise Line,N/A,4:00 PM,MCT
+4/5/23,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+4/6/23,MS Rotterdam,Holland America Line,7:00 AM,---,MCT
+4/7/23,MS Rotterdam,Holland America Line,---,4:00 PM,MCT
+4/8/23,Amera,Phoenix Reisen Cruises,9:00 AM,---,MCT
+4/9/23,Amera,Phoenix Reisen Cruises,---,5:00 PM,MCT
+4/9/23,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+4/9/23,Norwegian Prima,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+4/15/23,Norwegian Gem,Norwegian Cruise Line,10:00 AM,4:00 PM,MCT
+4/15/23,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,N/A,MCT
+4/16/23,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+4/16/23,Norwegian Prima,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+4/18/23,Norwegian Sun,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+4/19/23,Viking Octantis,Viking Expedition Cruises,7:00 AM,10:00 PM,MCT
+4/20/23,Costa Deliziosa,Costa Cruises,8:00 AM,---,MCT
+4/20/23,MSC Meraviglia,MSC Cruises,6:30 AM,---,BCT
+4/20/23,Norwegian Breakaway,Norwegian Cruise Line,6:30 AM,5:00 PM,MCT
+4/20/23,Norwegian Dawn,Norwegian Cruise Line,7:00 AM,5:00 PM,MCT
+4/21/23,Costa Deliziosa,Costa Cruises,---,6:00 PM,MCT
+4/21/23,MSC Meraviglia,MSC Cruises,---,---,BCT
+4/22/23,MSC Meraviglia,MSC Cruises,---,3:00 PM,BCT
+4/22/23,Norwegian Epic,Norwegian Cruise Line,8:30 AM,7:30 PM,MCT
+4/22/23,Ocean Explorer,Vantage Travel,N/A,---,MCT
+4/23/23,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+4/23/23,Norwegian Prima,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+4/23/23,Ocean Explorer,Vantage Travel,---,N/A,MCT
+4/29/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+4/30/23,Enchantment of the Seas,Royal Caribbean,N/A,5:00 PM,CLCP
+4/30/23,Norwegian Prima,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+4/30/23,Queen Mary 2,Cunard,6:30 AM,5:00 PM,BCT
+5/1/23,Anthem of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP
+5/4/23,Liberty of the Seas,Royal Caribbean,N/A,3:00 PM,CLCP
+5/6/23,Celebrity Summit,Celebrity Cruises,8:00 AM,4:00 PM,CLCP
+5/7/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+5/7/23,Norwegian Prima,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+5/7/23,Oasis of the Seas,Royal Caribbean,N/A,4:00 PM,CLCP
+5/13/23,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP
+5/14/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+5/14/23,Norwegian Joy,Norwegian Cruise Line,N/A,11:00 PM,MCT
+5/14/23,Norwegian Prima,Norwegian Cruise Line,7:00 AM,5:00 PM,MCT
+5/14/23,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP
+5/15/23,Celebrity Summit,Celebrity Cruises,8:00 AM,4:00 PM,CLCP
+5/15/23,Viking Polaris,Viking Expedition Cruises,6:00 AM,5:00 PM,MCT
+5/17/23,Marella Discovery,Marella Cruises,7:00 AM,---,MCT
+5/18/23,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP
+5/18/23,Marella Discovery,Marella Cruises,---,6:00 PM,MCT
+5/21/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+5/21/23,Norwegian Joy,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+5/21/23,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP
+5/23/23,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP
+5/25/23,Celebrity Summit,Celebrity Cruises,8:00 AM,4:00 PM,CLCP
+5/26/23,Queen Mary 2,Cunard,6:30 AM,5:00 PM,BCT
+5/27/23,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP
+5/28/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+5/28/23,Norwegian Joy,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+5/28/23,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP
+5/31/23,Marella Discovery,Marella Cruises,7:00 AM,---,MCT
+5/31/23,Seven Seas Navigator,Regent Seven Seas,6:00 AM,6:00 PM,MCT
+5/31/23,Silver Shadow,Silversea Cruises,8:00 AM,---,MCT
+6/1/23,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP
+6/1/23,Marella Discovery,Marella Cruises,---,6:00 PM,MCT
+6/1/23,Silver Shadow,Silversea Cruises,---,1:00 PM,MCT
+6/2/23,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP
+6/4/23,Celebrity Summit,Celebrity Cruises,8:00 AM,4:00 PM,CLCP
+6/4/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+6/4/23,Norwegian Joy,Norwegian Cruise Line,7:00 AM,6:00 PM,MCT
+6/6/23,Viking Saturn,Viking Ocean Cruises,N/A,---,MCT
+6/7/23,Viking Saturn,Viking Ocean Cruises,---,N/A,MCT
+6/9/23,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP
+6/10/23,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP
+6/11/23,Celebrity Summit,Celebrity Cruises,8:00 AM,4:00 PM,CLCP
+6/11/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+6/11/23,Norwegian Joy,Norwegian Cruise Line,7:00 AM,6:00 PM,MCT
+6/13/23,Carnival Venezia,Carnival Cruise Line,4:00 AM,---,MCT
+6/14/23,Carnival Venezia,Carnival Cruise Line,---,---,MCT
+6/14/23,Marella Discovery,Marella Cruises,7:00 AM,---,MCT
+6/15/23,Carnival Venezia,Carnival Cruise Line,---,4:00 PM,MCT
+6/15/23,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP
+6/15/23,Marella Discovery,Marella Cruises,---,5:30 PM,MCT
+6/16/23,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP
+6/18/23,Celebrity Summit,Celebrity Cruises,8:00 AM,4:00 PM,CLCP
+6/18/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+6/18/23,Norwegian Joy,Norwegian Cruise Line,7:00 AM,6:00 PM,MCT
+6/19/23,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+6/20/23,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP
+6/20/23,Viking Neptune,Viking Ocean Cruises,7:00 AM,---,MCT
+6/21/23,Viking Neptune,Viking Ocean Cruises,---,2:00 PM,MCT
+6/22/23,Seven Seas Navigator,Regent Seven Seas,11:00 AM,---,MCT
+6/23/23,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP
+6/23/23,Seven Seas Navigator,Regent Seven Seas,7:00 AM,6:00 PM,MCT
+6/24/23,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP
+6/25/23,Celebrity Summit,Celebrity Cruises,8:00 AM,4:00 PM,CLCP
+6/25/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+6/25/23,Norwegian Joy,Norwegian Cruise Line,7:00 AM,11:00 PM,MCT
+6/27/23,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+6/28/23,Marella Discovery,Marella Cruises,7:00 AM,---,MCT
+6/29/23,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP
+6/29/23,Marella Discovery,Marella Cruises,---,5:30 PM,MCT
+6/30/23,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP
+6/30/23,Queen Mary 2,Cunard,6:30 AM,5:00 PM,BCT
+7/1/23,Norwegian Joy,Norwegian Cruise Line,7:00 AM,3:00 PM,MCT
+7/2/23,Celebrity Summit,Celebrity Cruises,8:00 AM,4:00 PM,CLCP
+7/2/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+7/5/23,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+7/7/23,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP
+7/7/23,Queen Mary 2,Cunard,6:30 AM,5:00 PM,BCT
+7/8/23,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP
+7/9/23,Celebrity Summit,Celebrity Cruises,8:00 AM,4:00 PM,CLCP
+7/9/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+7/9/23,Norwegian Joy,Norwegian Cruise Line,7:00 AM,6:00 PM,MCT
+7/12/23,Marella Discovery,Marella Cruises,7:00 AM,---,MCT
+7/13/23,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+7/13/23,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP
+7/13/23,Marella Discovery,Marella Cruises,---,5:30 PM,MCT
+7/13/23,Viking Neptune,Viking Ocean Cruises,N/A,---,MCT
+7/14/23,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP
+7/14/23,Viking Neptune,Viking Ocean Cruises,---,---,MCT
+7/15/23,Viking Neptune,Viking Ocean Cruises,---,N/A,MCT
+7/16/23,Celebrity Summit,Celebrity Cruises,8:00 AM,4:00 PM,CLCP
+7/16/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+7/16/23,Norwegian Joy,Norwegian Cruise Line,7:00 AM,6:00 PM,MCT
+7/17/23,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+7/18/23,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP
+7/21/23,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP
+7/21/23,Queen Mary 2,Cunard,6:30 AM,5:00 PM,BCT
+7/22/23,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP
+7/23/23,Celebrity Summit,Celebrity Cruises,8:00 AM,4:00 PM,CLCP
+7/23/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+7/23/23,Norwegian Joy,Norwegian Cruise Line,7:00 AM,6:00 PM,MCT
+7/25/23,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+7/26/23,Caribbean Princess,Princess Cruises,7:00 AM,7:00 PM,BCT
+7/26/23,Marella Discovery,Marella Cruises,7:00 AM,---,MCT
+7/27/23,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP
+7/27/23,Marella Discovery,Marella Cruises,---,5:30 PM,MCT
+7/28/23,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP
+7/30/23,Celebrity Summit,Celebrity Cruises,8:00 AM,4:00 PM,CLCP
+7/30/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+7/30/23,Norwegian Joy,Norwegian Cruise Line,7:00 AM,6:00 PM,MCT
+8/1/23,Insignia,Oceania Cruises,4:00 PM,---,MCT
+8/2/23,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+8/2/23,Insignia,Oceania Cruises,---,4:00 PM,MCT
+8/4/23,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP
+8/5/23,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP
+8/6/23,Celebrity Summit,Celebrity Cruises,8:00 AM,4:00 PM,CLCP
+8/6/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+8/6/23,Norwegian Joy,Norwegian Cruise Line,7:00 AM,6:00 PM,MCT
+8/6/23,Viking Neptune,Viking Ocean Cruises,N/A,---,MCT
+8/7/23,Viking Neptune,Viking Ocean Cruises,---,N/A,MCT
+8/9/23,Marella Discovery,Marella Cruises,7:00 AM,---,MCT
+8/10/23,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+8/10/23,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP
+8/10/23,Marella Discovery,Marella Cruises,---,5:30 PM,MCT
+8/13/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+8/13/23,Norwegian Joy,Norwegian Cruise Line,7:00 AM,6:00 PM,MCT
+8/13/23,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP
+8/14/23,Caribbean Princess,Princess Cruises,7:00 AM,7:00 PM,BCT
+8/14/23,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+8/15/23,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP
+8/16/23,Coral Princess,Princess Cruises,6:30 AM,---,MCT
+8/17/23,Coral Princess,Princess Cruises,---,5:00 PM,MCT
+8/17/23,Viking Polaris,Viking Expeditions,N/A,N/A,MCT
+8/18/23,Queen Mary 2,Cunard,6:30 AM,5:00 PM,BCT
+8/19/23,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+8/19/23,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP
+8/20/23,Norwegian Joy,Norwegian Cruise Line,7:00 AM,6:00 PM,MCT
+8/20/23,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP
+8/21/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+8/22/23,Norwegian Escape,Norwegian Cruise Line,N/A,8:00 PM,MCT
+8/23/23,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+8/23/23,Marella Discovery,Marella Cruises,7:00 AM,---,MCT
+8/24/23,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP
+8/24/23,Marella Discovery,Marella Cruises,---,5:30 PM,MCT
+8/27/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+8/27/23,Norwegian Escape,Norwegian Cruise Line,7:00 AM,5:30 PM,MCT
+8/27/23,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP
+8/30/23,Caribbean Princess,Princess Cruises,7:00 AM,5:00 PM,BCT
+8/30/23,Insignia,Oceania Cruises,8:00 AM,5:00 PM,MCT
+8/30/23,Norwegian Joy,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+8/30/23,Viking Saturn,Viking Ocean Cruises,N/A,N/A,MCT
+8/31/23,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+9/2/23,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP
+9/3/23,Norwegian Escape,Norwegian Cruise Line,7:00 AM,5:30 PM,MCT
+9/3/23,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP
+9/4/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+9/4/23,Norwegian Joy,Norwegian Cruise Line,7:00 AM,3:00 PM,MCT
+9/4/23,Viking Star,Viking Ocean Cruises,N/A,---,MCT
+9/5/23,Viking Star,Viking Ocean Cruises,---,4:30 PM,MCT
+9/6/23,Insignia,Oceania Cruises,8:00 AM,5:00 PM,MCT
+9/6/23,Marella Discovery,Marella Cruises,7:00 AM,---,MCT
+9/6/23,Seabourn Quest,Seabourn,7:00 AM,5:00 PM,MCT
+9/7/23,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP
+9/7/23,Marella Discovery,Marella Cruises,---,5:30 PM,MCT
+9/8/23,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+9/9/23,Emerald Princess,Princess Cruises,6:00 AM,5:00 PM,BCT
+9/10/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+9/10/23,Norwegian Escape,Norwegian Cruise Line,7:00 AM,5:30 PM,MCT
+9/10/23,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP
+9/11/23,Amera,Phoenix Reisen Cruises,7:30 AM,---,MCT
+9/11/23,Queen Mary 2,Cunard,6:00 AM,5:00 PM,BCT
+9/12/23,Amera,Phoenix Reisen Cruises,---,6:00 PM,MCT
+9/13/23,Insignia,Oceania Cruises,8:00 AM,5:00 PM,MCT
+9/14/23,Jewel of the Seas,Royal Caribbean,7:00 AM,---,CLCP
+9/15/23,Emerald Princess,Princess Cruises,N/A,---,BCT
+9/15/23,Vista,Oceania Cruises,5:00 AM,---,MCT
+9/15/23,Jewel of the Seas,Royal Caribbean,---,6:30 PM,CLCP
+9/15/23,Silver Shadow,Silversea Cruises,7:00 AM,---,MCT
+9/16/23,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+9/16/23,Vista,Oceania Cruises,---,---,MCT
+9/16/23,Norwegian Escape,Norwegian Cruise Line,N/A,---,MCT
+9/16/23,Emerald Princess,Princess Cruises,---,5:00 PM,BCT
+9/16/23,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP
+9/16/23,Silver Shadow,Silversea Cruises,---,2:00 PM,MCT
+9/17/23,Norwegian Escape,Norwegian Cruise Line,---,5:30 PM,MCT
+9/17/23,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP
+9/17/23,Seven Seas Mariner,Regent Seven Seas,6:00 AM,6:00 PM,MCT
+9/17/23,Vista,Oceania Cruises,---,---,MCT
+9/18/23,Aurora,P&O Cruises,AM,---,MCT
+9/18/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+9/18/23,Vista,Oceania Cruises,---,6:00 PM,MCT
+9/19/23,Aurora,P&O Cruises,---,---,MCT
+9/19/23,Caribbean Princess,Princess Cruises,7:00 AM,7:00 PM,BCT
+9/20/23,Aurora,P&O Cruises,---,7:00 PM,MCT
+9/20/23,Insignia,Oceania Cruises,8:00 AM,5:00 PM,MCT
+9/20/23,Marella Discovery,Marella Cruises,7:00 AM,---,BCT
+9/20/23,Norwegian Joy,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+9/21/23,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP
+9/21/23,Marella Discovery,Marella Cruises,---,5:30 PM,BCT
+9/22/23,Mein Schiff 6,TUI Cruises,9:30 AM,---,CLCP
+9/23/23,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+9/23/23,Emerald Princess,Princess Cruises,6:00 AM,6:00 PM,BCT
+9/23/23,Mein Schiff 6,TUI Cruises,---,11:59 PM,CLCP
+9/24/23,MSC Meraviglia,MSC Cruises,7:00 AM,7:00 PM,BCT
+9/24/23,Norwegian Escape,Norwegian Cruise Line,7:00 AM,5:30 PM,MCT
+9/24/23,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP
+9/24/23,Viking Octantis,Viking Expeditions Cruises,N/A,N/A,MCT
+9/25/23,Explora I,Explora Journeys,7:00 AM,---,MCT
+9/25/23,Norwegian Joy,Norwegian Cruise Line,7:00 AM,3:00 PM,MCT
+9/26/23,Explora I,Explora Journeys,---,6:00 AM,MCT
+9/27/23,Crystal Serenity,Crystal Cruises,8:00 AM,3:00 PM,MCT
+9/27/23,Insignia,Oceania Cruises,6:00 AM,7:00 PM,MCT
+9/27/23,Viking Star,Viking Ocean Cruises,11:30 AM,---,MCT
+9/28/23,Disney Dream,Disney Cruise Line,5:30 AM,4:00 PM,MCT
+9/28/23,Jewel of the Seas,Royal Caribbean,8:00 AM,5:00 PM,CLCP
+9/28/23,Viking Star,Viking Ocean Cruises,---,---,MCT
+9/29/23,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+9/29/23,Queen Mary 2,Cunard,6:30 AM,5:00 PM,BCT
+9/29/23,Viking Star,Viking Ocean Cruises,---,N/A,MCT
+9/30/23,Emerald Princess,Princess Cruises,6:00 AM,6:00 PM,BCT
+9/30/23,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP
+9/30/23,Pacific World,Peaceboat,6:00 AM,11:00 PM,MCT
+10/1/23,Norwegian Escape,Norwegian Cruise Line,7:00 AM,5:30 PM,MCT
+10/1/23,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP
+10/3/23,Disney Dream,Disney Cruise Line,7:30 AM,4:00 PM,MCT
+10/4/23,Marella Discovery,Marella Cruises,7:00 AM,---,MCT
+10/4/23,MSC Meraviglia,MSC Cruises,7:00 AM,7:00 PM,BCT
+10/5/23,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP
+10/5/23,Marella Discovery,Marella Cruises,---,5:30 PM,MCT
+10/5/23,Silver Shadow,Silversea Cruises,7:00 AM,7:00 PM,MCT
+10/6/23,Mein Schiff 6,TUI Cruises,10:30 AM,---,CLCP
+10/7/23,Disney Dream,Disney Cruise Line,7:30 AM,5:00 PM,MCT
+10/7/23,Emerald Princess,Princess Cruises,6:00 AM,5:00 PM,BCT
+10/7/23,Mein Schiff 6,TUI Cruises,---,11:59 PM,CLCP
+10/7/23,Silver Endeavour,Sliversea Cruises,6:00 AM,N/A,MCT
+10/8/23,Norwegian Escape,Norwegian Cruise Line,7:00 AM,5:30 PM,MCT
+10/8/23,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP
+10/8/23,Spirit of Discovery,Saga Cruises,8:00 AM,5:00 PM,MCT
+10/8/23,The World,The World Resident Holdings,8:30 AM,---,MCT
+10/9/23,Caribbean Princess,Princess Cruises,7:00 AM,7:00 PM,BCT
+10/9/23,Seven Seas Mariner,Regent Seven Seas,6:00 AM,6:00 PM,MCT
+10/9/23,Vista,Oceania Cruises,8:00 AM,---,MCT
+10/9/23,The World,The World Resident Holdings,---,---,MCT
+10/10/23,Vista,Oceania Cruises,---,5:00 PM,MCT
+10/10/23,The World,The World Resident Holdings,---,---,MCT
+10/11/23,Norwegian Joy,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+10/11/23,Norwegian Sky,Norwegian Cruise Line,8:00 AM,10:00 PM,MCT
+10/11/23,The World,The World Resident Holdings,---,N/A,MCT
+10/12/23,Balmoral,Fred Olsen Cruise Lines,AM,---,MCT
+10/12/23,Explora I,Explora Journeys,7:00 AM,---,MCT
+10/12/23,Seabourn Quest,Seabourn Cruise Line,7:00 AM,5:00 PM,MCT
+10/13/23,Balmoral,Fred Olsen Cruise Lines,---,---,MCT
+10/13/23,Crystal Serenity,Crystal Cruises,7:00 AM,8:00 PM,MCT
+10/13/23,Disney Dream,Disney Cruise Line,7:30 AM,4:00 PM,MCT
+10/13/23,Explora I,Explora Journeys,---,---,MCT
+10/13/23,Queen Mary 2,Cunard,6:30 AM,5:00 PM,BCT
+10/14/23,Balmoral,Fred Olsen Cruise Lines,---,Early AM,MCT
+10/14/23,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+10/14/23,Emerald Princess,Princess Cruises,6:00 AM,5:00 PM,BCT
+10/14/23,Explora I,Explora Journeys,---,6:00 AM,MCT
+10/14/23,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP
+10/15/23,MSC Meraviglia,MSC Cruises,7:00 AM,7:00 PM,BCT
+10/15/23,Norwegian Escape,Norwegian Cruise Line,7:00 AM,5:30 PM,MCT
+10/15/23,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP
+10/16/23,Mein Schiff 6,TUI Cruises,11:00 AM,---,CLCP
+10/16/23,Norwegian Joy,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+10/17/23,Disney Dream,Disney Cruise Line,7:30 AM,4:00 PM,MCT
+10/17/23,Mein Schiff 6,TUI Cruises,---,---,CLCP
+10/17/23,MS Europa 2,Hapag-Lloyd Cruises,7:00 AM,---,MCT
+10/18/23,Marella Discovery,Marella Cruises,7:00 AM,---,MCT
+10/18/23,Mein Schiff 6,TUI Cruises,---,10:00 PM,CLCP
+10/18/23,MS Europa 2,Hapag-Lloyd Cruises,---,5:00 PM,MCT
+10/19/23,MS Europa,Hapag-Lloyd Cruises,4:00 PM,---,MCT
+10/19/23,Liberty of the Seas,Royal Caribbean,7:00 AM,3:00 PM,CLCP
+10/19/23,Marella Discovery,Marella Cruises,---,5:30 PM,MCT
+10/20/23,Jewel of the Seas,Royal Caribbean,8:00 AM,5:00 PM,CLCP
+10/20/23,MS Europa,Hapag-Lloyd Cruises,---,---,MCT
+10/21/23,Disney Dream,Disney Cruise Line,7:30 AM,4:00 PM,MCT
+10/21/23,Emerald Princess,Princess Cruises,6:00 AM,5:00 PM,BCT
+10/21/23,MS Europa,Hapag-Lloyd Cruises,---,---,MCT
+10/22/23,MS Europa,Hapag-Lloyd Cruises,---,7:00 AM,MCT
+10/22/23,Norwegian Escape,Norwegian Cruise Line,7:00 AM,6:00 PM,MCT
+10/22/23,Oasis of the Seas,Royal Caribbean,6:00 AM,4:00 PM,CLCP
+10/23/23,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+10/25/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+10/25/23,Silver Shadow,Silversea Cruises,7:00 AM,7:00 PM,MCT
+10/26/23,Mein Schiff 6,TUI Cruises,8:00 AM,---,CLCP
+10/27/23,Artania,Phoenix Reisen Cruises,7:00 AM,---,MCT
+10/27/23,Caribbean Princess,Princess Cruises,7:00 AM,11:00 PM,BCT
+10/27/23,Disney Dream,Disney Cruise Line,7:30 AM,4:00 PM,MCT
+10/27/23,Mein Schiff 6,TUI Cruises,---,10:00 PM,CLCP
+10/28/23,Artania,Phoenix Reisen Cruises,---,7:00 PM,MCT
+10/28/23,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+10/28/23,Emerald Princess,Princess Cruises,6:00 AM,5:00 PM,BCT
+10/28/23,Liberty of the Seas,Royal Caribbean,7:00 AM,N/A,CLCP
+10/29/23,Crystal Serenity,Crystal Cruises,7:00 AM,10:00 PM,BCT
+10/29/23,Explora I,Explora Journeys,7:00 AM,---,MCT
+10/29/23,Norwegian Escape,Norwegian Cruise Line,7:00 AM,6:00 PM,MCT
+10/29/23,Oasis of the Seas,Royal Caribbean,6:00 AM,N/A,CLCP
+10/29/23,MS Europa 2,Hapag-Lloyd Cruises,8:00 AM,---,MCT
+10/30/23,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+10/30/23,Explora I,Explora Journeys,---,7:00 PM,MCT
+10/30/23,MS Europa 2,Hapag-Lloyd Cruises,---,10:00 AM,MCT
+10/31/23,Disney Dream,Disney Cruise Line,7:30 AM,4:00 PM,MCT
+10/31/23,Seven Seas Mariner,Regent Seven Seas,6:00 AM,6:00 PM,MCT
+11/2/23,Seabourn Quest,Seabourn Cruise Line,8:00 AM,---,MCT
+11/3/23,Seabourn Quest,Seabourn Cruise Line,---,12:00 PM,MCT
+11/4/23,Disney Dream,Disney Cruise Line,7:30 AM,4:00 PM,MCT
+11/4/23,Emerald Princess,Princess Cruises,6:00 AM,5:00 PM,BCT
+11/4/23,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+11/5/23,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+11/5/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+11/5/23,Norwegian Escape,Norwegian Cruise Line,7:00 AM,8:00 PM,MCT
+11/9/23,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+11/9/23,Jewel of the Seas,Royal Caribbean,8:00 AM,5:00 PM,CLCP
+11/10/23,Norwegian Escape,Norwegian Cruise Line,7:00 AM,8:00 PM,MCT
+11/11/23,Insignia,Oceania Cruises,1:00 PM,---,MCT
+11/12/23,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+11/12/23,Insignia,Oceania Cruises,---,6:00 PM,MCT
+11/13/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+11/13/23,Silver Shadow,Silversea Cruises,8:00 AM,---,MCT
+11/14/23,Silver Shadow,Silversea Cruises,---,1:00 PM,MCT
+11/15/23,Norwegian Escape,Norwegian Cruise Line,7:00 AM,N/A,MCT
+11/15/23,Norwegian Jade,Norwegian Cruise Line,7:00 AM,N/A,MCT
+11/17/23,Silver Nova,Silversea Cruises,7:00 AM,---,MCT
+11/18/23,Silver Nova,Silversea Cruises,---,11:00 PM,MCT
+11/19/23,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+11/19/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+11/19/23,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+11/20/23,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+11/26/23,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+11/26/23,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+11/26/23,Queen Mary 2,Cunard,6:30 AM,5:00 PM,BCT
+11/27/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+11/28/23,Norwegian Breakaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+11/30/23,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+12/1/23,Norwegian Prima,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+12/2/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+12/3/23,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+12/6/23,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+12/8/23,Queen Mary 2,Cunard,6:30 AM,5:00 PM,BCT
+12/9/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+12/10/23,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+12/10/23,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+12/16/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+12/16/23,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+12/17/23,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+12/18/23,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+12/19/23,Norwegian Gem,Norwegian Cruise Line,7:00 AM,N/A,MCT
+12/21/23,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+12/22/23,Queen Mary 2,Cunard,6:30 AM,5:00 PM,BCT
+12/23/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+12/24/23,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+12/28/23,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+12/30/23,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+12/31/23,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+1/2/24,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+1/3/24,Queen Mary 2,Cunard,6:30 AM,5:00 PM,BCT
+1/6/24,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+1/6/24,MSC Meraviglia,MSC Cruises,7:00 AM,7:00 PM,BCT
+1/7/24,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+1/12/24,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+1/14/24,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+1/15/24,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+1/17/24,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+1/18/24,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+1/23/24,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+1/26/24,MSC Meraviglia,MSC Cruises,7:00 AM,7:00 PM,BCT
+1/27/24,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+1/29/24,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+2/2/24,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+2/4/24,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+2/6/24,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+2/9/24,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+2/11/24,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+2/11/24,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+2/16/24,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
+2/17/24,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+2/18/24,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+2/23/24,Carnival Venezia,Carnival Cruise Line,8:00 AM,4:00 PM,MCT
+2/25/24,Anthem of the Seas,Royal Caribbean,6:00 AM,3:00 PM,CLCP
+2/25/24,MSC Meraviglia,MSC Cruises,7:00 AM,3:00 PM,BCT
+2/26/24,Norwegian Getaway,Norwegian Cruise Line,7:00 AM,4:00 PM,MCT
