@@ -24,6 +24,9 @@ library(glmnet)
 library(gridExtra)
 library(stringr)
 library(kableExtra)
+library(caret)
+library(leaps)
+library(MASS)
 ```
 
 ## Introduction
@@ -48,9 +51,9 @@ library(kableExtra)
 
 -  What level of expected improvement in air quality can be expected as a result of improvements to New York City cruise ship terminals and proposed new regulations that will require all cruise ships to use on-shore power by 2028?
 
--  What feature set among available inputs will best predict air quality *in the absence of consideration of cruise ship inputs*? 
+    - What feature set among available inputs will best predict air quality *in the absence of consideration of cruise ship inputs*? 
 
-- Does the inclusion of cruise ship features measurably improve these results?
+    - Does the inclusion of cruise ship features measurably improve these results?
 
 ## Literature Review
 
@@ -71,6 +74,8 @@ library(kableExtra)
 - Ship docking data is taken from Port of New York, hourly, and the EDC for information on whether ships can access the on-shore power or must use the generator (all ships outside of BCT use generators)
 
 - Additional data taken from Purple Air sensor at Dyberry farm as a control for wildfire smoke
+
+    - Also explored alternative method of using wood-smake adjusted AQI as a target
 
 ## Data Preparation
 
@@ -104,39 +109,38 @@ ship_cols <-c(
 )
 
 drop_list <-c(
-  "degrees_mean",
-  "Arrival", "ArrivalHour",
-  "Departure", "DepartureHour",
   "degrees_mean"
 )
 
 #Join PortSide NY data to purple air data to cruise ships data to create an hourly data frame
-df_hourly <- left_join(Dyson_hourly, dplyr::select(Dyberry, local_datetime, PM2.5_corrected), by=c("hour" = "local_datetime"))  %>%     left_join(cruise_ships_hourly, by=c("hour"="Hour")) %>%
-  rename(
-    PM2.5_Dyson = PM2.5_mean
-    ) %>%
-  relocate(hour, all_of(ship_cols)) %>% 
+df_hourly <- left_join(Dyson_hourly, dplyr::select(Dyberry, local_datetime, PM2.5_corrected), by=c("hour" = "local_datetime"))  %>%     left_join(cruise_ships_hourly_wide, by=c("hour"="Hour")) %>%
+  relocate(hour, all_of(starts_with(ship_cols))) %>% 
   dplyr::select(-all_of(drop_list)) %>%
   mutate( # add features related to hour and day of week
     dayofweek = wday(hour),
-    hourofday = hour(hour)
-  )
+    hourofday = hour(hour),
+    Ships = rowSums(across(contains("Ship")))
+    )
+
+  
 write_csv(df_hourly, "Hourly_Joined.csv")
 ```
 
 ```{r join_daily}
-df_daily<- Dyson_daily %>% left_join(cruise_ships_daily, by=c("date"="Date")) %>%
+df_daily <- Dyson_daily %>% 
+  left_join(cruise_ships_daily_wide, by=c("date"="Date")) %>%
   relocate(date, any_of(ship_cols)) %>% 
-  dplyr::select(-any_of(drop_list)) %>%
+  dplyr::select(-any_of(drop_list), -Hour) %>%
   mutate(
-    dayofweek = wday(date)
+    dayofweek = wday(date),
+    Ships = rowSums(across(contains("Ship")))
     ) 
 
-write_csv(df_daily, "Daily_Joined.csv")
+write_csv(df_daily, "Daily_Joined.csv") 
 ```
 
 ```{r plot1}
-p_time_PM <- ggplot(df_hourly %>% filter(complete.cases(.))) +
+p_time_PM <- ggplot(df_hourly %>% dplyr::filter(complete.cases(.))) +
   geom_line(aes(x=hour, y=PM2.5_Dyson, color="PM 2.5 Levels in Red Hook")) +
   geom_line(aes(x=hour, y=PM2.5_corrected, color="PM 2.5 Levels Upstate\n(Dyberry Farm Control)")) +
   scale_x_datetime(breaks = scales::date_breaks("1 month"), labels = date_format("%m %d")) +
@@ -160,37 +164,216 @@ grid.arrange(p_time_AQI, p_time_PM, ncol=1)
 ## Data Exploration
 
 ```{r, warning=F, message=FALSE}
-BrooklynG_ships <- ggplot(df_hourly |> filter(Terminal=="BCT" | Terminal=="None")) +
-  geom_boxplot(aes(x=Ship_Presence, y = PM2.5_Dyson, color=Generator)) + 
-  geom_jitter(aes(x=Generator, y = PM2.5_Dyson, color=Generator), alpha=.4)
 
-BrooklynG_ships
 
-Brooklyn <- df_hourly |> filter(Terminal=="BCT" | Terminal=="None")
+ggplot(df_hourly, aes(x=Ships, y = PM2.5_Dyson)) +
+  geom_jitter(alpha=.4) + 
+  geom_smooth(method="lm")
+
+ggplot(df_hourly, aes(x=Ships, y = AQI_mean)) +
+  geom_jitter(alpha=.4) + 
+  geom_smooth(method="lm")
+
+
+ggplot(df_hourly, aes(x=Generator, y = PM2.5_Dyson)) +
+  geom_jitter(alpha=.4) + 
+  geom_smooth(method="lm")
+
+ggplot(df_hourly, aes(x=Generator, y = AQI_adj_mean)) +
+  geom_jitter(alpha=.4) + 
+  geom_smooth(method="lm")
+
 ```
 
-## Data Exploration
+```{r, eval=F, warning=F, message=FALSE}
 
-```{r tables}
-BKsummary <- Brooklyn |> group_by(Ship_Presence, Generator) |> 
-  summarize(
-    PM1 = mean(PM1_mean, na.rm=T),
-    PM2.5 = mean(PM2.5_Dyson, na.rm=T),
-    PM10 = mean(PM10_mean, na.rm=T)
-    )
+ggplot(df_daily, aes(x=Ships, y = elevated_hours)) +
+  geom_jitter(alpha=.4) + 
+  geom_smooth(method="lm")
 
-barplot(
-  BKsummary |> select(contains("PM")) |> as.matrix(),
-  main = "Air Quality",
-  xlab = "Class",
-  col = c("red","green", "blue"), beside = T
+ggplot(df_daily, aes(x=Generator, y = elevated_hours)) +
+  geom_jitter(alpha=.4) + 
+  geom_smooth(method="lm")
+
+
+ggplot(df_daily, aes(x=as.factor(TerminalBCT), y = elevated_hours)) +
+  geom_jitter(alpha=.4) + 
+  geom_smooth(method="lm")
+
+
+```
+
+## LASSO Regression
+
+```{r LASSO_PM, message=FALSE, warning=FALSE}
+lasso_data <- df_hourly%>% 
+  drop_na() %>%
+  dplyr::select(
+  -AQI_mean, 
+  -AQI_adj_mean,
+  -PM10_mean,
+  -PM1_mean, 
+  -hour, 
+  -Date
 )
+
+lasso_data_allships <-  df_daily %>%  
+  drop_na() %>%
+  dplyr::select(
+  -AQI_mean,
+  -PM10_mean,
+  -PM1_mean,
+  -AQI_adj_mean, -elevated_hours)
+  
+plot_lasso <- function(lasso_data, alpha, title="Lasso Feature Importance", sparse=F){
+  # Sample data with a large feature set
+set.seed(42)
+X <- makeX(lasso_data %>%dplyr::select(-PM2.5_Dyson))
+y <- lasso_data$PM2.5_Dyson
+n <- length(y)
+p <- length(X)
+
+
+# Fit a Lasso model with cross-validation
+cvfit <- cv.glmnet(X, y, alpha = alpha)  # alpha = 1 for Lasso, 0 for Ridge
+
+# Find the optimal lambda (alpha) from cross-validation
+best_lambda <- cvfit$lambda.1se
+
+mse <- cvfit$cvm[match(best_lambda, cvfit$lambda)]
+
+# Create a data frame for plotting
+feature_importance <- as.data.frame(
+as.matrix(coef(cvfit, best_lambda)
+))
+
+feature_importance$features <- rownames(feature_importance)
+
+colnames(feature_importance) <- c("Coefficient", "Feature")
+
+# Create a feature importance plot
+p <- ggplot(feature_importance |> filter(Feature != "(Intercept)", Coefficient !=0), aes(x = reorder(Feature, -Coefficient), y = Coefficient)) +
+  geom_bar(stat = "identity", fill = "blue") +
+  labs(title = title, 
+       subtitle = paste("MSE:", round(mse, 2))) +
+  theme(
+    axis.title.x = element_blank(),
+    axis.title.y = element_blank(),
+    plot.margin = margin(0.5,0.5,0,0.5,"cm"),
+    plot.title = element_text(size=10),
+    plot.subtitle = element_text(size=10)) + coord_flip()
+
+# print(cvfit)
+
+return(p)
+}
+
+#hourly, no ships
+p1 <- plot_lasso(lasso_data |>dplyr::select(-contains(c("Ship", "Line", "Terminal", "Generator"))), 1, "Hourly, No Ship")
+#hourly, all ships
+p2 <- plot_lasso(lasso_data, 1, "Lasso, Hourly, All Features", T)
+#daily, no ships
+p3 <- plot_lasso(lasso_data_allships |> dplyr::select(-contains(c("Ship", "Line", "Terminal", "Generator"))), 1, "Daily, No Ship Features")
+#daily, all ships
+p4 <- plot_lasso(lasso_data_allships, 1, "Daily, All Features")
+
+
+#hourly, no ships
+p5 <- plot_lasso(
+  lasso_data |>dplyr::select(-contains(c("Ship", "Line", "Terminal", "Generator"))), 
+  0, 
+  "Hourly, No Ships")
+#hourly, ships
+p6 <- plot_lasso(lasso_data, 0, "Hourly, All Features")
+#daily, no ships
+p7 <- plot_lasso(
+  lasso_data_allships |>dplyr::select(-contains(c("Ship", "Line", "Terminal", "Generator"))), 
+  0
+  , "Daily, No Ships")
+#daily, all ships
+p8 <- plot_lasso(lasso_data_allships, 0,  "Hourly, All Features")
+
+plist <- list(p1,p2,p3,p4)
+n <- length(plist)
+nCol <- floor(sqrt(n))
+do.call("grid.arrange", c(plist, ncol=nCol))
 ```
 
-### Data Exploration
+
+## Ridge Regression
+
 ```{r}
+plist2 <- list(p5,p6)
+n <- length(plist) 
+nCol <- floor(sqrt(n))
+do.call("grid.arrange", c(plist2, ncol=nCol)) 
 ```
 
+## Elastic Net
 
+```{r elasticnet, warning=FALSE, message=FALSE}
+#adapted from https://rpubs.com/jmkelly91/881590
+run_elastic <- function(lasso_data){
+  set.seed(42)
+  X <- makeX(lasso_data %>% dplyr::select(-PM2.5_Dyson))
+  y <- lasso_data$PM2.5_Dyson
 
+  models <- list()
+  for (i in 0:20) {
+    name <- paste0("alpha", i/20)
+    models[[name]] <-
+    cv.glmnet(X, y, type.measure="mse", alpha=i/20, 
+              family="gaussian")
+    }
 
+    results <- data.frame()
+  for (i in 0:20) {
+    name <- paste0("alpha", i/20)
+    
+    mod <- models[[name]]
+    
+    ## Calculate the Mean Squared Error...
+    mse <- mod$cvm[match(mod$lambda.1se, mod$lambda)]
+    
+    ## Store the results
+    temp <- data.frame(alpha=i/20, mse=mse, name=name)
+    results <- rbind(results, temp)
+  }
+
+plot(results$alpha, results$mse, ylim = c(0,50),
+        main="Elastic Net Turning for Alpha", 
+        xlab="Alpha",
+        ylab="Mean Squared Error"
+        ) |> print()
+}
+
+run_elastic(lasso_data)
+```
+
+## Visualizing Impactful Features
+```{r viz}
+ggplot(df_hourly, aes(x=as.factor(`ShipViking Neptune`), y = PM2.5_Dyson)) +
+  geom_jitter(alpha=.4) + 
+  geom_smooth(method="lm")
+
+ggplot(df_hourly, aes(x=`Temp_mean`, y = PM2.5_Dyson)) +
+  geom_jitter(alpha=.4) + 
+  geom_smooth(method="lm")
+
+ggplot(df_hourly, aes(x=`Avg.Wind.Speed_mean`, y = PM2.5_Dyson)) +
+  geom_jitter(alpha=.4) + 
+  geom_smooth(method="lm")
+
+```
+
+```{r}
+Ships <- df_hourly %>% dplyr::select(contains("Ship")) %>% names()
+
+ps <- list(rep(NA, length(Ships)))
+
+ship <- Ships[1]
+
+  p <- ggplot(df_hourly, aes(x=as.factor(`ShipAnthem of the Seas`), y = PM2.5_Dyson)) +
+  geom_jitter(alpha=.4) + 
+  geom_smooth(method="lm")
+```

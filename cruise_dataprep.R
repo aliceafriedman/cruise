@@ -1,20 +1,7 @@
-### Data Prep
-# cruiseShips_Aug <- read_csv("EDC data - Aug 2023.csv",show_col_types = FALSE) %>% 
-#   dplyr::mutate(Date = as.Date(Date, format= "%m/%d/%y"))
-# 
-# ships <- cruiseShips_Aug %>% group_by(Ship) %>%dplyr::select(`Connection`) %>% unique()
-# 
-# cruiseShips_April <- read_csv("EDC data - April 2023.csv", show_col_types = FALSE) %>% 
-#   dplyr::mutate(Date = as.Date(`*Date*`, format= "%m/%d/%Y")) %>% 
-#   dplyr::select(-`*Date*`) %>%
-#   rename(Ship = `*Vessel*`)
-# 
-# cruise <- left_join(cruiseShips_April, ships) %>% arrange(Date) %>%dplyr::select(Date, Ship, Connection) %>%
-#   mutate(Connection = if_else(Ship=="Crystal Serenity", "No", Connection))
-# 
-# cruise %>%dplyr::select(Ship, Connection) %>% table()
+### Cruise Data Prep
 
-cruiseRaw <- read_csv("Worldship_all.csv", show_col_types = FALSE) %>% mutate(
+cruiseRaw <- read_csv("Worldship_all.csv", show_col_types = FALSE) %>% filter(!is.na(Date)) %>%
+  mutate(
   Arrival = if_else(Arrival=="---", "12:00 AM", Arrival),
   Departure = if_else(Departure=="---", "11:59 PM", Departure),
   Arrival = paste(Date, Arrival) |> parse_date_time("m/d/y H:M p"),
@@ -22,13 +9,11 @@ cruiseRaw <- read_csv("Worldship_all.csv", show_col_types = FALSE) %>% mutate(
   Departure = paste(Date, Departure) |> parse_date_time("m/d/y H:M p"),
   DepartureHour = hour(Departure),
   Date = parse_date_time(Date, "m/d/y"),
-  Generator = if_else(Terminal!="BCT", 
-                      TRUE, 
+  Generator = if_else(Terminal!="BCT",
+                      TRUE,
                       if_else(
-                        Line == "MSC Cruises" | Line == "Marella Cruises", TRUE, FALSE 
+                        Line == "MSC Cruises" | Line == "Marella Cruises", TRUE, FALSE
                       )),
-  Terminal = if_else(is.na(Terminal), "None", Terminal),
-  Line = if_else(is.na(Line), "None", Line),
   Line = if_else(Line=="Sliversea Cruises", "Silversea Cruises", Line), #fix typo in raw data
   Line = if_else(Line=="Viking Expeditions Cruises", "Viking Expeditions", Line), #fix typo in raw data
   Line = if_else(Line=="Seabourn Cruise Line", "Seabourn", Line) #fix typo in raw data    
@@ -70,11 +55,27 @@ for (i in 1:nrow(cruise)) {
 hourly_ship_presence$Date <- date(hourly_ship_presence$Hour)
 
 cruise_ships_hourly <- full_join(hourly_ship_presence, cruise, by="Date", relationship = "many-to-many") %>% 
-  mutate(
+mutate(
   Ship_Presence = if_else(is.na(Ship_Presence), FALSE, Ship_Presence),
-  Ship = if_else(Ship_Presence==F, "None", Ship),
-  Line = if_else(Ship_Presence==F, "None", Line),
-  Terminal = if_else(Ship_Presence==F, "None", Terminal),
-  Generator = if_else(Ship_Presence==F, F, Generator),)
+  Generator = if_else(Ship_Presence==F, F, Generator),
+  ) %>%
+  dplyr::select(-contains(c("Arrival", "Departure")))
 
-cruise_ships_daily <- cruise_ships_hourly |> dplyr::filter(hour(Hour)==12)
+wide_ships <- pivot_wider(
+  cruise_ships_hourly, id_cols=c("Hour", "Date"), names_from = c("Ship"), values_from = Ship_Presence, names_prefix = "Ship",values_fn = sum,   values_fill = 0L,
+  )
+wide_terminals <- pivot_wider(
+  cruise_ships_hourly, id_cols=c("Hour", "Date"), names_from = c("Terminal"), names_prefix = "Terminal",values_from = Ship_Presence, values_fn = sum,   values_fill = 0,
+  )
+wide_lines <- pivot_wider(
+  cruise_ships_hourly, id_cols=c("Hour", "Date"), names_from = c("Line"), names_prefix = "Line",values_from = Ship_Presence, values_fn = sum,   values_fill = 0,
+  )
+wide_generators <- pivot_wider(
+  cruise_ships_hourly, id_cols=c("Hour", "Date"), names_from = c("Generator"), values_from = Generator, values_fn = sum,   values_fill = 0,
+  ) %>% 
+  rename(Generator = `TRUE`) %>%
+  dplyr::select(Hour, Date, Generator)
+  
+cruise_ships_hourly_wide <- left_join(wide_ships, wide_terminals) |> left_join(wide_lines) |> left_join(wide_generators)
+
+cruise_ships_daily_wide <- cruise_ships_hourly_wide |> dplyr::filter(hour(Hour)==12)

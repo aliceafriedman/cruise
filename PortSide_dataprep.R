@@ -66,7 +66,15 @@ Dyson_hourly <- data %>%dplyr::select(-DateTime) %>%
   mutate(
     sinWind = sin(degrees_mean),
     cosWind = cos(degrees_mean)
+  )%>% rename(
+    PM2.5_Dyson = PM2.5_mean
   )
+
+elevated_hours <- Dyson_hourly %>% 
+  filter(PM2.5_Dyson > 11) %>% 
+  mutate(date = date(hour)) %>% 
+  group_by(date) %>% 
+  summarize(elevated_hours = n())
 
 Dyson_daily <- Dyson %>% mutate(date = date(DateTime)) %>% dplyr::select(-DateTime) %>% 
   group_by(date)  %>% dplyr::select(where(is.numeric)) %>%
@@ -79,4 +87,11 @@ Dyson_daily <- Dyson %>% mutate(date = date(DateTime)) %>% dplyr::select(-DateTi
     cosWind = cos(degrees_mean)
   ) %>% rename(
     PM2.5_Dyson = PM2.5_mean
+  ) %>% 
+  left_join(elevated_hours) %>%
+  mutate(
+    elevated_hours = if_else(is.na(elevated_hours), 0, elevated_hours)
   )
+
+
+
