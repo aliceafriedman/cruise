@@ -195,51 +195,92 @@ lasso_data_EH_daily<- df_daily %>%  drop_na() %>%dplyr::select(
 
 ```
 
+```{r LASSO_refactored}
+todrop <- expr(c(
+  -AQI_mean,
+  -PM10_mean,
+  -PM1_mean,
+  -PM2.5_Dyson
+))
+
+lasso_data_AQI_daily <- df_daily %>%  drop_na() %>% dplyr::select(!!todrop)
+target <- "AQI_adj_mean"
+
+data <- df_daily
+alpha <- 1
+
+plot_lasso <- function(data, drop=todrop, target = "AQI_adj_mean", alpha=1, title="Feature Importance", sparse=FALSE){
+  # Sample data with a large feature set
+  var <- enexpr(target)
+  lasso_data <- data %>%  drop_na() %>% dplyr::select(!!todrop)
+  set.seed(42)
+  
+  X <- makeX(lasso_data %>% dplyr::select(-!!var))
+  y <- lasso_data %>% dplyr::select(!!var)
+
+# Fit a Lasso model with cross-validation
+cvfit <- cv.glmnet(X, y, alpha = alpha)  # alpha = 1 for Lasso
+
+# Find the optimal lambda (alpha) from cross-validation
+best_lambda <- cvfit$lambda.1se
+
+mse <- cvfit$cvm[match(best_lambda, cvfit$lambda)]
 
 
-```{r }
+# Get the coefficients (feature importance)
+lasso_coef <- coef(cvfit)
 
-pruner <- function(filter_list=c()){
-  smp_size <- floor(0.85 * nrow(lasso_data))
-  
-  ## set the seed to make your partition reproducible
-  set.seed(123)
-  
-  data <- makeX(lasso_data |> dplyr::select(-any_of(filter_list))) |> as.data.frame()
-  
-  train_ind <- sample(seq_len(nrow(data)), size = smp_size)
-  
-  Xtrain <- data[ train_ind, ] |> dplyr::select(-PM2.5_Dyson)
-  ytrain <- data[ train_ind, ] |> dplyr::select( PM2.5_Dyson)
-  X_test <- data[-train_ind, ] |> dplyr::select(-PM2.5_Dyson)
-  y_test <- data[-train_ind, ] |> dplyr::select( PM2.5_Dyson)
-    
-  # Fit a Lasso model with cross-validation
-  cvfit <- cv.glmnet(as.matrix(Xtrain), ytrain$PM2.5_Dyson, alpha = 1)  # alpha = 1 for Lasso, 0 for Ridge
-  
-  feature_importance <- as.data.frame(
-    as.matrix(coef(cvfit, cvfit$lambda.1se)
-  ))
-  
-  coefs <- feature_importance |> filter(s1 > 0) |> rownames()
-  
-  pruned_data <- lasso_data |> dplyr::select(any_of(coefs), PM2.5_Dyson)
-  
-  # Fit the full model 
-  full.model <- lm(PM2.5_Dyson ~., data = pruned_data[train_ind, ])
-  
-  # Stepwise regression model
-  step.model <- stepAIC(full.model, direction = "both", trace = Ts)
-  
-  summary(step.model)
-  return(c(step.model, X_test, y_test$PM2.5_Dyson))
+# Extract the coefficients for each lambda value
+# The lambda value can be chosen based on your specific needs
+lambda_index <- best_lambda  # Adjust as needed
+
+# coefficients <- as.vector(lasso_coef[, lambda_index])
+
+# Create a data frame for plotting
+feature_importance <- as.data.frame(
+  as.matrix(coef(cvfit, best_lambda)
+))
+
+feature_importance$features <- rownames(feature_importance)
+
+colnames(feature_importance) <- c("Coefficient", "Feature")
+
+# Create a feature importance plot
+p<- ggplot(feature_importance |> filter(Feature != "(Intercept)", Coefficient !=0), aes(x = reorder(Feature, -Coefficient), y = Coefficient)) +
+  geom_bar(stat = "identity", fill = "blue") +
+  labs(title = title, 
+       subtitle = paste("MSE:", mse),
+       x = "Feature", 
+       y = "Coefficient") +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    plot.margin = margin(1,1,1,2,"cm"))
+
+
+return(p)
+
 }
 
-pruned <- pruner()
+# noships_hourly <- plot_lasso_AQI(
+#   lasso_data_AQI |> 
+#    dplyr::select(-contains(c("Ship", "Line", "Terminal"))), 
+#   1,
+#   "Adj. AQI, Hourly Data, No Ships")
+# 
+# plot_lasso_AQI(lasso_data_AQI |> dplyr::select(-contains(c("Ship", "Terminal", "Line", "Generator"))), 1)
+# 
+# plot_lasso_AQI(lasso_data_AQI, 1)
 
-res_ships <- postResample(pred = predict(pruned[[1]], new_data = pruned[[2]]), obs = pruned[[3]])
+
+plot_lasso(df_daily)
+
+
+
+
 
 ```
+
+
 ```{r}
 library(caret)
 library(leaps)
@@ -326,7 +367,7 @@ res_ships <- postResample(pred = predict(step.model.ships, newdata = X_test), ob
 ```
 
 ```{r}
-anova(step.model.ships, step.model)
+anova(pruned$model, pruned2$model)
 (res[["RMSE"]] - res_ships[["RMSE"]])/res[["RMSE"]] 
 (res[["Rsquared"]] - res_ships[["Rsquared"]])
 

@@ -4,7 +4,7 @@ subtitle: "Final Presentation, DATA 698 CUNY SPS"
 author: "Alice Friedman"
 institute: "CUNY School for Professional Studies"
 date: "`r Sys.Date()`"
-output: ioslides_presentation
+output: slidy_presentation
 ---
 
 ```{r setup, include=FALSE}
@@ -29,11 +29,71 @@ library(leaps)
 library(MASS)
 ```
 
+```{r load_data, message=FALSE, warning=FALSE}
+#source("purple_pull.R") pulls from API and writes to csv
+source("cruise_dataprep.R") #loads CSV generated from worlshipny.org and merges with EDC info on shore power
+source("PortSide_dataprep.R") #loads CSV aggregates as hourly data ("Dyson_hourly") and daily"
+```
+
+```{r join_data_hourly}
+Dyberry <- read_csv("Dyberry.csv", show_col_types = FALSE ) #loads PM2.5 from purple air at Dyberry Farm
+
+ship_cols <-c(
+  "Ship_Presence","Terminal", "Line", "Generator", "Ship"
+)
+
+Dyberry_daily <- Dyberry |> 
+  group_by(Date) |> 
+  summarise(PM2.5_corrected = mean(PM2.5_corrected, na.rm=T))
+
+aq_cols <- c(
+  "AQI_mean",
+  "PM1_mean",
+  "PM2.5_Dyson",
+  "elevated_hours",
+  "PM10_mean",
+  "AQI_adj_mean"
+)
+drop_list <-c(
+  "degrees_mean", 
+  "ShipNA",
+  "TerminalNA",
+  "LineNA"
+)
+
+#Join PortSide NY data to purple air data to cruise ships data to create an hourly data frame
+df_hourly <- left_join(Dyson_hourly, dplyr::select(Dyberry, local_datetime, PM2.5_corrected), by=c("hour" = "local_datetime"))  %>%     left_join(cruise_ships_hourly_wide, by=c("hour"="Hour")) %>%
+  dplyr::select(-any_of(drop_list)) %>%
+  mutate( # add features related to hour and day of week
+    dayofweek = wday(hour),
+    hourofday = hour(hour),
+    Ships = rowSums(across(contains("Ship")))
+    )
+
+  
+write_csv(df_hourly, "Hourly_Joined.csv")
+```
+
+```{r join_daily}
+
+
+df_daily <- Dyson_daily %>% 
+  left_join(cruise_ships_daily_wide, by=c("date"="Date")) %>%
+  relocate(date, any_of(ship_cols)) %>% 
+  dplyr::select(-any_of(drop_list)) %>%
+  mutate(
+    dayofweek = wday(date),
+    Ships = rowSums(across(contains("Ship")))
+    ) |> left_join(Dyberry_daily, by = c("date" = "Date"))
+
+write_csv(df_daily, "Daily_Joined.csv") 
+```
+
 ## Introduction
 
 - Air Pollution is responsible for an estimated 6.7 million annual premature deaths globally (WHO, 2022).
   
-- Cruise ship emissions are a visible source of urban pollition in coastal cities, with increasing attention to mitigation strategies like the use of on-shore power while in port
+- Cruise ship emissions are a visible source of urban pollution in coastal cities, with increasing attention to mitigation strategies like the use of on-shore power while in port
 
 - *Research Gap*: Lack of empirical analysis in the context of New York City, emphasizing the need for a data-driven approach.
 
@@ -45,7 +105,7 @@ library(MASS)
 
 - Red Hook neighborhood has worst air quality in Brooklyn (NYC.gov, 2023)
 
-- Policy Context: New York City considering local law Int. 1050, requiring cruise ships to use on-shore power by 2028 at all ports (including Manattan Cruise Terminal)
+- Policy Context: New York City considering local law Int. 1050, requiring cruise ships to use on-shore power by 2028 at all ports (including Manhattan Cruise Terminal)
 
 ## Research Questions
 
@@ -67,7 +127,7 @@ library(MASS)
 
 ## Data Sources
 
-- Weather and airquality data at the Port is taken from a Dyson Instruments weather station located adjacent to the Brooklyn Cruise Terminal
+- Weather and air quality data at the Port is taken from a Dyson Instruments weather station located adjacent to the Brooklyn Cruise Terminal
 
 - Observations are taken in 15 minute increments, starting July 11, 2023
 
@@ -85,59 +145,27 @@ library(MASS)
 
 - Wind direction converted to radians and then defined by the sine and cosine of theta to avoid correlation
 
+## Data Preparation
+
 - Cruise ship compatibility is taken from the EDC and extrapolated to ship dockings in July
 
 - PM 2.5 levels from Purple Air corrected based on EPA 
 
 - Weather data aggregated hourly (average value, except for rain which is summed) to join with cruise ship data and control sensor data from Purple Air
 
-- Final data set has 17 features, 5 possible targets, and 3,396 observations across 141 days (some days contain more than 24 observations because there may be more than one ship present)
+## Data Preparation
+
+- Although it was also tested, autocorrelation in hourly results resulted in spurious associations, and so aggregation by day was ultimately used for the final model selection
+
+
+- Cruise ship features (Ship, Line, Terminal) were included as dummy variables as well as as aggregate features (number of Ships in the harbor, number of Ships running a generator)
+
+- Additional feature day of week added per standard practice in the literature
+
+- Final data set has `r length(names(df_daily)) - 5` features, 5 possible targets, and `r length(df_daily)` across 141 days
+
 
 ## Time Series
-
-```{r load_data, message=FALSE, warning=FALSE}
-#source("purple_pull.R") pulls from API and writes to csvs
-source("cruise_dataprep.R") #loads CSV generated from worlshipny.org and merges with EDC info on shore power
-source("PortSide_dataprep.R") #loads CSV aggregates as hourly data ("Dyson_hourly") and daily"
-```
-
-```{r join_data_hourly}
-Dyberry <- read_csv("Dyberry.csv", show_col_types = FALSE ) #loads PM2.5 from purple air at Dyberry Farm
-
-ship_cols <-c(
-  "Ship_Presence","Terminal", "Line", "Generator"
-)
-
-drop_list <-c(
-  "degrees_mean"
-)
-
-#Join PortSide NY data to purple air data to cruise ships data to create an hourly data frame
-df_hourly <- left_join(Dyson_hourly, dplyr::select(Dyberry, local_datetime, PM2.5_corrected), by=c("hour" = "local_datetime"))  %>%     left_join(cruise_ships_hourly_wide, by=c("hour"="Hour")) %>%
-  relocate(hour, all_of(starts_with(ship_cols))) %>% 
-  dplyr::select(-all_of(drop_list)) %>%
-  mutate( # add features related to hour and day of week
-    dayofweek = wday(hour),
-    hourofday = hour(hour),
-    Ships = rowSums(across(contains("Ship")))
-    )
-
-  
-write_csv(df_hourly, "Hourly_Joined.csv")
-```
-
-```{r join_daily}
-df_daily <- Dyson_daily %>% 
-  left_join(cruise_ships_daily_wide, by=c("date"="Date")) %>%
-  relocate(date, any_of(ship_cols)) %>% 
-  dplyr::select(-any_of(drop_list), -Hour) %>%
-  mutate(
-    dayofweek = wday(date),
-    Ships = rowSums(across(contains("Ship")))
-    ) 
-
-write_csv(df_daily, "Daily_Joined.csv") 
-```
 
 ```{r plot1}
 p_time_PM <- ggplot(df_hourly %>% dplyr::filter(complete.cases(.))) +
@@ -149,231 +177,274 @@ p_time_PM <- ggplot(df_hourly %>% dplyr::filter(complete.cases(.))) +
   theme(aspect.ratio = 1/4)+ 
   scale_color_manual(values = c("blue", "lightblue"), name = "Legend Title")
 
-p_time_AQI <- ggplot(Dyson) +
-  geom_line(aes(x=DateTime, y=AQI, color = "Actual AQI")) +  
-  geom_line(aes(x=DateTime, y=AQI_adj, color = "Adjusted for Woodsmoke")) +  
+p_time_AQI <- ggplot(df_hourly) +
+  geom_line(aes(x=hour, y=AQI_mean, color = "Actual AQI")) +  
+  geom_line(aes(x=hour, y=AQI_adj_mean, color = "Adjusted for Woodsmoke")) +  
   scale_x_datetime(breaks = scales::date_breaks("1 month"), labels = date_format("%m %d")) +
   ylab("AQI") + 
   xlab("Date") +
   theme(aspect.ratio = 1/4)+ 
   scale_color_manual(values = c("blue", "lightblue"), name = "Legend Title")
 
-grid.arrange(p_time_AQI, p_time_PM, ncol=1)
+grid.arrange(p_time_AQI, p_time_PM, ncol=1) 
 ```
 
 ## Data Exploration
 
-```{r, warning=F, message=FALSE}
+- Looked at relationship between features against various targets
 
+```{r data_ex, warning=F, message=FALSE}
 
-ggplot(df_hourly, aes(x=Ships, y = PM2.5_Dyson)) +
-  geom_jitter(alpha=.4) + 
+plot_vars <- function(x, y){
+  X <- enexpr(x)
+  Y <- enexpr(y)
+  
+  p <- ggplot(df_hourly, aes(x=!!X, y = !!Y)) +
+  geom_jitter(alpha=.1) + 
   geom_smooth(method="lm")
+  
+  return(p)
 
-ggplot(df_hourly, aes(x=Ships, y = AQI_mean)) +
-  geom_jitter(alpha=.4) + 
-  geom_smooth(method="lm")
+  }
 
+plist_data_ex <- list(
+  plot_vars(Ships, PM1_mean),
+  plot_vars(Generator, PM1_mean),
+  plot_vars(Ships, PM2.5_Dyson),
+  plot_vars(Generator, PM2.5_Dyson),
+  plot_vars(Ships, PM10_mean),
+  plot_vars(Generator, PM10_mean),  
+  plot_vars(Ships, AQI_mean),
+  plot_vars(Generator, AQI_mean),
+  plot_vars(Ships, AQI_adj_mean),
+  plot_vars(Generator, AQI_adj_mean)
+  
+)
 
-ggplot(df_hourly, aes(x=Generator, y = PM2.5_Dyson)) +
-  geom_jitter(alpha=.4) + 
-  geom_smooth(method="lm")
-
-ggplot(df_hourly, aes(x=Generator, y = AQI_adj_mean)) +
-  geom_jitter(alpha=.4) + 
-  geom_smooth(method="lm")
+do.call("grid.arrange", c(plist_data_ex, ncol=2))
 
 ```
 
-```{r, eval=F, warning=F, message=FALSE}
+## Data Exploration
 
-ggplot(df_daily, aes(x=Ships, y = elevated_hours)) +
-  geom_jitter(alpha=.4) + 
-  geom_smooth(method="lm")
+- Looked at relationship between features against various targets
 
-ggplot(df_daily, aes(x=Generator, y = elevated_hours)) +
-  geom_jitter(alpha=.4) + 
-  geom_smooth(method="lm")
+```{r, warning=FALSE, message=FALSE}
+plist_data_ex2 <- list(
+  plot_vars(Avg.Wind.Speed_mean, PM1_mean),
+  plot_vars(Temp_mean, PM1_mean),
+  plot_vars(Avg.Wind.Speed_mean, PM2.5_Dyson),
+  plot_vars(Temp_mean, PM2.5_Dyson),
+  plot_vars(Avg.Wind.Speed_mean, PM10_mean),
+  plot_vars(Temp_mean, PM10_mean),  
+  plot_vars(Avg.Wind.Speed_mean, AQI_mean),
+  plot_vars(Temp_mean, AQI_mean),
+  plot_vars(Avg.Wind.Speed_mean, AQI_adj_mean),
+  plot_vars(Temp_mean, AQI_adj_mean)
+  
+)
 
-
-ggplot(df_daily, aes(x=as.factor(TerminalBCT), y = elevated_hours)) +
-  geom_jitter(alpha=.4) + 
-  geom_smooth(method="lm")
-
-
+do.call("grid.arrange", c(plist_data_ex2, ncol=2))
 ```
+
 
 ## LASSO Regression
 
 ```{r LASSO_PM, message=FALSE, warning=FALSE}
-lasso_data <- df_hourly%>% 
-  drop_na() %>%
-  dplyr::select(
-  -AQI_mean, 
-  -AQI_adj_mean,
-  -PM10_mean,
-  -PM1_mean, 
-  -hour, 
-  -Date
-)
+#create function my_e_net which allows you to run lasso, ridge, and elastic net and plot results
+# Takes arguments df, droplist, target, alpha (1 is Lasso, 0 is Ridge), title, and sparse
+source("lasso.R")
 
-lasso_data_allships <-  df_daily %>%  
-  drop_na() %>%
-  dplyr::select(
-  -AQI_mean,
-  -PM10_mean,
-  -PM1_mean,
-  -AQI_adj_mean, -elevated_hours)
+ship_names <- df_daily |> dplyr::select(contains(ship_cols)) |> names()
+#hourly, no ships
+p1 <- my_e_net(df_daily, 
+               droplist=append(ship_names, "PM2.5_corrected"),
+               target="AQI_adj_mean",
+               title="Daily, No Ship")
   
-plot_lasso <- function(lasso_data, alpha, title="Lasso Feature Importance", sparse=F){
-  # Sample data with a large feature set
-set.seed(42)
-X <- makeX(lasso_data %>%dplyr::select(-PM2.5_Dyson))
-y <- lasso_data$PM2.5_Dyson
-n <- length(y)
-p <- length(X)
+p2 <- my_e_net(df_daily, 
+               droplist=c("PM2.5_corrected"),
+               target="AQI_adj_mean",
+               title="Daily, All Ship Features")
+p3 <- my_e_net(df_daily, 
+               droplist=ship_names,
+               target="PM2.5_Dyson",
+               title="Daily, No Ship")
+  
+p4 <- my_e_net(df_daily, 
+               droplist=c(),
+               target="PM2.5_Dyson",
+               title="Daily, All Ship Features")
+  
 
+p7 <- my_e_net(df_daily, 
+               droplist=ship_names,
+               target="PM2.5_Dyson",
+               title="Daily, No Ship", 
+               alpha = 0)
+  
+p8 <- my_e_net(df_daily, 
+               droplist=c(),
+               target="PM2.5_Dyson",
+               title="Daily, All Ship Features", 
+               alpha = 0)
 
-# Fit a Lasso model with cross-validation
-cvfit <- cv.glmnet(X, y, alpha = alpha)  # alpha = 1 for Lasso, 0 for Ridge
-
-# Find the optimal lambda (alpha) from cross-validation
-best_lambda <- cvfit$lambda.1se
-
-mse <- cvfit$cvm[match(best_lambda, cvfit$lambda)]
-
-# Create a data frame for plotting
-feature_importance <- as.data.frame(
-as.matrix(coef(cvfit, best_lambda)
-))
-
-feature_importance$features <- rownames(feature_importance)
-
-colnames(feature_importance) <- c("Coefficient", "Feature")
-
-# Create a feature importance plot
-p <- ggplot(feature_importance |> filter(Feature != "(Intercept)", Coefficient !=0), aes(x = reorder(Feature, -Coefficient), y = Coefficient)) +
-  geom_bar(stat = "identity", fill = "blue") +
-  labs(title = title, 
-       subtitle = paste("MSE:", round(mse, 2))) +
-  theme(
-    axis.title.x = element_blank(),
-    axis.title.y = element_blank(),
-    plot.margin = margin(0.5,0.5,0,0.5,"cm"),
-    plot.title = element_text(size=10),
-    plot.subtitle = element_text(size=10)) + coord_flip()
-
-# print(cvfit)
-
-return(p)
-}
-
-#hourly, no ships
-p1 <- plot_lasso(lasso_data |>dplyr::select(-contains(c("Ship", "Line", "Terminal", "Generator"))), 1, "Hourly, No Ship")
-#hourly, all ships
-p2 <- plot_lasso(lasso_data, 1, "Lasso, Hourly, All Features", T)
-#daily, no ships
-p3 <- plot_lasso(lasso_data_allships |> dplyr::select(-contains(c("Ship", "Line", "Terminal", "Generator"))), 1, "Daily, No Ship Features")
-#daily, all ships
-p4 <- plot_lasso(lasso_data_allships, 1, "Daily, All Features")
-
-
-#hourly, no ships
-p5 <- plot_lasso(
-  lasso_data |>dplyr::select(-contains(c("Ship", "Line", "Terminal", "Generator"))), 
-  0, 
-  "Hourly, No Ships")
-#hourly, ships
-p6 <- plot_lasso(lasso_data, 0, "Hourly, All Features")
-#daily, no ships
-p7 <- plot_lasso(
-  lasso_data_allships |>dplyr::select(-contains(c("Ship", "Line", "Terminal", "Generator"))), 
-  0
-  , "Daily, No Ships")
-#daily, all ships
-p8 <- plot_lasso(lasso_data_allships, 0,  "Hourly, All Features")
-
-plist <- list(p1,p2,p3,p4)
-n <- length(plist)
-nCol <- floor(sqrt(n))
-do.call("grid.arrange", c(plist, ncol=nCol))
+plist <- list(p1, p2)
+do.call("grid.arrange", c(plist, ncol=2))
 ```
 
 
 ## Ridge Regression
 
 ```{r}
-plist2 <- list(p5,p6)
+plist2 <- list(p7,p8)
 n <- length(plist) 
 nCol <- floor(sqrt(n))
-do.call("grid.arrange", c(plist2, ncol=nCol)) 
+do.call("grid.arrange", c(plist2, ncol=2)) 
 ```
 
 ## Elastic Net
 
-```{r elasticnet, warning=FALSE, message=FALSE}
+```{r elasticnet, warning=FALSE, message=FALSE, echo=FALSE}
 #adapted from https://rpubs.com/jmkelly91/881590
-run_elastic <- function(lasso_data){
+
+
+run_elastic <- function(target, data=df_daily, droplist=c()){
+  
+  #list of possible targets 
+   aq_cols <- c(
+    "AQI_mean",
+    "AQI_adj_mean",   
+    "PM1_mean",
+    "PM2.5_Dyson",
+    "PM10_mean",
+    "elevated_hours"
+  )
+  
+  #remove the target from the list  
+  not_targets <- aq_cols[!aq_cols == target]
+  
+  #create a list to drop that includes targets not chosen as well as an optional additional list of features
+  drop_any <- append(not_targets, droplist)
+  
+  # create date set for use in enet that drops NAs as well as the features not of interest
+  enet_data <- data %>%  drop_na() %>% dplyr::select(-any_of(drop_any))
+  
+  #Set target variable as an enriched expression so it can be used inside of tidy select funcs
+  var <- dplyr::enexpr(target)
+  
   set.seed(42)
-  X <- makeX(lasso_data %>% dplyr::select(-PM2.5_Dyson))
-  y <- lasso_data$PM2.5_Dyson
+  #Create X matrix and y vector by separating target var from DF
+  X <- makeX(enet_data %>% dplyr::select(-!!var))
+  y <- enet_data[[target]]
+  
 
-  models <- list()
-  for (i in 0:20) {
-    name <- paste0("alpha", i/20)
-    models[[name]] <-
-    cv.glmnet(X, y, type.measure="mse", alpha=i/20, 
-              family="gaussian")
-    }
-
-    results <- data.frame()
-  for (i in 0:20) {
-    name <- paste0("alpha", i/20)
-    
-    mod <- models[[name]]
-    
-    ## Calculate the Mean Squared Error...
-    mse <- mod$cvm[match(mod$lambda.1se, mod$lambda)]
-    
-    ## Store the results
-    temp <- data.frame(alpha=i/20, mse=mse, name=name)
-    results <- rbind(results, temp)
+  results <- data.frame(alpha = seq(0, 1, by=0.05))
+  
+  
+  find_mse <- function (alpha) {
+  mod <- cv.glmnet(X, y, type.measure="mse", alpha=alpha, family="gaussian")
+  mse <- mod$cvm[match(mod$lambda.1se, mod$lambda)]
+  return(mse)  
   }
+  
+  results$mse <- sapply(results$alpha, find_mse)
 
-plot(results$alpha, results$mse, ylim = c(0,50),
-        main="Elastic Net Turning for Alpha", 
-        xlab="Alpha",
-        ylab="Mean Squared Error"
-        ) |> print()
+  # ggplot(results, aes(x=alpha, y=mse) + geom_point())
+  ggplot(results, aes(x=alpha, y=mse)) + geom_point() +ylim(0, max(results$mse)*1.1)+
+    ggtitle(paste("Mean Square Error vs Alpha with Target:", target)) +
+    geom_point(color = "red") 
 }
-
-run_elastic(lasso_data)
-```
-
-## Visualizing Impactful Features
-```{r viz}
-ggplot(df_hourly, aes(x=as.factor(`ShipViking Neptune`), y = PM2.5_Dyson)) +
-  geom_jitter(alpha=.4) + 
-  geom_smooth(method="lm")
-
-ggplot(df_hourly, aes(x=`Temp_mean`, y = PM2.5_Dyson)) +
-  geom_jitter(alpha=.4) + 
-  geom_smooth(method="lm")
-
-ggplot(df_hourly, aes(x=`Avg.Wind.Speed_mean`, y = PM2.5_Dyson)) +
-  geom_jitter(alpha=.4) + 
-  geom_smooth(method="lm")
+pe <- run_elastic("PM2.5_Dyson")
 
 ```
+```{r run_elastic}
+pe
+```
 
+## Model Selection
+
+- Used step-wise function from pruned feature set using 
+```{r model_select}
+source("model_test.R", echo = F)
+
+pruned <- pruner()
+pruned2 <- pruner(data=df_daily, droplist=c(ship_names), target="PM2.5_Dyson")
+pruned3 <- pruner(data = df_daily, droplist = c(), target = "AQI_adj_mean")
+pruned4 <- pruner(data=df_daily, droplist=c(ship_names), target="AQI_adj_mean")
+
+p_ships <- plot_res(pruned, "Best PM 2.5 Model With Ship Features")
+p_noships <- plot_res(pruned2, "Best PM 2.5 Model Without Ship Features")
+```
+
+## Model Selection
+
+- Compared models with and without inclusion of ship features for best model using a 70/30 split of test/training data
+
+```{r plot_model, warning=FALSE}
+do.call("grid.arrange", c(list(p_noships, p_ships, 
+                               plot_res(pruned4, "Best Adj. AQI Model Without Ship Features"),
+                               plot_res(pruned3, "Best Adj. AQI Model With Ship Features")
+                               
+), ncol=2)) 
+```
+
+
+## Model Selection
+Best Model Including Ship Features
 ```{r}
-Ships <- df_hourly %>% dplyr::select(contains("Ship")) %>% names()
-
-ps <- list(rep(NA, length(Ships)))
-
-ship <- Ships[1]
-
-  p <- ggplot(df_hourly, aes(x=as.factor(`ShipAnthem of the Seas`), y = PM2.5_Dyson)) +
-  geom_jitter(alpha=.4) + 
-  geom_smooth(method="lm")
+summary(pruned$model)
 ```
+
+## Model Selection
+Best Model without Ship Features
+```{r}
+summary(pruned2$model)
+```
+
+## Model Selection
+``` {r anova}
+anova(pruned$model, pruned2$model)
+```
+
+## Conclusion
+
+- Daily aggregations are preferable in this analysis due to autocorrelation of hourly observations of air quality levels
+
+- The inclusion of select ship features *does* increase explanatory value of the model with statistical significance, although only specific ships -- no aggregate features such as the number of ships in the harbor or berthed at Brooklyn Cruise Terminal are found to be significant
+
+- Only a few ships are significant in impacting air quality (Norwegian Prima, Artania, Marella Discovery), indicating that the overall effect may be modest, but individual improvements on the worst performing ships may improve air quality. Of these, only Norwegian Prima's effect is found to be statistically significant.
+
+```{r conc, warning=FALSE, message=FALSE}
+do.call("grid.arrange", 
+        c(list(
+          plot_vars(Humidity_mean, PM2.5_Dyson),
+          plot_vars(Temp_mean, PM2.5_Dyson),
+          plot_vars(PM2.5_corrected, PM2.5_Dyson),
+          plot_vars(`ShipNorwegian Prima`, PM2.5_Dyson),
+          plot_vars(ShipArtania, PM2.5_Dyson),
+          plot_vars(`ShipMarella Discovery`, PM2.5_Dyson)
+        ), 
+          ncol=2))
+```
+
+## Conclusion
+
+### What feature set among available inputs will best predict air quality *in the absence of consideration of cruise ship inputs*? 
+
+Temperature, Humidity, and Average Wind Speed are most predictive locally, while the inclusion of a "control" PM2.5 reading is the most significant factor overall. This indicates that global air quality, most likely the presence of Canadian wildfires, is the most significant factor affecting local air quality.
+
+### Does the inclusion of cruise ship features measurably improve these results?
+
+Yes, there is a modest improvement in performance against a test-set and explanatory value by including select ships features in non-parametric regressions. However, when those features are used in a linear regression, only one ship has statistical significance and given the large number of ships, even this results should be considered in question.
+
+### What level of improvement can we expect to see as a result of NYC's proposed legislation to require on-shore power for all ships by 2028?
+
+Although cruise ships are a visible source of smoke, efforts to mitigate ship emissions are likely to have a very limited return on the costly investment to provide on-shore power. 
+
+## Conclusion
+
+Because these results are not in line with other literature on the subject, more research should be done to validate these results. Possible extensions include:
+- Running results over longer periods of time
+- Including more sensors closer to the other ports
+- Looking at effects over space by analyzing multiple senses on days when the worst offending ships are present.

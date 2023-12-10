@@ -1,0 +1,13 @@
+name: DataViewer
+title: DataViewer
+username: aliceafriedman
+account: aliceafriedman
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 10757343
+bundleId: 8028882
+url: https://aliceafriedman.shinyapps.io/DataViewer/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: DysonDaily.csv|Hourly_Joined.csv

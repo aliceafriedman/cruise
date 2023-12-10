@@ -1,9 +1,9 @@
 ### Cruise Data Prep
 
-cruiseRaw <- read_csv("Worldship_all.csv", show_col_types = FALSE) %>% filter(!is.na(Date)) %>%
+cruise <- read_csv("Worldship_all.csv", show_col_types = FALSE) %>% filter(!is.na(Date)) %>%
   mutate(
-  Arrival = if_else(Arrival=="---", "12:00 AM", Arrival),
-  Departure = if_else(Departure=="---", "11:59 PM", Departure),
+  Arrival = case_match(Arrival, c("---", "N/A", NA, "AM") ~ "12:00 AM", .default = Arrival),
+  Departure = case_match(Departure, c("---", "N/A", NA, "Early AM", "PM", "AM") ~ "11:59 PM", .default = Departure),
   Arrival = paste(Date, Arrival) |> parse_date_time("m/d/y H:M p"),
   ArrivalHour = hour(Arrival),
   Departure = paste(Date, Departure) |> parse_date_time("m/d/y H:M p"),
@@ -19,19 +19,6 @@ cruiseRaw <- read_csv("Worldship_all.csv", show_col_types = FALSE) %>% filter(!i
   Line = if_else(Line=="Seabourn Cruise Line", "Seabourn", Line) #fix typo in raw data    
 ) 
 
-meanArrival = mean(cruiseRaw$ArrivalHour, na.rm = T) |> round(1)
-meanDeparture = mean(cruiseRaw$DepartureHour, na.rm = T) |> round(0)
-
-cruise <- cruiseRaw %>% mutate(
-  Arrival = if_else(
-    is.na(Arrival), 
-    Date + hours(meanArrival), 
-    Arrival),
-  Departure = if_else(
-    is.na(Departure), 
-    Date + hours(meanDeparture), 
-    Departure),
-)
 
 # Create an hourly sequence for the entire period
 start_date <- min(cruise$Arrival)
@@ -62,13 +49,13 @@ mutate(
   dplyr::select(-contains(c("Arrival", "Departure")))
 
 wide_ships <- pivot_wider(
-  cruise_ships_hourly, id_cols=c("Hour", "Date"), names_from = c("Ship"), values_from = Ship_Presence, names_prefix = "Ship",values_fn = sum,   values_fill = 0L,
+  cruise_ships_hourly, id_cols=c("Hour", "Date"), names_from = c("Ship"), values_from = Ship_Presence, names_prefix = "Ship",values_fn = sum,   values_fill = 0,
   )
 wide_terminals <- pivot_wider(
-  cruise_ships_hourly, id_cols=c("Hour", "Date"), names_from = c("Terminal"), names_prefix = "Terminal",values_from = Ship_Presence, values_fn = sum,   values_fill = 0,
+  cruise_ships_hourly, id_cols=c("Hour", "Date"), names_from = c("Terminal"), names_prefix = "Terminal", values_from = Ship_Presence, values_fn = sum,   values_fill = 0,
   )
 wide_lines <- pivot_wider(
-  cruise_ships_hourly, id_cols=c("Hour", "Date"), names_from = c("Line"), names_prefix = "Line",values_from = Ship_Presence, values_fn = sum,   values_fill = 0,
+  cruise_ships_hourly, id_cols=c("Hour", "Date"), names_from = c("Line"), names_prefix = "Line", values_from = Ship_Presence, values_fn = sum,   values_fill = 0,
   )
 wide_generators <- pivot_wider(
   cruise_ships_hourly, id_cols=c("Hour", "Date"), names_from = c("Generator"), values_from = Generator, values_fn = sum,   values_fill = 0,
@@ -76,6 +63,12 @@ wide_generators <- pivot_wider(
   rename(Generator = `TRUE`) %>%
   dplyr::select(Hour, Date, Generator)
   
-cruise_ships_hourly_wide <- left_join(wide_ships, wide_terminals) |> left_join(wide_lines) |> left_join(wide_generators)
+cruise_ships_hourly_wide <- left_join(wide_ships, wide_terminals) |> left_join(wide_lines) |> left_join(wide_generators) |> filter(Date > "2023/07/10")
 
-cruise_ships_daily_wide <- cruise_ships_hourly_wide |> dplyr::filter(hour(Hour)==12)
+cruise_ships_daily_wide <- cruise_ships_hourly_wide |> group_by (Date) |>
+  summarise(
+  across(
+    contains(c("Ship", "Generator", "Terminal", "Line")),
+    ~ max(.x)
+  )
+)

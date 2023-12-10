@@ -80,7 +80,7 @@ Dyson_daily <- Dyson %>% mutate(date = date(DateTime)) %>% dplyr::select(-DateTi
   group_by(date)  %>% dplyr::select(where(is.numeric)) %>%
   summarize(
     across(-contains("Rain"), list(mean = mean)),
-    across(contains("Rain"), list(sum=sum))
+    across(contains("Rain"), list(sum = sum))
   ) %>%
   mutate(
     sinWind = sin(degrees_mean),
@@ -93,5 +93,5 @@ Dyson_daily <- Dyson %>% mutate(date = date(DateTime)) %>% dplyr::select(-DateTi
     elevated_hours = if_else(is.na(elevated_hours), 0, elevated_hours)
   )
 
-
+write_csv(Dyson_daily, "DysonDaily.csv")
 
